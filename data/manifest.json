@@ -1,0 +1,4118 @@
+{
+ "katalog": "Katalog podpůrných opatření (Michalík, Baslerová, Felcmanová a kol.)",
+ "generovano": "skripty v ./scripts (PyMuPDF)",
+ "katalogy": {
+  "vseobecny": {
+   "nazev": "Obecná část",
+   "cilova_skupina": "Metodika, struktura karet, oblasti podpory",
+   "typ": "obecna",
+   "zdroj": "katalog-vseobecny.pdf",
+   "prehled": "data/cards/vseobecny/_prehled.md",
+   "kapitoly": [
+    {
+     "nazev": "Úvod",
+     "full": "data/full/vseobecny/01-uvod.md"
+    },
+    {
+     "nazev": "Současná situace ve vzdělávání žáků se speciálními vzdělávacími potřebami",
+     "full": "data/full/vseobecny/02-soucasna-situace-ve-vzdelavani-zaku-se-specialnimi.md"
+    },
+    {
+     "nazev": "Dpůrná opatření ve vzdělávání",
+     "full": "data/full/vseobecny/03-dpurna-opatreni-ve-vzdelavani.md"
+    },
+    {
+     "nazev": "Komu jsou podpůrná opatření určena",
+     "full": "data/full/vseobecny/04-komu-jsou-podpurna-opatreni-urcena.md"
+    },
+    {
+     "nazev": "Právní úprava podpůrných opatření",
+     "full": "data/full/vseobecny/05-pravni-uprava-podpurnych-opatreni.md"
+    },
+    {
+     "nazev": "Školská poradenská zařízení a jejich činnost v oblasti podpůrných opatření",
+     "full": "data/full/vseobecny/06-skolska-poradenska-zarizeni-a-jejich-cinnost-v-obl.md"
+    },
+    {
+     "nazev": "Škola a podpůrná opatření",
+     "full": "data/full/vseobecny/07-skola-a-podpurna-opatreni.md"
+    },
+    {
+     "nazev": "Charakteristika podpůrných opatření",
+     "full": "data/full/vseobecny/08-charakteristika-podpurnych-opatreni.md"
+    },
+    {
+     "nazev": "Organizační a personální zabezpečení implementace podpůrných opatření",
+     "full": "data/full/vseobecny/09-organizacni-a-personalni-zabezpeceni-implementace-.md"
+    },
+    {
+     "nazev": "Metodika práce s katalogem podpůrných opatření",
+     "full": "data/full/vseobecny/10-metodika-prace-s-katalogem-podpurnych-opatreni.md"
+    },
+    {
+     "nazev": "Slovníček odborných pojmů a seznam zkratek",
+     "full": "data/full/vseobecny/11-slovnicek-odbornych-pojmu-a-seznam-zkratek.md"
+    },
+    {
+     "nazev": "Závěr",
+     "full": "data/full/vseobecny/12-zaver.md"
+    },
+    {
+     "nazev": "Příloha: struktura podpůrných opatření",
+     "full": "data/full/vseobecny/13-priloha-struktura-podpurnych-opatreni.md"
+    }
+   ]
+  },
+  "tp": {
+   "nazev": "Tělesné postižení a závažné onemocnění",
+   "cilova_skupina": "žáci s tělesným postižením nebo závažným onemocněním",
+   "typ": "dilci",
+   "zdroj": "katalog-tp.pdf",
+   "prehled": "data/cards/tp/_prehled.md",
+   "all": "data/cards/tp/_all.md",
+   "pocet_karet": 54,
+   "oblasti": [
+    {
+     "oblast": 1,
+     "nazev": "Organizace výuky",
+     "full": "data/full/tp/oblast-01-organizace-vyuky.md",
+     "karty": [
+      {
+       "kod": "1.1",
+       "nazev": "Úprava režimu výuky (časová, místní)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Flexibilní úprava výuky v čase (zkrácená/dělená hodina, výuka v blocích) i v místě (výuka mimo kmenovou třídu).",
+       "full": "data/full/tp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/tp/1-1-uprava-rezimu-vyuky-casova-mistni.md"
+      },
+      {
+       "kod": "1.2",
+       "nazev": "Další pracovní místo pro žáka",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Vytvoření dalšího upraveného pracovního místa pro žáka v rámci třídy nebo školy.",
+       "full": "data/full/tp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/tp/1-2-dalsi-pracovni-misto-pro-zaka.md"
+      },
+      {
+       "kod": "1.3",
+       "nazev": "Jiné prostorové uspořádání výuky",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Uspořádání pracovních míst podle potřeb žáka a výuky (např.",
+       "full": "data/full/tp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/tp/1-3-jine-prostorove-usporadani-vyuky.md"
+      },
+      {
+       "kod": "1.4",
+       "nazev": "Úprava zasedacího pořádku",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Přizpůsobení zasedacího pořádku (a počtu žáků) aktuálním potřebám žáka.",
+       "full": "data/full/tp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/tp/1-4-uprava-zasedaciho-poradku.md"
+      },
+      {
+       "kod": "1.5",
+       "nazev": "Snížení počtu žáků ve třídě",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Vzdělávání žáka v méně početném kolektivu, kde lze snáze individualizovat a omezit rušivé podněty.",
+       "full": "data/full/tp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/tp/1-5-snizeni-poctu-zaku-ve-tride.md"
+      },
+      {
+       "kod": "1.6",
+       "nazev": "Vzdělávání v jiném než školním prostředí",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Žák je vzděláván částečně nebo výhradně v domácím prostředí.",
+       "full": "data/full/tp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/tp/1-6-vzdelavani-v-jinem-nez-skolnim-prostredi.md"
+      },
+      {
+       "kod": "1.7",
+       "nazev": "Mimoškolní pobyty a výcviky",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Podpora žáka při akcích mimo běžnou výuku - výlety, školy v přírodě, exkurze, plavecký a lyžařský výcvik, sportovní a socializační pobyty.",
+       "full": "data/full/tp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/tp/1-7-mimoskolni-pobyty-a-vycviky.md"
+      }
+     ]
+    },
+    {
+     "oblast": 2,
+     "nazev": "Modifikace vyučovacích metod a forem",
+     "full": "data/full/tp/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+     "karty": [
+      {
+       "kod": "2.1",
+       "nazev": "Způsoby výuky adekvátní pedagogické situaci",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Pestré používání a promyšlené střídání různých výukových metod a forem podle cíle a potřeb žáků.",
+       "full": "data/full/tp/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/tp/2-1-zpusoby-vyuky-adekvatni-pedagogicke-situaci.md"
+      },
+      {
+       "kod": "2.2",
+       "nazev": "Individuální práce se žákem v průběhu výuky",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Vyčlenění časového prostoru pro individuální, pedagogem řízenou práci žáka v rámci hromadné výuky.",
+       "full": "data/full/tp/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/tp/2-2-individualni-prace-se-zakem-v-prubehu-vyuky.md"
+      },
+      {
+       "kod": "2.3",
+       "nazev": "Strukturalizace výuky",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Metodika strukturovaného učení (vych.",
+       "full": "data/full/tp/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/tp/2-3-strukturalizace-vyuky.md"
+      },
+      {
+       "kod": "2.4",
+       "nazev": "Kooperativní učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Vyučovací metody, kdy malé heterogenní skupiny žáků spolupracují na společném úkolu s jasně definovanými rolemi.",
+       "full": "data/full/tp/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/tp/2-4-kooperativni-uceni.md"
+      },
+      {
+       "kod": "2.5",
+       "nazev": "Metody aktivního učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Aktivizující metody, při nichž žák nové poznatky sám objevuje místo pouhého přejímání od pedagoga.",
+       "full": "data/full/tp/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/tp/2-5-metody-aktivniho-uceni.md"
+      },
+      {
+       "kod": "2.6",
+       "nazev": "Výuka respektující styly učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Přizpůsobení výuky dominantnímu stylu učení žáka (zrakový, sluchový, slovně-pojmový, hmatově-pohybový).",
+       "full": "data/full/tp/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/tp/2-6-vyuka-respektujici-styly-uceni.md"
+      },
+      {
+       "kod": "2.7",
+       "nazev": "Podpora motivace žáka",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Cílená podpora vnitřní i vnější motivace jako základní podmínky efektivního učení.",
+       "full": "data/full/tp/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/tp/2-7-podpora-motivace-zaka.md"
+      },
+      {
+       "kod": "2.8",
+       "nazev": "Prevence únavy a podpora koncentrace pozornosti",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Preventivní opatření a relaxační techniky snižující únavu a podporující koncentraci pozornosti.",
+       "full": "data/full/tp/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/tp/2-8-prevence-unavy-a-podpora-koncentrace-pozornosti.md"
+      },
+      {
+       "kod": "2.9",
+       "nazev": "Kontrola pochopení osvojovaného učiva",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Průběžná zpětná vazba monitorující, zda žáci učivu skutečně rozumějí (procvičovat má smysl jen pochopené).",
+       "full": "data/full/tp/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/tp/2-9-kontrola-pochopeni-osvojovaneho-uciva.md"
+      }
+     ]
+    },
+    {
+     "oblast": 3,
+     "nazev": "Intervence",
+     "full": "data/full/tp/oblast-03-intervence.md",
+     "karty": [
+      {
+       "kod": "3.1",
+       "nazev": "Spolupráce rodiny a školy",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Partnerská, vstřícná komunikace mezi učitelem a zákonným zástupcem o potřebách a vzdělávání žáka.",
+       "full": "data/full/tp/oblast-03-intervence.md",
+       "card": "data/cards/tp/3-1-spoluprace-rodiny-a-skoly.md"
+      },
+      {
+       "kod": "3.2",
+       "nazev": "Rozvoj jazykových kompetencí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Propojení rané intervence a klinické logopedie s reedukací komunikačních dovedností ve škole.",
+       "full": "data/full/tp/oblast-03-intervence.md",
+       "card": "data/cards/tp/3-2-rozvoj-jazykovych-kompetenci.md"
+      },
+      {
+       "kod": "3.3",
+       "nazev": "Intervenční techniky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Podpůrné terapie v rámci ucelené rehabilitace zaměřené na důsledky postižení žáka.",
+       "full": "data/full/tp/oblast-03-intervence.md",
+       "card": "data/cards/tp/3-3-intervencni-techniky.md"
+      },
+      {
+       "kod": "3.4",
+       "nazev": "Intervence nad rámec běžné výuky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Kompenzace a reedukace oslabených funkcí formou individuálního či skupinového doučování.",
+       "full": "data/full/tp/oblast-03-intervence.md",
+       "card": "data/cards/tp/3-4-intervence-nad-ramec-bezne-vyuky.md"
+      },
+      {
+       "kod": "3.5",
+       "nazev": "Rozvoj specifických dovedností a poznávacích funkcí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Rozvoj a kompenzace postižených funkcí a osvojení pracovních postupů kompenzujících postižení žáka.",
+       "full": "data/full/tp/oblast-03-intervence.md",
+       "card": "data/cards/tp/3-5-rozvoj-specifickych-dovednosti-a-poznavacich-funkci.md"
+      },
+      {
+       "kod": "3.6",
+       "nazev": "Nácvik sebeobslužných dovedností",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Nácvik sebeobsluhy (oblékání, hygiena, stravování, pohyb) vedoucí k samostatnosti, zahrnutý v IVP.",
+       "full": "data/full/tp/oblast-03-intervence.md",
+       "card": "data/cards/tp/3-6-nacvik-sebeobsluznych-dovednosti.md"
+      },
+      {
+       "kod": "3.7",
+       "nazev": "Nácvik sociálního chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Nácvik pozitivních vzorců chování a včasné začlenění žáka mezi kolektiv vrstevníků.",
+       "full": "data/full/tp/oblast-03-intervence.md",
+       "card": "data/cards/tp/3-7-nacvik-socialniho-chovani.md"
+      },
+      {
+       "kod": "3.8",
+       "nazev": "Zvládání náročného chování – práce s emocemi žáků v konfliktních situacích – průběžná práce s emocemi žáků (podpora emočního rozvoje žáků)",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Trénink zvládání projevů diagnózy, které vytvářejí zátěžové situace pro žáka i okolí.",
+       "full": "data/full/tp/oblast-03-intervence.md",
+       "card": "data/cards/tp/3-8-zvladani-narocneho-chovani-prace-s-emocemi-zaku-v-konfli.md"
+      },
+      {
+       "kod": "3.9",
+       "nazev": "Metodická intervence směrem k pedagogům ze strany ŠPZ",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Přenos informací z vyšetření a metodické vedení pedagogů ze strany ŠPZ při integraci žáka.",
+       "full": "data/full/tp/oblast-03-intervence.md",
+       "card": "data/cards/tp/3-9-metodicka-intervence-smerem-k-pedagogum-ze-strany-spz.md"
+      },
+      {
+       "kod": "3.10",
+       "nazev": "Výuka prostřednictvím alternativních a augmentativních forem komunikace (AAK)",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Formy dorozumívání doplňující nebo nahrazující řeč (znaky, symboly, piktogramy, komunikátory, PC).",
+       "full": "data/full/tp/oblast-03-intervence.md",
+       "card": "data/cards/tp/3-10-vyuka-prostrednictvim-alternativnich-a-augmentativnich-.md"
+      }
+     ]
+    },
+    {
+     "oblast": 4,
+     "nazev": "Pomůcky",
+     "full": "data/full/tp/oblast-04-pomucky.md",
+     "karty": [
+      {
+       "kod": "4.1",
+       "nazev": "Didaktické pomůcky (se zaměřením na pomůcky usnadňující psaní a kreslení)",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Didaktické pomůcky usnadňující psaní a kreslení, kompenzující narušenou jemnou motoriku.",
+       "full": "data/full/tp/oblast-04-pomucky.md",
+       "card": "data/cards/tp/4-1-didakticke-pomucky-se-zamerenim-na-pomucky-usnadnujici-p.md"
+      },
+      {
+       "kod": "4.2",
+       "nazev": "Speciální didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Speciální didaktické pomůcky kompenzující potíže plynoucí z tělesného postižení (viz podkarty TV, AAK, získávání informací, manuální dovednosti).",
+       "full": "data/full/tp/oblast-04-pomucky.md",
+       "card": "data/cards/tp/4-2-specialni-didakticke-pomucky.md"
+      },
+      {
+       "kod": "4.2.2",
+       "nazev": "Pomůcky k TV (podkarta)",
+       "oblast": 4,
+       "typ": "podkarta",
+       "anotace": "Kompenzační pomůcky a úpravy umožňující žákovi s postižením účast v tělesné výchově a relaxaci.",
+       "full": "data/full/tp/oblast-04-pomucky.md",
+       "card": "data/cards/tp/4-2-2-pomucky-k-tv-podkarta.md"
+      },
+      {
+       "kod": "4.2.3",
+       "nazev": "Pomůcky k alternativní a augmentativní komunikaci (podkarta)",
+       "oblast": 4,
+       "typ": "podkarta",
+       "anotace": "Náhradní a podpůrné způsoby komunikace (AAK) — systémy s pomůckami i bez nich.",
+       "full": "data/full/tp/oblast-04-pomucky.md",
+       "card": "data/cards/tp/4-2-3-pomucky-k-alternativni-a-augmentativni-komunikaci-podk.md"
+      },
+      {
+       "kod": "4.2.4",
+       "nazev": "Pomůcky k získávání a uchování informací (podkarta)",
+       "oblast": 4,
+       "typ": "podkarta",
+       "anotace": "Pomůcky umožňující žákovi samostatné získávání a uchování informací z výuky.",
+       "full": "data/full/tp/oblast-04-pomucky.md",
+       "card": "data/cards/tp/4-2-4-pomucky-k-ziskavani-a-uchovani-informaci-podkarta.md"
+      },
+      {
+       "kod": "4.2.5",
+       "nazev": "Pomůcky pro rozvoj manuálních dovedností (podkarta)",
+       "oblast": 4,
+       "typ": "podkarta",
+       "anotace": "Pomůcky rozšiřující spektrum manuálních činností a podporující samostatnost a profesní orientaci žáka.",
+       "full": "data/full/tp/oblast-04-pomucky.md",
+       "card": "data/cards/tp/4-2-5-pomucky-pro-rozvoj-manualnich-dovednosti-podkarta.md"
+      },
+      {
+       "kod": "4.3",
+       "nazev": "Kompenzační a reedukační pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Kompenzační a reedukační pomůcky zajišťující co největší samostatnost žáka ve škole (viz podkarty vybavení třídy, sebeobsluha).",
+       "full": "data/full/tp/oblast-04-pomucky.md",
+       "card": "data/cards/tp/4-3-kompenzacni-a-reedukacni-pomucky.md"
+      },
+      {
+       "kod": "4.3.1",
+       "nazev": "Pomůcky k vybavení třídy (podkarta)",
+       "oblast": 4,
+       "typ": "podkarta",
+       "anotace": "Úprava a vybavení třídy zabraňující vylučování žáka z aktivit a podporující jeho samostatnost.",
+       "full": "data/full/tp/oblast-04-pomucky.md",
+       "card": "data/cards/tp/4-3-1-pomucky-k-vybaveni-tridy-podkarta.md"
+      },
+      {
+       "kod": "4.3.2",
+       "nazev": "Pomůcky usnadňující sebeobsluhu (podkarta)",
+       "oblast": 4,
+       "typ": "podkarta",
+       "anotace": "Kompenzační pomůcky podporující samostatnost žáka v sebeobsluze a socializaci ve škole.",
+       "full": "data/full/tp/oblast-04-pomucky.md",
+       "card": "data/cards/tp/4-3-2-pomucky-usnadnujici-sebeobsluhu-podkarta.md"
+      }
+     ]
+    },
+    {
+     "oblast": 5,
+     "nazev": "Úpravy obsahu vzdělávání",
+     "full": "data/full/tp/oblast-05-upravy-obsahu-vzdelavani.md",
+     "karty": [
+      {
+       "kod": "5.1",
+       "nazev": "Respektování specifik žáka",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Respektování obtíží plynoucích z postižení, které žák nemůže sám ovlivnit.",
+       "full": "data/full/tp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/tp/5-1-respektovani-specifik-zaka.md"
+      },
+      {
+       "kod": "5.2",
+       "nazev": "Úprava rozsahu a obsahu učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Úplné nebo částečné uvolnění žáka z předmětu (typicky TV) a úprava obsahu podle zdravotního stavu.",
+       "full": "data/full/tp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/tp/5-2-uprava-rozsahu-a-obsahu-uciva.md"
+      },
+      {
+       "kod": "5.3",
+       "nazev": "Rozložení učiva z důvodu těžkého deficitu",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Zajištění přípravy na vzdělávání a rozložení učiva jednoho ročníku do delšího období.",
+       "full": "data/full/tp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/tp/5-3-rozlozeni-uciva-z-duvodu-tezkeho-deficitu.md"
+      },
+      {
+       "kod": "5.4",
+       "nazev": "Rozložení učiva pro žáky ohrožené předčasným odchodem ze vzdělávání",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Prodloužení středního/vyššího odborného vzdělávání až o 2 roky, aby žák obor dokončil.",
+       "full": "data/full/tp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/tp/5-4-rozlozeni-uciva-pro-zaky-ohrozene-predcasnym-odchodem-ze.md"
+      },
+      {
+       "kod": "5.5",
+       "nazev": "Obohacování učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Rozšíření vzdělávacího obsahu o předměty speciálněpedagogické péče nebo o oblasti, ve kterých žák vyniká.",
+       "full": "data/full/tp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/tp/5-5-obohacovani-uciva.md"
+      },
+      {
+       "kod": "5.6",
+       "nazev": "Modifikace podávané informace",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Úprava formy a rozsahu podávaného učiva podle možností žáka jej přijmout.",
+       "full": "data/full/tp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/tp/5-6-modifikace-podavane-informace.md"
+      }
+     ]
+    },
+    {
+     "oblast": 6,
+     "nazev": "Hodnocení",
+     "full": "data/full/tp/oblast-06-hodnoceni.md",
+     "karty": [
+      {
+       "kod": "6.1",
+       "nazev": "Individualizace hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Vyrovnání podmínek pro školní úspěšnost a objektivní zhodnocení výkonů podle možností a diagnózy žáka.",
+       "full": "data/full/tp/oblast-06-hodnoceni.md",
+       "card": "data/cards/tp/6-1-individualizace-hodnoceni.md"
+      },
+      {
+       "kod": "6.2",
+       "nazev": "Podmínky a metody dlouhodobého sledování žáka",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Průběžné pozorování a záznam prací, pokroků a vývoje žáka jako podklad pro hodnocení.",
+       "full": "data/full/tp/oblast-06-hodnoceni.md",
+       "card": "data/cards/tp/6-2-podminky-a-metody-dlouhodobeho-sledovani-zaka.md"
+      },
+      {
+       "kod": "6.3",
+       "nazev": "Rozšířené formy hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Formy hodnocení, které komplexně zachytí průběh vzdělávání i hůře měřitelné kvality (snaha, pečlivost).",
+       "full": "data/full/tp/oblast-06-hodnoceni.md",
+       "card": "data/cards/tp/6-3-rozsirene-formy-hodnoceni.md"
+      },
+      {
+       "kod": "6.4",
+       "nazev": "Posílení motivační funkce hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Volba formy hodnocení, která žáka motivuje k práci a umožní mu prožít úspěch tam, kde je méně úspěšný.",
+       "full": "data/full/tp/oblast-06-hodnoceni.md",
+       "card": "data/cards/tp/6-4-posileni-motivacni-funkce-hodnoceni.md"
+      }
+     ]
+    },
+    {
+     "oblast": 7,
+     "nazev": "Příprava na vyučování",
+     "full": "data/full/tp/oblast-07-priprava-na-vyucovani.md",
+     "karty": [
+      {
+       "kod": "7.1",
+       "nazev": "Jiné formy přípravy na vyučování",
+       "oblast": 7,
+       "typ": "karta",
+       "anotace": "Individuálně upravené domácí úkoly a domácí studijní činnost odpovídající možnostem žáka.",
+       "full": "data/full/tp/oblast-07-priprava-na-vyucovani.md",
+       "card": "data/cards/tp/7-1-jine-formy-pripravy-na-vyucovani.md"
+      }
+     ]
+    },
+    {
+     "oblast": 8,
+     "nazev": "Podpora sociální a zdravotní",
+     "full": "data/full/tp/oblast-08-podpora-socialni-a-zdravotni.md",
+     "karty": [
+      {
+       "kod": "8.1",
+       "nazev": "Léčebná a režimová opatření",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Zajištění podmínek pro dodržování léčebného režimu a úprava vzdělávání v době nemoci či rekonvalescence.",
+       "full": "data/full/tp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/tp/8-1-lecebna-a-rezimova-opatreni.md"
+      },
+      {
+       "kod": "8.2",
+       "nazev": "Odlišné stravování",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Úprava školního stravování z léčebných důvodů (nelze z nemedicínských, např.",
+       "full": "data/full/tp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/tp/8-2-odlisne-stravovani.md"
+      },
+      {
+       "kod": "8.3",
+       "nazev": "Spolupráce s externími poskytovateli služeb",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Spolupráce školy a rodiny s poskytovateli sociálních služeb (poradenství, péče, prevence) pro osoby se zdravotním postižením.",
+       "full": "data/full/tp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/tp/8-3-spoluprace-s-externimi-poskytovateli-sluzeb.md"
+      },
+      {
+       "kod": "8.4",
+       "nazev": "Podávání medikace",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Zajištění podání předepsaných léků v rámci denního režimu školy.",
+       "full": "data/full/tp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/tp/8-4-podavani-medikace.md"
+      },
+      {
+       "kod": "8.5",
+       "nazev": "Reedukační a socializační pobyty",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Pobyty rozvíjející pohyb, sebeobsluhu a sociální vazby, spojené s informováním rodičů i pedagogů o léčebných a vzdělávacích metodách.",
+       "full": "data/full/tp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/tp/8-5-reedukacni-a-socializacni-pobyty.md"
+      }
+     ]
+    },
+    {
+     "oblast": 9,
+     "nazev": "Práce s třídním kolektivem",
+     "full": "data/full/tp/oblast-09-prace-s-tridnim-kolektivem.md",
+     "karty": [
+      {
+       "kod": "9.1",
+       "nazev": "Klima třídy",
+       "oblast": 9,
+       "typ": "karta",
+       "anotace": "Cílené utváření bezpečné atmosféry a vztahů ve třídě, které učitel vytváří svým příkladem, postoji a pravidly.",
+       "full": "data/full/tp/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/tp/9-1-klima-tridy.md"
+      }
+     ]
+    },
+    {
+     "oblast": 10,
+     "nazev": "Úprava prostředí",
+     "full": "data/full/tp/oblast-10-uprava-prostredi.md",
+     "karty": [
+      {
+       "kod": "10.1",
+       "nazev": "Úprava prostředí (vytvoření zázemí pro potřebu relaxace, zklidnění, samoty atp.)",
+       "oblast": 10,
+       "typ": "karta",
+       "anotace": "Vytvoření ergonomicky vybaveného pracovního místa podle typu a závažnosti postižení.",
+       "full": "data/full/tp/oblast-10-uprava-prostredi.md",
+       "card": "data/cards/tp/10-1-uprava-prostredi-vytvoreni-zazemi-pro-potrebu-relaxace-.md"
+      },
+      {
+       "kod": "10.2",
+       "nazev": "Stavební úpravy, bezbariérovost",
+       "oblast": 10,
+       "typ": "karta",
+       "anotace": "Stavební, technická a organizační opatření zajišťující bezpečný a samostatný pohyb žáka po škole.",
+       "full": "data/full/tp/oblast-10-uprava-prostredi.md",
+       "card": "data/cards/tp/10-2-stavebni-upravy-bezbarierovost.md"
+      }
+     ]
+    }
+   ]
+  },
+  "zp": {
+   "nazev": "Zrakové postižení",
+   "cilova_skupina": "žáci se zrakovým postižením nebo oslabením zrakového vnímání",
+   "typ": "dilci",
+   "zdroj": "katalog-zp.pdf",
+   "prehled": "data/cards/zp/_prehled.md",
+   "all": "data/cards/zp/_all.md",
+   "pocet_karet": 47,
+   "oblasti": [
+    {
+     "oblast": 1,
+     "nazev": "Organizace výuky",
+     "full": "data/full/zp/oblast-01-organizace-vyuky.md",
+     "karty": [
+      {
+       "kod": "1.1",
+       "nazev": "Úprava režimu výuky (časová, místní)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Časová (delší limity) a místní (vhodné pracovní místo) úprava režimu podle aktuálních potřeb žáka.",
+       "full": "data/full/zp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/zp/1-1-uprava-rezimu-vyuky-casova-mistni.md"
+      },
+      {
+       "kod": "1.2",
+       "nazev": "Další pracovní místo pro žáka (ve třídě i mimo třídu)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Vytvoření dalšího pracovního místa pro individuální práci a prostorově náročné pomůcky, přednostně ve třídě.",
+       "full": "data/full/zp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/zp/1-2-dalsi-pracovni-misto-pro-zaka-ve-tride-i-mimo-tridu.md"
+      },
+      {
+       "kod": "1.3",
+       "nazev": "Jiné prostorové uspořádání výuky",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Prostorové uspořádání třídy podle druhu činnosti, druhu a stupně zrakového postižení.",
+       "full": "data/full/zp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/zp/1-3-jine-prostorove-usporadani-vyuky.md"
+      },
+      {
+       "kod": "1.4",
+       "nazev": "Úprava zasedacího pořádku",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Výběr pozice ve třídě podle typu a stupně zrakové vady, s dostatečným pracovním a úložným prostorem.",
+       "full": "data/full/zp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/zp/1-4-uprava-zasedaciho-poradku.md"
+      },
+      {
+       "kod": "1.5",
+       "nazev": "Snížení počtu žáků ve třídě",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Nižší počet žáků, který učiteli umožní individuálně podporovat žáka a intenzivněji sledovat jeho práci.",
+       "full": "data/full/zp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/zp/1-5-snizeni-poctu-zaku-ve-tride.md"
+      },
+      {
+       "kod": "1.6",
+       "nazev": "Vzdělávání v jiném než školním prostředí (domácí prostředí nebo jiné než školské zařízení)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Přechodné vzdělávání v domácím prostředí podle IVP, když zdravotní stav nedovoluje navštěvovat kmenovou třídu.",
+       "full": "data/full/zp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/zp/1-6-vzdelavani-v-jinem-nez-skolnim-prostredi-domaci-prostred.md"
+      },
+      {
+       "kod": "1.7",
+       "nazev": "Mimoškolní pobyty a výcviky",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Účast žáka se ZP na sportovních, poznávacích či jazykových pobytech mimo školu společně s třídou.",
+       "full": "data/full/zp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/zp/1-7-mimoskolni-pobyty-a-vycviky.md"
+      }
+     ]
+    },
+    {
+     "oblast": 2,
+     "nazev": "Modifikace výukových metod a forem práce",
+     "full": "data/full/zp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+     "karty": [
+      {
+       "kod": "2.1",
+       "nazev": "Způsoby výuky adekvátní pedagogické situaci",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Volba postupů, metod a forem výuky podle cíle hodiny, věku a speciálních potřeb žáka.",
+       "full": "data/full/zp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/zp/2-1-zpusoby-vyuky-adekvatni-pedagogicke-situaci.md"
+      },
+      {
+       "kod": "2.2",
+       "nazev": "Individuální práce se žákem",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Individuální práce respektující tempo, zrakové možnosti a potřeby žáka, vycházející z IVP nebo PLPP.",
+       "full": "data/full/zp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/zp/2-2-individualni-prace-se-zakem.md"
+      },
+      {
+       "kod": "2.3",
+       "nazev": "Strukturalizace výuky",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Členění činností, prostoru a času a rozklad úkolu na jednotlivé kroky k náhradě chybějícího vidění.",
+       "full": "data/full/zp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/zp/2-3-strukturalizace-vyuky.md"
+      },
+      {
+       "kod": "2.4",
+       "nazev": "Kooperativní učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Práce v týmu, kde výsledky žáka podporuje celá skupina a skupina těží z jeho činnosti.",
+       "full": "data/full/zp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/zp/2-4-kooperativni-uceni.md"
+      },
+      {
+       "kod": "2.5",
+       "nazev": "Metody aktivního učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Aktivizace žáka k vlastnímu získávání poznatků prolínáním speciálně- a obecněpedagogických postupů.",
+       "full": "data/full/zp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/zp/2-5-metody-aktivniho-uceni.md"
+      },
+      {
+       "kod": "2.6",
+       "nazev": "Výuka respektující styly učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Multisenzoriální znázorňování učiva střídáním postupů podle individuálních stylů učení.",
+       "full": "data/full/zp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/zp/2-6-vyuka-respektujici-styly-uceni.md"
+      },
+      {
+       "kod": "2.7",
+       "nazev": "Podpora motivace žáka",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Volba postupů zajišťujících aktivní přístup a pozornost žáka spolu se spravedlivým pozitivním hodnocením.",
+       "full": "data/full/zp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/zp/2-7-podpora-motivace-zaka.md"
+      },
+      {
+       "kod": "2.8",
+       "nazev": "Prevence únavy a podpora koncentrace pozornosti",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Opatření oddalující únavu ze zrakové či hmatové práce zajištěním vhodných podmínek a odpočinku.",
+       "full": "data/full/zp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/zp/2-8-prevence-unavy-a-podpora-koncentrace-pozornosti.md"
+      },
+      {
+       "kod": "2.9",
+       "nazev": "Pravidelná kontrola pochopení osvojovaného učiva",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Zpětná vazba ověřující, zda žák správně zrakem či náhradními smysly zpracoval a pochopil učivo.",
+       "full": "data/full/zp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/zp/2-9-pravidelna-kontrola-pochopeni-osvojovaneho-uciva.md"
+      }
+     ]
+    },
+    {
+     "oblast": 3,
+     "nazev": "Intervence",
+     "full": "data/full/zp/oblast-03-intervence.md",
+     "karty": [
+      {
+       "kod": "3.1",
+       "nazev": "Spolupráce rodiny a školy",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Budování partnerského vztahu rodiny a školy založeného na respektu, důvěře a oboustranné informovanosti.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-1-spoluprace-rodiny-a-skoly.md"
+      },
+      {
+       "kod": "3.2",
+       "nazev": "Rozvoj jazykových kompetencí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Zlepšování komunikace a jazykových kompetencí, včetně náhrady chybějící neverbální roviny u těžce zrakově postižených.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-2-rozvoj-jazykovych-kompetenci.md"
+      },
+      {
+       "kod": "3.3",
+       "nazev": "Intervenční techniky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Terapie uměleckými a dalšími aktivitami doplňující vzdělávání – muzikoterapie, dramaterapie, arteterapie, canisterapie, hipoterapie, Snoezelen, bazální stimulace.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-3-intervencni-techniky.md"
+      },
+      {
+       "kod": "3.4",
+       "nazev": "Intervence nad rámec běžné výuky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Speciálněpedagogická podpora nad rámec běžné výuky – dovysvětlení, opakování, procvičování a nácvik speciálních dovedností.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-4-intervence-nad-ramec-bezne-vyuky.md"
+      },
+      {
+       "kod": "3.5",
+       "nazev": "Rozvoj specifických dovedností a poznávacích funkcí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Reedukační činnosti (rozvoj postižené zrakové funkce) a kompenzační činnosti (rozvoj nepostižených smyslů) k náhradě deficitu.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-5-rozvoj-specifickych-dovednosti-a-poznavacich-funkci.md"
+      },
+      {
+       "kod": "3.5.1",
+       "nazev": "Posilování sluchové a zrakové percepce",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Cílené rozvíjení sluchového a zrakového vnímání jako předpokladu čtenářských, písemných a početních dovedností.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-5-1-posilovani-sluchove-a-zrakove-percepce.md"
+      },
+      {
+       "kod": "3.5.5",
+       "nazev": "Zácvikové pobyty",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Pobyt v odborném zázemí k osvojení nové specifické dovednosti, obvykle při změně zdravotního stavu žáka.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-5-5-zacvikove-pobyty.md"
+      },
+      {
+       "kod": "3.6",
+       "nazev": "Nácvik sebeobslužných dovedností",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Cílený zácvik základních sebeobslužných úkonů – hygieny, oblékání, stravování, péče o zdraví a samostatného pohybu.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-6-nacvik-sebeobsluznych-dovednosti.md"
+      },
+      {
+       "kod": "3.7",
+       "nazev": "Nácvik sociálního chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Osvojování sociálního a společenského chování sociálním učením, včetně náhrady chybějícího vnímání neverbálních projevů.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-7-nacvik-socialniho-chovani.md"
+      },
+      {
+       "kod": "3.8",
+       "nazev": "Zvládání náročného chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Předcházení nedorozuměním mezi žákem s těžkým ZP a okolím vysvětlením příčin odlišného chování a vhodné komunikace.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-8-zvladani-narocneho-chovani.md"
+      },
+      {
+       "kod": "3.9",
+       "nazev": "Metodická intervence směrem k pedagogům ze strany ŠPZ a ŠPP",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Metodická podpora pedagogů a vedení školy ze strany ŠPP a ŠPZ v celém průběhu integrace žáka.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-9-metodicka-intervence-smerem-k-pedagogum-ze-strany-spz-a-.md"
+      },
+      {
+       "kod": "3.10",
+       "nazev": "Výuka prostřednictvím podporující a alternativní komunikace",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Osvojení čtení a psaní Braillovým písmem (hmatem vnímané body) jako základní kompenzační techniky; psaní na Pichtově psacím stroji.",
+       "full": "data/full/zp/oblast-03-intervence.md",
+       "card": "data/cards/zp/3-10-vyuka-prostrednictvim-podporujici-a-alternativni-komuni.md"
+      }
+     ]
+    },
+    {
+     "oblast": 4,
+     "nazev": "Pomůcky",
+     "full": "data/full/zp/oblast-04-pomucky.md",
+     "karty": [
+      {
+       "kod": "4.1",
+       "nazev": "Didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Předměty používané ve výuce k dosažení pedagogických cílů, volené podle stupně zrakového postižení.",
+       "full": "data/full/zp/oblast-04-pomucky.md",
+       "card": "data/cards/zp/4-1-didakticke-pomucky.md"
+      },
+      {
+       "kod": "4.2",
+       "nazev": "Speciální didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Didaktické pomůcky upravené dle stupně ZP, nabízející místo zraku vnímání hmatem a sluchem.",
+       "full": "data/full/zp/oblast-04-pomucky.md",
+       "card": "data/cards/zp/4-2-specialni-didakticke-pomucky.md"
+      },
+      {
+       "kod": "4.3",
+       "nazev": "Reedukační a kompenzační pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Nástroje speciálně vyrobené či upravené tak, aby kompenzovaly těžké ZP (pomůcky optické, optoelektronické, na bázi PC, ostatní).",
+       "full": "data/full/zp/oblast-04-pomucky.md",
+       "card": "data/cards/zp/4-3-reedukacni-a-kompenzacni-pomucky.md"
+      }
+     ]
+    },
+    {
+     "oblast": 5,
+     "nazev": "Úpravy obsahu vzdělávání",
+     "full": "data/full/zp/oblast-05-upravy-obsahu-vzdelavani.md",
+     "karty": [
+      {
+       "kod": "5.1",
+       "nazev": "Respektování specifik žáka",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Individuální přístup respektující specifika ZP, která žák sám nemůže ovlivnit.",
+       "full": "data/full/zp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/zp/5-1-respektovani-specifik-zaka.md"
+      },
+      {
+       "kod": "5.2",
+       "nazev": "Úprava rozsahu a obsahu učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Snížení rozsahu učiva a jeho doplnění o specifické dovednosti; obsah zůstává, mění se forma a tempo.",
+       "full": "data/full/zp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/zp/5-2-uprava-rozsahu-a-obsahu-uciva.md"
+      },
+      {
+       "kod": "5.3",
+       "nazev": "Rozložení učiva z důvodu těžkého deficitu",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Odklad školní docházky nebo rozvolnění učiva pomocí IVP, aby měl žák delší čas na osvojení dovedností.",
+       "full": "data/full/zp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/zp/5-3-rozlozeni-uciva-z-duvodu-tezkeho-deficitu.md"
+      },
+      {
+       "kod": "5.6",
+       "nazev": "Modifikace podávané informace",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Úprava sdělení do formy, které žák rozumí, pro pochopení podstaty učiva.",
+       "full": "data/full/zp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/zp/5-6-modifikace-podavane-informace.md"
+      }
+     ]
+    },
+    {
+     "oblast": 6,
+     "nazev": "Hodnocení",
+     "full": "data/full/zp/oblast-06-hodnoceni.md",
+     "karty": [
+      {
+       "kod": "6.1",
+       "nazev": "Individualizace hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Úprava hodnocení respektující diagnózu a stupeň ZP; žáka hodnotíme za to, co umí.",
+       "full": "data/full/zp/oblast-06-hodnoceni.md",
+       "card": "data/cards/zp/6-1-individualizace-hodnoceni.md"
+      },
+      {
+       "kod": "6.2",
+       "nazev": "Podmínky a metody dlouhodobého sledování žáků",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Dlouhodobé sledování žáka pomocí vyhodnocování IVP a plánů, portfolia, úrovně sebeobsluhy a sebehodnocení.",
+       "full": "data/full/zp/oblast-06-hodnoceni.md",
+       "card": "data/cards/zp/6-2-podminky-a-metody-dlouhodobeho-sledovani-zaku.md"
+      },
+      {
+       "kod": "6.3",
+       "nazev": "Rozšířené formy hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Slovní (stručné i rozšířené), kriteriální a kombinované hodnocení místo či vedle známky.",
+       "full": "data/full/zp/oblast-06-hodnoceni.md",
+       "card": "data/cards/zp/6-3-rozsirene-formy-hodnoceni.md"
+      },
+      {
+       "kod": "6.4",
+       "nazev": "Posílení motivační funkce hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Hodnocení kladoucí důraz na to, co žák umí, pro udržení potřebné motivace.",
+       "full": "data/full/zp/oblast-06-hodnoceni.md",
+       "card": "data/cards/zp/6-4-posileni-motivacni-funkce-hodnoceni.md"
+      }
+     ]
+    },
+    {
+     "oblast": 7,
+     "nazev": "Příprava na výuku",
+     "full": "data/full/zp/oblast-07-priprava-na-vyuku.md",
+     "karty": [
+      {
+       "kod": "7.1",
+       "nazev": "Jiné formy přípravy na vyučování",
+       "oblast": 7,
+       "typ": "karta",
+       "anotace": "Přizpůsobení domácí přípravy a komunikace školy s rodinou potřebám žáka se ZP.",
+       "full": "data/full/zp/oblast-07-priprava-na-vyuku.md",
+       "card": "data/cards/zp/7-1-jine-formy-pripravy-na-vyucovani.md"
+      }
+     ]
+    },
+    {
+     "oblast": 8,
+     "nazev": "Podpora sociální a zdravotní",
+     "full": "data/full/zp/oblast-08-podpora-socialni-a-zdravotni.md",
+     "karty": [
+      {
+       "kod": "8.1",
+       "nazev": "Léčebná režimová opatření",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Uzpůsobení vzdělávacích podmínek a doplňování látky při krátkodobé či dlouhodobé nemoci se zásadami zrakové hygieny.",
+       "full": "data/full/zp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/zp/8-1-lecebna-rezimova-opatreni.md"
+      },
+      {
+       "kod": "8.2",
+       "nazev": "Odlišné stravování",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Zajištění vhodného dietního stravování dle lékařského doporučení jako podmínky bezpečného vzdělávání.",
+       "full": "data/full/zp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/zp/8-2-odlisne-stravovani.md"
+      },
+      {
+       "kod": "8.3",
+       "nazev": "Podávání medikace",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Zajištění pravidelného podávání naordinovaných léků v průběhu vyučování.",
+       "full": "data/full/zp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/zp/8-3-podavani-medikace.md"
+      },
+      {
+       "kod": "8.4",
+       "nazev": "Spolupráce s externími poskytovateli služeb",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Nabídka a zprostředkování služeb externích organizací, když podporu nezajistí rodina ani škola.",
+       "full": "data/full/zp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/zp/8-4-spoluprace-s-externimi-poskytovateli-sluzeb.md"
+      },
+      {
+       "kod": "8.5",
+       "nazev": "Reedukační a socializační pobyty",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Pobyty pro intenzivní nácvik speciálních dovedností a socializaci \"šité na míru\".",
+       "full": "data/full/zp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/zp/8-5-reedukacni-a-socializacni-pobyty.md"
+      }
+     ]
+    },
+    {
+     "oblast": 9,
+     "nazev": "Práce s třídním kolektivem",
+     "full": "data/full/zp/oblast-09-prace-s-tridnim-kolektivem.md",
+     "karty": [
+      {
+       "kod": "9.1",
+       "nazev": "Klima třídy",
+       "oblast": 9,
+       "typ": "karta",
+       "anotace": "Techniky a metody pro tvorbu zdravého třídního klimatu a přijetí žáka se ZP.",
+       "full": "data/full/zp/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/zp/9-1-klima-tridy.md"
+      }
+     ]
+    },
+    {
+     "oblast": 10,
+     "nazev": "Úprava prostředí",
+     "full": "data/full/zp/oblast-10-uprava-prostredi.md",
+     "karty": [
+      {
+       "kod": "10.1",
+       "nazev": "Úprava pracovního prostředí",
+       "oblast": 10,
+       "typ": "karta",
+       "anotace": "Úprava makroprostoru (třída, škola) i mikroprostoru (pracovní místo) podle typu zrakové vady.",
+       "full": "data/full/zp/oblast-10-uprava-prostredi.md",
+       "card": "data/cards/zp/10-1-uprava-pracovniho-prostredi.md"
+      }
+     ]
+    }
+   ]
+  },
+  "sp": {
+   "nazev": "Sluchové postižení",
+   "cilova_skupina": "žáci se sluchovým postižením nebo oslabením sluchového vnímání",
+   "typ": "dilci",
+   "zdroj": "katalog-sp.pdf",
+   "prehled": "data/cards/sp/_prehled.md",
+   "all": "data/cards/sp/_all.md",
+   "pocet_karet": 47,
+   "oblasti": [
+    {
+     "oblast": 1,
+     "nazev": "Organizace výuky",
+     "full": "data/full/sp/oblast-01-organizace-vyuky.md",
+     "karty": [
+      {
+       "kod": "1.1",
+       "nazev": "Úprava režimu výuky (časová a místní)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Úprava místních a časových podmínek výuky pro kvalitní odezírání a sluchové zpracování.",
+       "full": "data/full/sp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/sp/1-1-uprava-rezimu-vyuky-casova-a-mistni.md"
+      },
+      {
+       "kod": "1.2",
+       "nazev": "Další pracovní místo pro žáka (ve třídě i mimo třídu)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Individuální práce se žákem na dalším pracovním místě ve třídě nebo mimo ni s AP či učitelem.",
+       "full": "data/full/sp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/sp/1-2-dalsi-pracovni-misto-pro-zaka-ve-tride-i-mimo-tridu.md"
+      },
+      {
+       "kod": "1.4",
+       "nazev": "Úprava zasedacího pořádku",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Promyšlené posazení žáka ve třídě, které zásadně ovlivňuje kvalitu přijímaných informací.",
+       "full": "data/full/sp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/sp/1-4-uprava-zasedaciho-poradku.md"
+      },
+      {
+       "kod": "1.5",
+       "nazev": "Snížení počtu žáků ve třídě",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Menší třída pro žáky schopné samostatné práce bez AP, kteří potřebují častější kontrolu a intervenci učitele.",
+       "full": "data/full/sp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/sp/1-5-snizeni-poctu-zaku-ve-tride.md"
+      },
+      {
+       "kod": "1.6",
+       "nazev": "Vzdělávání v jiném než školním prostředí (domácí prostředí nebo jiné než školské zařízení)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Dočasné vzdělávání v domácím prostředí po nezbytně nutnou dobu, když zdravotní stav nedovoluje docházku.",
+       "full": "data/full/sp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/sp/1-6-vzdelavani-v-jinem-nez-skolnim-prostredi-domaci-prostred.md"
+      },
+      {
+       "kod": "1.7",
+       "nazev": "Mimoškolní pobyty a výcviky",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Adaptační pobyty se socializační funkcí pro budování vztahů v kolektivu; druhý typ ve škole pro SP seznamuje s kulturou Neslyšících.",
+       "full": "data/full/sp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/sp/1-7-mimoskolni-pobyty-a-vycviky.md"
+      }
+     ]
+    },
+    {
+     "oblast": 2,
+     "nazev": "Modifikace výukových metod a forem práce",
+     "full": "data/full/sp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+     "karty": [
+      {
+       "kod": "2.1",
+       "nazev": "Způsoby výuky adekvátní pedagogické situaci",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Uspořádání výuky a volba formy podle situace, s důrazem na časté střídání činností.",
+       "full": "data/full/sp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/sp/2-1-zpusoby-vyuky-adekvatni-pedagogicke-situaci.md"
+      },
+      {
+       "kod": "2.2",
+       "nazev": "Individuální práce se žákem",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Jeden pedagog pracuje s jedním žákem postupy dle jeho možností, ve třídě nebo mimo ni.",
+       "full": "data/full/sp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/sp/2-2-individualni-prace-se-zakem.md"
+      },
+      {
+       "kod": "2.3",
+       "nazev": "Strukturalizace výuky",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Strukturování času, prostoru a činností (hlavně u PAS, i těžké SP či kombinace) pro pocit bezpečí a jistoty.",
+       "full": "data/full/sp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/sp/2-3-strukturalizace-vyuky.md"
+      },
+      {
+       "kod": "2.4",
+       "nazev": "Kooperativní učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Způsob výuky, kde žáci navzájem spolupracují a učí se pracovat v týmu.",
+       "full": "data/full/sp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/sp/2-4-kooperativni-uceni.md"
+      },
+      {
+       "kod": "2.5",
+       "nazev": "Metody aktivního učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Aktivní zapojení žáků do výuky, jež rozvíjí komunikaci i myšlení a činí výuku atraktivní.",
+       "full": "data/full/sp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/sp/2-5-metody-aktivniho-uceni.md"
+      },
+      {
+       "kod": "2.6",
+       "nazev": "Výuka respektující styly učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Přizpůsobení výuky preferovanému stylu učení; u SP chybí bezděčné a sluchem vnímané učení.",
+       "full": "data/full/sp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/sp/2-6-vyuka-respektujici-styly-uceni.md"
+      },
+      {
+       "kod": "2.7",
+       "nazev": "Podpora motivace žáka",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Budování příjemné atmosféry a motivace pochvalou a kladným hodnocením, aby žák zůstal aktivní.",
+       "full": "data/full/sp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/sp/2-7-podpora-motivace-zaka.md"
+      },
+      {
+       "kod": "2.8",
+       "nazev": "Prevence únavy a podpora koncentrace pozornosti",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Řízení výuky s ohledem na nástup únavy z trvalého zrakového a sluchového soustředění (kvalitní odezírání jen cca 20 minut).",
+       "full": "data/full/sp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/sp/2-8-prevence-unavy-a-podpora-koncentrace-pozornosti.md"
+      },
+      {
+       "kod": "2.9",
+       "nazev": "Pravidelná kontrola pochopení osvojovaného učiva",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Průběžné, obousměrné ověřování, zda žák rozumí výkladu i zadaným činnostem.",
+       "full": "data/full/sp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/sp/2-9-pravidelna-kontrola-pochopeni-osvojovaneho-uciva.md"
+      }
+     ]
+    },
+    {
+     "oblast": 3,
+     "nazev": "Intervence",
+     "full": "data/full/sp/oblast-03-intervence.md",
+     "karty": [
+      {
+       "kod": "3.1",
+       "nazev": "Spolupráce rodiny a školy",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Partnerská spolupráce s rodiči při adaptaci žáka na nové prostředí a zapojení rodiče jako experta do výuky.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-1-spoluprace-rodiny-a-skoly.md"
+      },
+      {
+       "kod": "3.2",
+       "nazev": "Rozvoj jazykových kompetencí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Cílené budování slovní zásoby a porozumění (mluveným či znakovým jazykem), s tolerancí chyb plynoucích z nezvládnutého jazyka.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-2-rozvoj-jazykovych-kompetenci.md"
+      },
+      {
+       "kod": "3.2.5",
+       "nazev": "Výuka českého znakového jazyka",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "ČZJ se u těchto žáků užívá jako plnohodnotný mateřský jazyk – jazyk vyučovací i vyučovaný, na jehož základě se čeština učí jako druhý jazyk.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-2-5-vyuka-ceskeho-znakoveho-jazyka.md"
+      },
+      {
+       "kod": "3.2.6",
+       "nazev": "Jazyková podpora v češtině jako v druhém jazyce",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Výuka češtiny (psané, případně mluvené) metodami výuky cizího jazyka, aby se žák co nejdříve stal funkčně gramotným.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-2-6-jazykova-podpora-v-cestine-jako-v-druhem-jazyce.md"
+      },
+      {
+       "kod": "3.3",
+       "nazev": "Intervenční techniky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Podpůrné terapie a stimulační programy podporující vývoj žáka v souvislostech (sebeobsluha, sociální, komunikační, smyslové a kognitivní dovednosti).",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-3-intervencni-techniky.md"
+      },
+      {
+       "kod": "3.4",
+       "nazev": "Intervence nad rámec běžné výuky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Speciálněpedagogická podpora v oblastech nedostatečně rozvinutých vlivem postižení, které ovlivňují školní úspěšnost i začlenění.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-4-intervence-nad-ramec-bezne-vyuky.md"
+      },
+      {
+       "kod": "3.5",
+       "nazev": "Rozvoj specifických dovedností a poznávacích funkcí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Podpora dovedností vnímaných jako dispozice (vyzrálost psychických funkcí, ovládání těla a emocí, získávání informací sluchem) i reedukace sluchu.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-5-rozvoj-specifickych-dovednosti-a-poznavacich-funkci.md"
+      },
+      {
+       "kod": "3.5.1",
+       "nazev": "Posilování sluchové a zrakové percepce",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Cílená reedukace sluchu (od detekce po porozumění) a výcvik zrakové pozornosti a diferenciace pro kompenzaci a komunikaci.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-5-1-posilovani-sluchove-a-zrakove-percepce.md"
+      },
+      {
+       "kod": "3.5.5",
+       "nazev": "Zácvikové pobyty",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Krátkodobý pobyt žáka (i rodiny) ve zkušenějším zařízení k nácviku nových dovedností a práce s doporučenou kompenzační pomůckou.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-5-5-zacvikove-pobyty.md"
+      },
+      {
+       "kod": "3.6",
+       "nazev": "Nácvik sebeobslužných dovedností",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Cílený zácvik k co největší samostatnosti v sebeobsluze – lokomoce, jídlo a pití, osobní čistota, hygiena, oblékání.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-6-nacvik-sebeobsluznych-dovednosti.md"
+      },
+      {
+       "kod": "3.7",
+       "nazev": "Nácvik sociálního chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Nácvik zvládání reálných životních situací, který vyrovnává opoždění v sociálních zkušenostech způsobené omezeným příjmem informací.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-7-nacvik-socialniho-chovani.md"
+      },
+      {
+       "kod": "3.8",
+       "nazev": "Zvládání náročného chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Přiblížení důvodů odlišného chování okolí i žákovi a nabídka postupů, jak náročnému chování předcházet i jak je řešit.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-8-zvladani-narocneho-chovani.md"
+      },
+      {
+       "kod": "3.9",
+       "nazev": "Metodická intervence směrem k pedagogům ze strany ŠPZ a ŠPP",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Podpora pedagogů ze strany ŠPP a ŠPZ při výběru zařízení, přípravě na přijetí žáka a při zavádění či změnách podpůrných opatření.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-9-metodicka-intervence-smerem-k-pedagogum-ze-strany-spz-a-.md"
+      },
+      {
+       "kod": "3.10",
+       "nazev": "Výuka prostřednictvím podporující a alternativní komunikace",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Volba a užití vhodného komunikačního prostředku, aby žák porozuměl jazyku výuky a nevznikala komunikační bariéra.",
+       "full": "data/full/sp/oblast-03-intervence.md",
+       "card": "data/cards/sp/3-10-vyuka-prostrednictvim-podporujici-a-alternativni-komuni.md"
+      }
+     ]
+    },
+    {
+     "oblast": 4,
+     "nazev": "Pomůcky",
+     "full": "data/full/sp/oblast-04-pomucky.md",
+     "karty": [
+      {
+       "kod": "4.1",
+       "nazev": "Didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Běžné i speciálně vyrobené pomůcky (hračky, stavebnice, vkládanky, cvičné sešity) zrychlující a upevňující osvojení dovednosti.",
+       "full": "data/full/sp/oblast-04-pomucky.md",
+       "card": "data/cards/sp/4-1-didakticke-pomucky.md"
+      },
+      {
+       "kod": "4.2",
+       "nazev": "Speciální didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Pomůcky (často technické) posilující názornost a nahrazující sluchový handicap tam, kde běžné prostředky selhávají.",
+       "full": "data/full/sp/oblast-04-pomucky.md",
+       "card": "data/cards/sp/4-2-specialni-didakticke-pomucky.md"
+      },
+      {
+       "kod": "4.3",
+       "nazev": "Kompenzační pomůcky, reedukační pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Sluchadla, kochleární implantát, BAHA (kostní vedení) a zesilovací systémy (FM, indukční smyčka); reedukační pomůcky učí sluch využívat.",
+       "full": "data/full/sp/oblast-04-pomucky.md",
+       "card": "data/cards/sp/4-3-kompenzacni-pomucky-reedukacni-pomucky.md"
+      }
+     ]
+    },
+    {
+     "oblast": 5,
+     "nazev": "Úpravy obsahu vzdělávání",
+     "full": "data/full/sp/oblast-05-upravy-obsahu-vzdelavani.md",
+     "karty": [
+      {
+       "kod": "5.1",
+       "nazev": "Respektování specifik žáka",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Přihlížení ke specifickým projevům sluchového postižení a jejich respektování ve výuce.",
+       "full": "data/full/sp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/sp/5-1-respektovani-specifik-zaka.md"
+      },
+      {
+       "kod": "5.2",
+       "nazev": "Úprava rozsahu a obsahu učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Přiměřené snížení nároků a přizpůsobení učiva individuálním možnostem žáka, případně uvolnění z předmětu.",
+       "full": "data/full/sp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/sp/5-2-uprava-rozsahu-a-obsahu-uciva.md"
+      },
+      {
+       "kod": "5.3",
+       "nazev": "Rozložení učiva z důvodu těžkého deficitu",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Rozvolnění učiva pro žáky, kteří kvůli těžkému postižení nezvládnou učivo RVP v daném období — pozvolný nárůst nároků.",
+       "full": "data/full/sp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/sp/5-3-rozlozeni-uciva-z-duvodu-tezkeho-deficitu.md"
+      },
+      {
+       "kod": "5.5",
+       "nazev": "Obohacování obsahu učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Prohlubování a obohacování učiva i vyučovacího procesu o další informační zdroje nad rámec programu.",
+       "full": "data/full/sp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/sp/5-5-obohacovani-obsahu-uciva.md"
+      },
+      {
+       "kod": "5.6",
+       "nazev": "Modifikace podávané informace",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Úprava podávaných informací formou komunikace, kterou žák preferuje — mluveným jazykem, nebo znakovým jazykem u vizuálně komunikujících.",
+       "full": "data/full/sp/oblast-05-upravy-obsahu-vzdelavani.md",
+       "card": "data/cards/sp/5-6-modifikace-podavane-informace.md"
+      }
+     ]
+    },
+    {
+     "oblast": 6,
+     "nazev": "Hodnocení",
+     "full": "data/full/sp/oblast-06-hodnoceni.md",
+     "karty": [
+      {
+       "kod": "6.1",
+       "nazev": "Individualizace hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Úprava hodnocení respektující individuální možnosti, zvláštnosti a diagnózu žáka; nelze jej srovnávat s ostatními.",
+       "full": "data/full/sp/oblast-06-hodnoceni.md",
+       "card": "data/cards/sp/6-1-individualizace-hodnoceni.md"
+      },
+      {
+       "kod": "6.2",
+       "nazev": "Podmínky a metody dlouhodobého sledování žáků",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Soustavné diagnostické sledování žáka různými nástroji pro posouzení dílčích pokroků a plánování dalších cílů.",
+       "full": "data/full/sp/oblast-06-hodnoceni.md",
+       "card": "data/cards/sp/6-2-podminky-a-metody-dlouhodobeho-sledovani-zaku.md"
+      },
+      {
+       "kod": "6.3",
+       "nazev": "Rozšířené formy hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Formy hodnocení zachycující aspekty, které nelze dobře vyjádřit známkou, s ohledem na SVP žáka.",
+       "full": "data/full/sp/oblast-06-hodnoceni.md",
+       "card": "data/cards/sp/6-3-rozsirene-formy-hodnoceni.md"
+      },
+      {
+       "kod": "6.4",
+       "nazev": "Posílení motivační funkce hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Posílení motivace k učení alternativními formami hodnocení místo známky, navázané na konkrétní zájem žáka.",
+       "full": "data/full/sp/oblast-06-hodnoceni.md",
+       "card": "data/cards/sp/6-4-posileni-motivacni-funkce-hodnoceni.md"
+      }
+     ]
+    },
+    {
+     "oblast": 7,
+     "nazev": "Příprava na výuku",
+     "full": "data/full/sp/oblast-07-priprava-na-vyuku.md",
+     "karty": [
+      {
+       "kod": "7.1",
+       "nazev": "Jiné formy přípravy na vyučování",
+       "oblast": 7,
+       "typ": "karta",
+       "anotace": "Úprava domácí přípravy jako doplňku školního učení — procvičování, rozvoj slovní zásoby a čtení s porozuměním.",
+       "full": "data/full/sp/oblast-07-priprava-na-vyuku.md",
+       "card": "data/cards/sp/7-1-jine-formy-pripravy-na-vyucovani.md"
+      }
+     ]
+    },
+    {
+     "oblast": 8,
+     "nazev": "Podpora sociální a zdravotní",
+     "full": "data/full/sp/oblast-08-podpora-socialni-a-zdravotni.md",
+     "karty": [
+      {
+       "kod": "8.2",
+       "nazev": "Odlišné stravování",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Umožnění odlišného způsobu stravování a zajištění podmínek pro jeho podávání z medicínských důvodů.",
+       "full": "data/full/sp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/sp/8-2-odlisne-stravovani.md"
+      },
+      {
+       "kod": "8.3",
+       "nazev": "Podávání medikace",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Podávání medikace v průběhu vzdělávání dle potřeb žáka — pravidelně nebo v akutních případech.",
+       "full": "data/full/sp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/sp/8-3-podavani-medikace.md"
+      },
+      {
+       "kod": "8.4",
+       "nazev": "Spolupráce s externími poskytovateli služeb",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Komplexní péče provázaná mezi rezortem školským, zdravotnickým a sociálním s cílem zmírnit následky postižení a umožnit integraci.",
+       "full": "data/full/sp/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/sp/8-4-spoluprace-s-externimi-poskytovateli-sluzeb.md"
+      }
+     ]
+    },
+    {
+     "oblast": 9,
+     "nazev": "Práce s třídním kolektivem",
+     "full": "data/full/sp/oblast-09-prace-s-tridnim-kolektivem.md",
+     "karty": [
+      {
+       "kod": "9.1",
+       "nazev": "Klima třídy",
+       "oblast": 9,
+       "typ": "karta",
+       "anotace": "Soubor aktivit podporujících adaptaci nového kolektivu a zdravé vztahy — dynamika skupiny, role, emoce, téma různorodosti.",
+       "full": "data/full/sp/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/sp/9-1-klima-tridy.md"
+      }
+     ]
+    },
+    {
+     "oblast": 10,
+     "nazev": "Úprava prostředí",
+     "full": "data/full/sp/oblast-10-uprava-prostredi.md",
+     "karty": [
+      {
+       "kod": "10.1",
+       "nazev": "Úprava pracovního prostředí",
+       "oblast": 10,
+       "typ": "karta",
+       "anotace": "Celková úprava prostředí pro vzdělávání v souladu se zásadami komunikace u žáků se sluchovým postižením.",
+       "full": "data/full/sp/oblast-10-uprava-prostredi.md",
+       "card": "data/cards/sp/10-1-uprava-pracovniho-prostredi.md"
+      }
+     ]
+    }
+   ]
+  },
+  "mp": {
+   "nazev": "Mentální postižení",
+   "cilova_skupina": "žáci s mentálním postižením nebo oslabením kognitivního výkonu",
+   "typ": "dilci",
+   "zdroj": "katalog-mp.pdf",
+   "prehled": "data/cards/mp/_prehled.md",
+   "all": "data/cards/mp/_all.md",
+   "pocet_karet": 50,
+   "oblasti": [
+    {
+     "oblast": 1,
+     "nazev": "Organizace výuky",
+     "full": "data/full/mp/oblast-01-organizace-vyuky.md",
+     "karty": [
+      {
+       "kod": "1.1",
+       "nazev": "Úprava režimu výuky (časová, místní)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Prostorové a časové přizpůsobení organizace výuky individuálním potřebám žáka.",
+       "full": "data/full/mp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/mp/1-1-uprava-rezimu-vyuky-casova-mistni.md"
+      },
+      {
+       "kod": "1.2",
+       "nazev": "Další pracovní místo pro žáka (ve třídě i mimo třídu)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Specializované pracovní místo v kmenové třídě nebo v jiné místnosti dle potřeb žáka.",
+       "full": "data/full/mp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/mp/1-2-dalsi-pracovni-misto-pro-zaka-ve-tride-i-mimo-tridu.md"
+      },
+      {
+       "kod": "1.3",
+       "nazev": "Jiné prostorové uspořádání výuky",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Úprava prostoru učebny a využití specializovaných místností podle vzdělávacích potřeb žáka.",
+       "full": "data/full/mp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/mp/1-3-jine-prostorove-usporadani-vyuky.md"
+      },
+      {
+       "kod": "1.4",
+       "nazev": "Úprava zasedacího pořádku",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Volba umístění pracovního místa žáka pro kvalitní příjem informací a kontakt s pedagogem.",
+       "full": "data/full/mp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/mp/1-4-uprava-zasedaciho-poradku.md"
+      },
+      {
+       "kod": "1.5",
+       "nazev": "Snížení počtu žáků ve třídě",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Snížení počtu žáků ve třídě běžné školy, kde se vzdělává žák se zdravotním postižením.",
+       "full": "data/full/mp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/mp/1-5-snizeni-poctu-zaku-ve-tride.md"
+      },
+      {
+       "kod": "1.6",
+       "nazev": "Vzdělávání v jiném než školním prostředí",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Plnění docházky mimo školu — individuální vzdělávání, výuka při nemocnici či zařízení, uvolnění z předmětu s náhradní výukou.",
+       "full": "data/full/mp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/mp/1-6-vzdelavani-v-jinem-nez-skolnim-prostredi.md"
+      },
+      {
+       "kod": "1.7",
+       "nazev": "Mimoškolní pobyty a výcviky",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Akce mimo běžnou výuku (výlety, školy v přírodě, výcviky, exkurze) pořádané pro třídní kolektiv.",
+       "full": "data/full/mp/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/mp/1-7-mimoskolni-pobyty-a-vycviky.md"
+      }
+     ]
+    },
+    {
+     "oblast": 2,
+     "nazev": "Modifikace výukových metod a forem práce",
+     "full": "data/full/mp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+     "karty": [
+      {
+       "kod": "2.1",
+       "nazev": "Způsoby výuky adekvátní pedagogické situaci",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Volba vhodné organizační formy výuky podle pedagogické situace a potřeb žáka.",
+       "full": "data/full/mp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/mp/2-1-zpusoby-vyuky-adekvatni-pedagogicke-situaci.md"
+      },
+      {
+       "kod": "2.2",
+       "nazev": "Individuální práce se žákem",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Vyčlenění řízeného času pro aktivní práci jednotlivého žáka v rámci vyučovací hodiny.",
+       "full": "data/full/mp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/mp/2-2-individualni-prace-se-zakem.md"
+      },
+      {
+       "kod": "2.3",
+       "nazev": "Strukturalizace výuky",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Systém přesného uspořádání aktivit, prostoru a času, který žákovi usnadňuje orientaci a snižuje stres.",
+       "full": "data/full/mp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/mp/2-3-strukturalizace-vyuky.md"
+      },
+      {
+       "kod": "2.3.1",
+       "nazev": "Strukturování komplexních úloh do menších celků",
+       "oblast": 2,
+       "typ": "podkarta",
+       "anotace": "Rozdělení příliš komplexních či zahlcujících úkolů na menší, přehledné části.",
+       "full": "data/full/mp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/mp/2-3-1-strukturovani-komplexnich-uloh-do-mensich-celku.md"
+      },
+      {
+       "kod": "2.4",
+       "nazev": "Kooperativní učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Učení v malých (ideálně čtyřčlenných) skupinách s vzájemnou spoluprací a pozitivní závislostí.",
+       "full": "data/full/mp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/mp/2-4-kooperativni-uceni.md"
+      },
+      {
+       "kod": "2.5",
+       "nazev": "Metody aktivního učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Metody podporující aktivitu, iniciativu a vlastní činnost žáků v přímé interakci s pedagogem.",
+       "full": "data/full/mp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/mp/2-5-metody-aktivniho-uceni.md"
+      },
+      {
+       "kod": "2.6",
+       "nazev": "Výuka respektující styly učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Diagnostika převažujícího učebního stylu žáka a přizpůsobení metod a prostředků výuky.",
+       "full": "data/full/mp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/mp/2-6-vyuka-respektujici-styly-uceni.md"
+      },
+      {
+       "kod": "2.7",
+       "nazev": "Podpora motivace žáka",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Podpora hnací síly k dosahování cílů vhodnou volbou činností a aktivizací žáka.",
+       "full": "data/full/mp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/mp/2-7-podpora-motivace-zaka.md"
+      },
+      {
+       "kod": "2.8",
+       "nazev": "Prevence únavy a podpora koncentrace pozornosti",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Metody a formy výuky snižující zátěž žáka a udržující jeho koncentraci a práceschopnost.",
+       "full": "data/full/mp/oblast-02-modifikace-vyukovych-metod-a-forem-prace.md",
+       "card": "data/cards/mp/2-8-prevence-unavy-a-podpora-koncentrace-pozornosti.md"
+      }
+     ]
+    },
+    {
+     "oblast": 3,
+     "nazev": "Intervence",
+     "full": "data/full/mp/oblast-03-intervence.md",
+     "karty": [
+      {
+       "kod": "3.1",
+       "nazev": "Spolupráce rodiny a školy",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Partnerská spolupráce školy a rodiny na vzdělávání žáka formou osobního kontaktu, písemné komunikace i účasti rodičů ve třídě.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-1-spoluprace-rodiny-a-skoly.md"
+      },
+      {
+       "kod": "3.2",
+       "nazev": "Rozvoj jazykových kompetencí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Cílené zlepšování vyjadřovacích schopností, porozumění řeči a rozšiřování slovní zásoby žáka.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-2-rozvoj-jazykovych-kompetenci.md"
+      },
+      {
+       "kod": "3.3",
+       "nazev": "Intervenční techniky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Využití terapeuticko-formativních přístupů speciální pedagogiky – expresivních terapií, zooterapie, bazální stimulace, Strassmeierovy metody.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-3-intervencni-techniky.md"
+      },
+      {
+       "kod": "3.3.1",
+       "nazev": "Využití metody videotréninku interakcí",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Metoda VTI rozvíjí komunikaci mezi pedagogem a žákem rozborem videozáznamů z běžné výuky a těží z pozitivních momentů interakce.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-3-1-vyuziti-metody-videotreninku-interakci.md"
+      },
+      {
+       "kod": "3.4",
+       "nazev": "Intervence nad rámec běžné výuky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Individuální či skupinová speciálněpedagogická podpora mimo vyučování zaměřená na nezvládnuté dovednosti žáka.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-4-intervence-nad-ramec-bezne-vyuky.md"
+      },
+      {
+       "kod": "3.5",
+       "nazev": "Rozvoj specifických dovedností a poznávacích funkcí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Cílená reedukace izolovaného, diagnosticky zjištěného deficitu dílčí funkce (percepce, motorika, řeč, poznávací funkce) – nikoli obecné doučování.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-5-rozvoj-specifickych-dovednosti-a-poznavacich-funkci.md"
+      },
+      {
+       "kod": "3.5.1",
+       "nazev": "Posilování sluchové a zrakové percepce",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Cílený rozvoj analýzy, syntézy, diferenciace a celostního vnímání ve sluchové a zrakové percepci jako předpokladu čtení, psaní a počítání.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-5-1-posilovani-sluchove-a-zrakove-percepce.md"
+      },
+      {
+       "kod": "3.5.2",
+       "nazev": "Podpora rozvoje myšlenkových operací",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Trénink základních myšlenkových operací – identifikace problému, porovnávání, kategorizace, analýza, syntéza, generalizace, serialita.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-5-2-podpora-rozvoje-myslenkovych-operaci.md"
+      },
+      {
+       "kod": "3.5.3",
+       "nazev": "Trénink paměti",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Trénink zapamatování a vybavování informací různými formami a kompenzace deficitů paměti.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-5-3-trenink-pameti.md"
+      },
+      {
+       "kod": "3.5.4",
+       "nazev": "Trénink koncentrace pozornosti",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Trénink schopnosti vytrvat u práce, rozdělit pozornost a přejít k další aktivitě.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-5-4-trenink-koncentrace-pozornosti.md"
+      },
+      {
+       "kod": "3.5.8",
+       "nazev": "Rozvoj exekutivních funkcí",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Posilování procesů potřebných pro výkon činnosti – plánování, kontroly, pozornosti, pracovní paměti, seriality, tlumení nežádoucího chování.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-5-8-rozvoj-exekutivnich-funkci.md"
+      },
+      {
+       "kod": "3.5.9",
+       "nazev": "Nácvik orientace v čase",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Nácvik znalosti hodin, odhadů délky trvání, posloupnosti dějů a orientace v časových přehledech.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-5-9-nacvik-orientace-v-case.md"
+      },
+      {
+       "kod": "3.5.10",
+       "nazev": "Nácvik orientace v prostoru",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Nácvik orientace na těle, ploše, v prostoru i textu a správného užívání prostorových pojmů.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-5-10-nacvik-orientace-v-prostoru.md"
+      },
+      {
+       "kod": "3.6",
+       "nazev": "Nácvik sebeobslužných dovedností",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Cílený individuální nácvik sebeobsluhy na bazální úrovni (hygiena, oblékání, stravování) i vyšší (nákup, peníze, doprava, telefonování).",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-6-nacvik-sebeobsluznych-dovednosti.md"
+      },
+      {
+       "kod": "3.7",
+       "nazev": "Nácvik sociálního chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Nácvik sociálních dovedností zaměřený na komunikaci, vztahy a porozumění sociálním situacím s přenosem do reálného života.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-7-nacvik-socialniho-chovani.md"
+      },
+      {
+       "kod": "3.8",
+       "nazev": "Zvládání náročného chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Postupy prevence a zvládání problémového chování založené na hledání jeho příčin a funkce.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-8-zvladani-narocneho-chovani.md"
+      },
+      {
+       "kod": "3.9",
+       "nazev": "Metodická intervence směrem k pedagogům",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Metodická podpora učitelů běžných škol ze strany poradenských pracovišť při vzdělávání žáků.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-9-metodicka-intervence-smerem-k-pedagogum.md"
+      },
+      {
+       "kod": "3.10",
+       "nazev": "Výuka prostřednictvím podporující",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Augmentativní a alternativní komunikace (AAK) umožňující žákovi dorozumívat se jinými prostředky než mluvenou řečí.",
+       "full": "data/full/mp/oblast-03-intervence.md",
+       "card": "data/cards/mp/3-10-vyuka-prostrednictvim-podporujici.md"
+      }
+     ]
+    },
+    {
+     "oblast": 4,
+     "nazev": "Pomůcky",
+     "full": "data/full/mp/oblast-04-pomucky.md",
+     "karty": [
+      {
+       "kod": "4.1",
+       "nazev": "Didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Výběr a příprava vhodných učebních pomůcek zprostředkujících žákům přímé, názorné poznání.",
+       "full": "data/full/mp/oblast-04-pomucky.md",
+       "card": "data/cards/mp/4-1-didakticke-pomucky.md"
+      },
+      {
+       "kod": "4.2.1",
+       "nazev": "Audioknihy",
+       "oblast": 4,
+       "typ": "podkarta",
+       "anotace": "Zprostředkování literatury poslechem přesného audiozáznamu knihy při pokračujícím nácviku čtení.",
+       "full": "data/full/mp/oblast-04-pomucky.md",
+       "card": "data/cards/mp/4-2-1-audioknihy.md"
+      },
+      {
+       "kod": "4.3",
+       "nazev": "Reedukační a kompenzační pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Pomůcky rozvíjející oslabené funkce (reedukace) nebo nahrazující funkce nevyvinutelné (kompenzace).",
+       "full": "data/full/mp/oblast-04-pomucky.md",
+       "card": "data/cards/mp/4-3-reedukacni-a-kompenzacni-pomucky.md"
+      }
+     ]
+    },
+    {
+     "oblast": 5,
+     "nazev": "Úprava obsahu vzdělávání",
+     "full": "data/full/mp/oblast-05-uprava-obsahu-vzdelavani.md",
+     "karty": [
+      {
+       "kod": "5.1",
+       "nazev": "Respektování specifik žáka",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Přizpůsobení režimu výuky a nároků typu a hloubce postižení na základě diagnostiky.",
+       "full": "data/full/mp/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/mp/5-1-respektovani-specifik-zaka.md"
+      },
+      {
+       "kod": "5.2",
+       "nazev": "Úprava rozsahu a obsahu učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Redukce rozsahu i obsahu učiva krátkodobě, nebo dlouhodobě pomocí IVP.",
+       "full": "data/full/mp/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/mp/5-2-uprava-rozsahu-a-obsahu-uciva.md"
+      },
+      {
+       "kod": "5.3",
+       "nazev": "Rozložení učiva z důvodu těžkého deficitu",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Využití legislativních možností rozložit vzdělávání v čase, aby měl žák dostatek prostoru osvojit si dovednosti.",
+       "full": "data/full/mp/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/mp/5-3-rozlozeni-uciva-z-duvodu-tezkeho-deficitu.md"
+      },
+      {
+       "kod": "5.5",
+       "nazev": "Obohacování učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Zařazování obohacujících prvků nad rámec učiva pro posílení vnitřní motivace a kvality výstupu.",
+       "full": "data/full/mp/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/mp/5-5-obohacovani-uciva.md"
+      },
+      {
+       "kod": "5.6",
+       "nazev": "Modifikace podávané informace",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Úprava způsobu předání informace tam, kde má žák problém ji pochopit a zpracovat.",
+       "full": "data/full/mp/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/mp/5-6-modifikace-podavane-informace.md"
+      }
+     ]
+    },
+    {
+     "oblast": 6,
+     "nazev": "Hodnocení",
+     "full": "data/full/mp/oblast-06-hodnoceni.md",
+     "karty": [
+      {
+       "kod": "6.1",
+       "nazev": "Individualizace hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Hodnocení respektující individuální možnosti žáka, provázané s diferenciací zadávané práce.",
+       "full": "data/full/mp/oblast-06-hodnoceni.md",
+       "card": "data/cards/mp/6-1-individualizace-hodnoceni.md"
+      },
+      {
+       "kod": "6.2",
+       "nazev": "Podmínky a metody dlouhodobého sledování",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Získávání podkladů soustavným, dlouhodobým sledováním výkonů, pokroku a osobnosti žáka.",
+       "full": "data/full/mp/oblast-06-hodnoceni.md",
+       "card": "data/cards/mp/6-2-podminky-a-metody-dlouhodobeho-sledovani.md"
+      },
+      {
+       "kod": "6.3",
+       "nazev": "Rozšířené formy hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Formativní hodnocení (slovní, kriteriální) postihující průběh učení, ne jen výsledek.",
+       "full": "data/full/mp/oblast-06-hodnoceni.md",
+       "card": "data/cards/mp/6-3-rozsirene-formy-hodnoceni.md"
+      },
+      {
+       "kod": "6.4",
+       "nazev": "Posílení motivační funkce hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Hodnocení dávající i méně úspěšnému žákovi zažít pocit úspěchu a pochvalu.",
+       "full": "data/full/mp/oblast-06-hodnoceni.md",
+       "card": "data/cards/mp/6-4-posileni-motivacni-funkce-hodnoceni.md"
+      }
+     ]
+    },
+    {
+     "oblast": 7,
+     "nazev": "Příprava na výuku",
+     "full": "data/full/mp/oblast-07-priprava-na-vyuku.md",
+     "karty": [
+      {
+       "kod": "7.1",
+       "nazev": "Jiné formy přípravy na vyučování",
+       "oblast": 7,
+       "typ": "karta",
+       "anotace": "Modifikace domácí přípravy tak, aby opakováním upevnila alespoň minimum učiva.",
+       "full": "data/full/mp/oblast-07-priprava-na-vyuku.md",
+       "card": "data/cards/mp/7-1-jine-formy-pripravy-na-vyucovani.md"
+      }
+     ]
+    },
+    {
+     "oblast": 9,
+     "nazev": "Práce s třídním kolektivem",
+     "full": "data/full/mp/oblast-09-prace-s-tridnim-kolektivem.md",
+     "karty": [
+      {
+       "kod": "9.1",
+       "nazev": "Klima třídy",
+       "oblast": 9,
+       "typ": "karta",
+       "anotace": "Cílené ovlivňování vztahů ve třídě pro začlenění žáka a rozvoj jeho sociálních kompetencí.",
+       "full": "data/full/mp/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/mp/9-1-klima-tridy.md"
+      }
+     ]
+    },
+    {
+     "oblast": 10,
+     "nazev": "Úprava prostředí",
+     "full": "data/full/mp/oblast-10-uprava-prostredi.md",
+     "karty": [
+      {
+       "kod": "10.1",
+       "nazev": "Úprava pracovního prostředí",
+       "oblast": 10,
+       "typ": "karta",
+       "anotace": "Uspořádání pracovního místa a prostor pro kvalitní kontakt, příjem informací a použití pomůcek.",
+       "full": "data/full/mp/oblast-10-uprava-prostredi.md",
+       "card": "data/cards/mp/10-1-uprava-pracovniho-prostredi.md"
+      },
+      {
+       "kod": "10.2",
+       "nazev": "Stavební úpravy, bezbariérovost",
+       "oblast": 10,
+       "typ": "karta",
+       "anotace": "Stavební a technické úpravy zajišťující bezbariérový vstup a samostatný pohyb ve škole.",
+       "full": "data/full/mp/oblast-10-uprava-prostredi.md",
+       "card": "data/cards/mp/10-2-stavebni-upravy-bezbarierovost.md"
+      }
+     ]
+    }
+   ]
+  },
+  "nks": {
+   "nazev": "Narušená komunikační schopnost",
+   "cilova_skupina": "žáci s narušenou komunikační schopností",
+   "typ": "dilci",
+   "zdroj": "katalog-nks.pdf",
+   "prehled": "data/cards/nks/_prehled.md",
+   "all": "data/cards/nks/_all.md",
+   "pocet_karet": 50,
+   "oblasti": [
+    {
+     "oblast": 1,
+     "nazev": "Organizace výuky",
+     "full": "data/full/nks/oblast-01-organizace-vyuky.md",
+     "karty": [
+      {
+       "kod": "1.1",
+       "nazev": "Úprava režimu výuky (časová, místní)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Časové a prostorové uspořádání výuky přizpůsobené potřebám žáka s NKS.",
+       "full": "data/full/nks/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/nks/1-1-uprava-rezimu-vyuky-casova-mistni.md"
+      },
+      {
+       "kod": "1.2",
+       "nazev": "Vytvoření dalšího pracovního místa pro žáka",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Druhé pracovní místo pro chvíle, kdy žák pracuje jiným tempem či na jiných úkolech než třída.",
+       "full": "data/full/nks/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/nks/1-2-vytvoreni-dalsiho-pracovniho-mista-pro-zaka.md"
+      },
+      {
+       "kod": "1.3",
+       "nazev": "Jiné prostorové uspořádání výuky",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Změna uspořádání třídy (i jiných prostor školy) tak, aby lépe vyhovovala vzdělávání žáka s NKS.",
+       "full": "data/full/nks/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/nks/1-3-jine-prostorove-usporadani-vyuky.md"
+      },
+      {
+       "kod": "1.4",
+       "nazev": "Úprava zasedacího pořádku",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Umístění žáka na nejvýhodnější místo ve třídě pro kontakt s učitelem a soustředění.",
+       "full": "data/full/nks/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/nks/1-4-uprava-zasedaciho-poradku.md"
+      },
+      {
+       "kod": "1.5",
+       "nazev": "Snížení počtu žáků ve třídě",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Snížení počtu žáků ve třídě, kde je zařazen žák se závažnější formou NKS (dysfázie, afázie, mutismus aj.).",
+       "full": "data/full/nks/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/nks/1-5-snizeni-poctu-zaku-ve-tride.md"
+      }
+     ]
+    },
+    {
+     "oblast": 2,
+     "nazev": "Modifikace vyučovacích metod a forem",
+     "full": "data/full/nks/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+     "karty": [
+      {
+       "kod": "2.1",
+       "nazev": "Způsoby výuky adekvátní pedagogické situaci",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Cílená volba forem (hromadná, skupinová, individuální, individualizovaná) podle třídy, tématu a stavu žáka.",
+       "full": "data/full/nks/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/nks/2-1-zpusoby-vyuky-adekvatni-pedagogicke-situaci.md"
+      },
+      {
+       "kod": "2.2",
+       "nazev": "Individuální práce se žákem",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Krátkodobá práce pedagoga či AP s jedním žákem (jeden na jednoho) v určitém okamžiku hodiny.",
+       "full": "data/full/nks/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/nks/2-2-individualni-prace-se-zakem.md"
+      },
+      {
+       "kod": "2.3",
+       "nazev": "Strukturalizace výuky",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Pravidelné časové, prostorové a pracovní uspořádání výuky pro lepší orientaci žáka.",
+       "full": "data/full/nks/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/nks/2-3-strukturalizace-vyuky.md"
+      },
+      {
+       "kod": "2.4",
+       "nazev": "Kooperativní učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Učení ve skupinách směřující k fungování třídy jako týmu se vzájemnou pomocí a odpovědností za společný úspěch.",
+       "full": "data/full/nks/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/nks/2-4-kooperativni-uceni.md"
+      },
+      {
+       "kod": "2.5",
+       "nazev": "Metody aktivního učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Vedení žáka k myšlení v souvislostech a aktivnímu zpracování informací; úprava metod dle druhu NKS a aktuálního stavu.",
+       "full": "data/full/nks/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/nks/2-5-metody-aktivniho-uceni.md"
+      },
+      {
+       "kod": "2.6",
+       "nazev": "Výuka respektující styly učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Pomoc žákovi najít a kombinovat styl učení, který mu vyhovuje a opírá se o jeho silné stránky.",
+       "full": "data/full/nks/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/nks/2-6-vyuka-respektujici-styly-uceni.md"
+      },
+      {
+       "kod": "2.7",
+       "nazev": "Podpora motivace",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Podněcování a udržování aktivity žáka vnitřní i vnější motivací.",
+       "full": "data/full/nks/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/nks/2-7-podpora-motivace.md"
+      },
+      {
+       "kod": "2.8",
+       "nazev": "Prevence únavy a podpora koncentrace pozornosti",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Plánování a přizpůsobování metod a komunikace tak, aby předcházely únavě a ztrátě pozornosti.",
+       "full": "data/full/nks/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/nks/2-8-prevence-unavy-a-podpora-koncentrace-pozornosti.md"
+      },
+      {
+       "kod": "2.9",
+       "nazev": "Pravidelná kontrola pochopení osvojovaného učiva",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Průběžné ověřování porozumění otevřenými otázkami a pozorováním, s okamžitou úpravou informace.",
+       "full": "data/full/nks/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/nks/2-9-pravidelna-kontrola-pochopeni-osvojovaneho-uciva.md"
+      }
+     ]
+    },
+    {
+     "oblast": 3,
+     "nazev": "Intervence",
+     "full": "data/full/nks/oblast-03-intervence.md",
+     "karty": [
+      {
+       "kod": "3.1",
+       "nazev": "Spolupráce rodiny a školy",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Systematická oboustranná výměna informací mezi rodinou a školou usnadňující vzdělávání žáka.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-1-spoluprace-rodiny-a-skoly.md"
+      },
+      {
+       "kod": "3.2",
+       "nazev": "Rozvoj jazykových kompetencí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Rozvoj komunikační schopnosti ve všech jazykových rovinách jako základ dalšího vzdělávání žáka s NKS.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-2-rozvoj-jazykovych-kompetenci.md"
+      },
+      {
+       "kod": "3.2.1",
+       "nazev": "Rozvoj komunikační schopnosti v rovině lexikálně-sémantické",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Rozvoj slovní zásoby a chápání významu slov a vět napříč všemi předměty.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-2-1-rozvoj-komunikacni-schopnosti-v-rovine-lexikalne-seman.md"
+      },
+      {
+       "kod": "3.2.2",
+       "nazev": "Rozvoj komunikační schopnosti v morfologicko-syntaktické rovině",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Rozvoj gramatické správnosti – tvarosloví, větosloví, slovosled, rod, číslo, pád.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-2-2-rozvoj-komunikacni-schopnosti-v-morfologicko-syntaktic.md"
+      },
+      {
+       "kod": "3.2.3",
+       "nazev": "Rozvoj komunikační schopnosti v rovině pragmatické",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Rozvoj užití řeči k dosažení komunikačního záměru a zlepšení sociálních interakcí.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-2-3-rozvoj-komunikacni-schopnosti-v-rovine-pragmaticke.md"
+      },
+      {
+       "kod": "3.2.4",
+       "nazev": "Rozvoj komunikační schopnosti v rovině foneticko-fonologické",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Rozvoj správné artikulace, sluchové diferenciace hlásek a fonematického sluchu.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-2-4-rozvoj-komunikacni-schopnosti-v-rovine-foneticko-fonol.md"
+      },
+      {
+       "kod": "3.3",
+       "nazev": "Intervenční techniky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Doplňkové techniky a stimulační programy doprovázející běžné intervence pro komplexní péči o žáka.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-3-intervencni-techniky.md"
+      },
+      {
+       "kod": "3.3.2",
+       "nazev": "Expresivní techniky",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Expresivní terapie (dramaterapie, arteterapie, muzikoterapie) rozvíjející komunikaci a osobnost, vhodné zvláště u balbuties, dysfázie a mutismu.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-3-2-expresivni-techniky.md"
+      },
+      {
+       "kod": "3.3.3",
+       "nazev": "Zooterapie a stimulační techniky",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Doplňkové terapie a stimulační programy kombinující rozvoj komunikace, motoriky, percepce a pozornosti.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-3-3-zooterapie-a-stimulacni-techniky.md"
+      },
+      {
+       "kod": "3.4",
+       "nazev": "Intervence nad rámec běžné výuky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Speciálněpedagogická podpora (docvičování) nad rámec běžné výuky k fixaci učiva.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-4-intervence-nad-ramec-bezne-vyuky.md"
+      },
+      {
+       "kod": "3.5",
+       "nazev": "Rozvoj specifických dovedností a poznávacích funkcí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Reedukace oslabených funkcí a jejich kompenzace zachovalými funkcemi pro rozvoj kognice.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-5-rozvoj-specifickych-dovednosti-a-poznavacich-funkci.md"
+      },
+      {
+       "kod": "3.5.1",
+       "nazev": "Posilování sluchové a zrakové percepce",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Rozvoj oslabeného sluchového vnímání (fonematický sluch, analýza/syntéza, rytmus) a zrakového vnímání (rozlišování, paměť, oční pohyby).",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-5-1-posilovani-sluchove-a-zrakove-percepce.md"
+      },
+      {
+       "kod": "3.5.2",
+       "nazev": "Podpora rozvoje myšlenkových operací",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Posilování a trénink myšlenkových operací (analýza, syntéza, klasifikace, úsudek) propojených s rozvojem řeči.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-5-2-podpora-rozvoje-myslenkovych-operaci.md"
+      },
+      {
+       "kod": "3.5.3",
+       "nazev": "Trénink paměti",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Cvičení zaměřené na různé druhy (zvláště sluchovou) a fáze paměti a na techniky vybavování.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-5-3-trenink-pameti.md"
+      },
+      {
+       "kod": "3.5.4",
+       "nazev": "Trénink koncentrace pozornosti",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Posilování intenzity, stability a rozsahu pozornosti a schopnosti dokončit práci.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-5-4-trenink-koncentrace-pozornosti.md"
+      },
+      {
+       "kod": "3.5.8",
+       "nazev": "Exekutivní funkce",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Rozvoj kognitivních a exekutivních funkcí – plánování, organizace, řešení problémů, prostorová a časová orientace.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-5-8-exekutivni-funkce.md"
+      },
+      {
+       "kod": "3.6",
+       "nazev": "Nácvik sebeobslužných dovedností",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Individuální nácvik sebeobsluhy (oblékání, hygiena, stravování) a samostatnosti v běžných denních aktivitách.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-6-nacvik-sebeobsluznych-dovednosti.md"
+      },
+      {
+       "kod": "3.7",
+       "nazev": "Nácvik sociálního chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Nácvik sociálních dovedností a seberegulace uplatňovaných v mezilidských vztazích.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-7-nacvik-socialniho-chovani.md"
+      },
+      {
+       "kod": "3.8",
+       "nazev": "Zvládání náročného chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Identifikace spouštěčů a řešení problémového chování s cílem snížit jeho frekvenci a intenzitu.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-8-zvladani-narocneho-chovani.md"
+      },
+      {
+       "kod": "3.9",
+       "nazev": "Metodická intervence směrem k pedagogům",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Konzultace a metodická podpora pedagogům při realizaci podpůrných opatření a IVP.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-9-metodicka-intervence-smerem-k-pedagogum.md"
+      },
+      {
+       "kod": "3.10",
+       "nazev": "Výuka prostřednictvím podporující a alternativní komunikace",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Užití metod AAK (augmentativní a alternativní komunikace) umožňující sebevyjádření a vzdělávání žáka.",
+       "full": "data/full/nks/oblast-03-intervence.md",
+       "card": "data/cards/nks/3-10-vyuka-prostrednictvim-podporujici-a-alternativni-komuni.md"
+      }
+     ]
+    },
+    {
+     "oblast": 4,
+     "nazev": "Pomůcky",
+     "full": "data/full/nks/oblast-04-pomucky.md",
+     "karty": [
+      {
+       "kod": "4.1",
+       "nazev": "Didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Názorné učební pomůcky, které usnadňují osvojení a vybavování učiva a kompenzují oslabené funkce.",
+       "full": "data/full/nks/oblast-04-pomucky.md",
+       "card": "data/cards/nks/4-1-didakticke-pomucky.md"
+      },
+      {
+       "kod": "4.2",
+       "nazev": "Speciální didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Úprava zakoupených nebo výroba vlastních pomůcek přizpůsobených porozumění a slovníku žáka.",
+       "full": "data/full/nks/oblast-04-pomucky.md",
+       "card": "data/cards/nks/4-2-specialni-didakticke-pomucky.md"
+      },
+      {
+       "kod": "4.3",
+       "nazev": "Reedukační a kompenzační pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Pomůcky zmírňující či kompenzující deficity ve výuce; u těžších NKS pomůcky pro AAK.",
+       "full": "data/full/nks/oblast-04-pomucky.md",
+       "card": "data/cards/nks/4-3-reedukacni-a-kompenzacni-pomucky.md"
+      }
+     ]
+    },
+    {
+     "oblast": 5,
+     "nazev": "Úprava obsahu vzdělávání",
+     "full": "data/full/nks/oblast-05-uprava-obsahu-vzdelavani.md",
+     "karty": [
+      {
+       "kod": "5.1",
+       "nazev": "Respektování specifik žáka",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Učitel vytváří žákovi podmínky k maximálnímu osvojení znalostí s ohledem na jeho specifika.",
+       "full": "data/full/nks/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/nks/5-1-respektovani-specifik-zaka.md"
+      },
+      {
+       "kod": "5.2",
+       "nazev": "Úprava rozsahu a obsahu učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Krátkodobá i dlouhodobá modifikace rozsahu a obsahu učiva podle individuálních potřeb žáka.",
+       "full": "data/full/nks/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/nks/5-2-uprava-rozsahu-a-obsahu-uciva.md"
+      },
+      {
+       "kod": "5.3",
+       "nazev": "Rozložení učiva z důvodu těžkého deficitu",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Rozložení učiva ročníku do dvou let přes IVP bez opakování ročníku (jednou v 1.–3.",
+       "full": "data/full/nks/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/nks/5-3-rozlozeni-uciva-z-duvodu-tezkeho-deficitu.md"
+      }
+     ]
+    },
+    {
+     "oblast": 6,
+     "nazev": "Hodnocení",
+     "full": "data/full/nks/oblast-06-hodnoceni.md",
+     "karty": [
+      {
+       "kod": "6.1",
+       "nazev": "Individualizace hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Diferencované hodnocení zohledňující možnosti žáka; individualizace začíná už v cílech a rozsahu zadané práce.",
+       "full": "data/full/nks/oblast-06-hodnoceni.md",
+       "card": "data/cards/nks/6-1-individualizace-hodnoceni.md"
+      },
+      {
+       "kod": "6.2",
+       "nazev": "Podmínky a metody dlouhodobého sledování žáků",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Dlouhodobé sledování žáka (portfolio, vyhodnocování IVP, sledování komunikačních dovedností), které dává komplexní pohled a eliminuje aktuální výkyvy.",
+       "full": "data/full/nks/oblast-06-hodnoceni.md",
+       "card": "data/cards/nks/6-2-podminky-a-metody-dlouhodobeho-sledovani-zaku.md"
+      },
+      {
+       "kod": "6.3",
+       "nazev": "Rozšířené formy hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Rozšíření hodnocení nad rámec známky, které lépe postihne individuální pokrok a řečové obtíže žáka.",
+       "full": "data/full/nks/oblast-06-hodnoceni.md",
+       "card": "data/cards/nks/6-3-rozsirene-formy-hodnoceni.md"
+      },
+      {
+       "kod": "6.4",
+       "nazev": "Posílení motivační funkce hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Hodnocení cílené na řečové chování žáka, aby se vyhýbal komunikačním situacím co nejméně a rozvíjel osvojené řečové prostředky.",
+       "full": "data/full/nks/oblast-06-hodnoceni.md",
+       "card": "data/cards/nks/6-4-posileni-motivacni-funkce-hodnoceni.md"
+      }
+     ]
+    },
+    {
+     "oblast": 7,
+     "nazev": "Příprava na výuku",
+     "full": "data/full/nks/oblast-07-priprava-na-vyuku.md",
+     "karty": [
+      {
+       "kod": "7.1",
+       "nazev": "Jiné formy přípravy na vyučování",
+       "oblast": 7,
+       "typ": "karta",
+       "anotace": "Přizpůsobení domácí přípravy možnostem žáka; příprava výuku jen doplňuje, nenahrazuje ji.",
+       "full": "data/full/nks/oblast-07-priprava-na-vyuku.md",
+       "card": "data/cards/nks/7-1-jine-formy-pripravy-na-vyucovani.md"
+      }
+     ]
+    },
+    {
+     "oblast": 8,
+     "nazev": "Podpora sociální a zdravotní",
+     "full": "data/full/nks/oblast-08-podpora-socialni-a-zdravotni.md",
+     "karty": [
+      {
+       "kod": "8.1",
+       "nazev": "Léčebná a režimová opatření",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Především režimová opatření uzpůsobující vzdělávání zdravotnímu stavu a typu NKS.",
+       "full": "data/full/nks/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/nks/8-1-lecebna-a-rezimova-opatreni.md"
+      },
+      {
+       "kod": "8.4",
+       "nazev": "Spolupráce s externími poskytovateli služeb",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Spolupráce školy, rodičů a externích poskytovatelů při logopedii a podpůrných terapiích, které škola sama nezajistí.",
+       "full": "data/full/nks/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/nks/8-4-spoluprace-s-externimi-poskytovateli-sluzeb.md"
+      }
+     ]
+    },
+    {
+     "oblast": 9,
+     "nazev": "Práce s třídním kolektivem",
+     "full": "data/full/nks/oblast-09-prace-s-tridnim-kolektivem.md",
+     "karty": [
+      {
+       "kod": "9.1",
+       "nazev": "Práce s třídním kolektivem",
+       "oblast": 9,
+       "typ": "karta",
+       "anotace": "Cílená práce se třídou (diagnostika klimatu a intervence) usnadňující začlenění žáka a posílení vrstevnických vztahů.",
+       "full": "data/full/nks/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/nks/9-1-prace-s-tridnim-kolektivem.md"
+      }
+     ]
+    },
+    {
+     "oblast": 10,
+     "nazev": "Úprava prostředí",
+     "full": "data/full/nks/oblast-10-uprava-prostredi.md",
+     "karty": [
+      {
+       "kod": "10.1",
+       "nazev": "Úprava pracovního prostředí",
+       "oblast": 10,
+       "typ": "karta",
+       "anotace": "Úprava pracovního prostředí optimalizující příjem informací, kontakt s učitelem a práci s pomůckami.",
+       "full": "data/full/nks/oblast-10-uprava-prostredi.md",
+       "card": "data/cards/nks/10-1-uprava-pracovniho-prostredi.md"
+      }
+     ]
+    }
+   ]
+  },
+  "pas": {
+   "nazev": "Poruchy autistického spektra",
+   "cilova_skupina": "žáci s poruchou autistického spektra nebo vybraným psychickým onemocněním",
+   "typ": "dilci",
+   "zdroj": "katalog-pas.pdf",
+   "prehled": "data/cards/pas/_prehled.md",
+   "all": "data/cards/pas/_all.md",
+   "pocet_karet": 45,
+   "oblasti": [
+    {
+     "oblast": 1,
+     "nazev": "Organizace výuky",
+     "full": "data/full/pas/oblast-01-organizace-vyuky.md",
+     "karty": [
+      {
+       "kod": "1.1",
+       "nazev": "Úprava režimu výuky (časová, místní)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Časová a místní úprava organizace výuky, která žákovi pomáhá zvládat organizační stránku vzdělávání a předchází problémovému chování.",
+       "full": "data/full/pas/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/pas/1-1-uprava-rezimu-vyuky-casova-mistni.md"
+      },
+      {
+       "kod": "1.1.1",
+       "nazev": "Úprava režimu výuky s využitím relaxačních přestávek",
+       "oblast": 1,
+       "typ": "podkarta",
+       "anotace": "Střídání přiměřeně dlouhých bloků činnosti s relaxačními přestávkami podle aktuálních možností a unavitelnosti žáka.",
+       "full": "data/full/pas/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/pas/1-1-1-uprava-rezimu-vyuky-s-vyuzitim-relaxacnich-prestavek.md"
+      },
+      {
+       "kod": "1.1.2",
+       "nazev": "Úprava režimu výuky s důrazem na individuální práci",
+       "oblast": 1,
+       "typ": "podkarta",
+       "anotace": "Výuka s větším podílem individuální práce, když se žák nezvládá zapojit do běžné organizace v plném rozsahu.",
+       "full": "data/full/pas/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/pas/1-1-2-uprava-rezimu-vyuky-s-durazem-na-individualni-praci.md"
+      },
+      {
+       "kod": "1.2",
+       "nazev": "Další pracovní místo pro žáka (ve třídě i mimo třídu)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Vytvoření dalšího pracovního místa ve třídě nebo mimo ni pro žáka, který nezvládne celou výuku na stabilním místě v kolektivu.",
+       "full": "data/full/pas/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/pas/1-2-dalsi-pracovni-misto-pro-zaka-ve-tride-i-mimo-tridu.md"
+      },
+      {
+       "kod": "1.4",
+       "nazev": "Úprava zasedacího pořádku",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Preventivní úprava místa žáka ve třídě, která předchází krizovým situacím a udrží žáka v kolektivu bez problémového chování.",
+       "full": "data/full/pas/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/pas/1-4-uprava-zasedaciho-poradku.md"
+      },
+      {
+       "kod": "1.5",
+       "nazev": "Snížení počtu žáků ve třídě",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Snížení počtu žáků ve třídě, kde je vzděláván žák se závažnými symptomy, který by běžný počet obtížně zvládl.",
+       "full": "data/full/pas/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/pas/1-5-snizeni-poctu-zaku-ve-tride.md"
+      },
+      {
+       "kod": "1.6",
+       "nazev": "Vzdělávání v jiném než školním prostředí (domácí prostředí nebo jiné než školské zařízení)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Přechodné vzdělávání žáka v domácím prostředí podle IVP, s docházkou do školy jen ke konzultacím, umožňuje-li to jeho stav.",
+       "full": "data/full/pas/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/pas/1-6-vzdelavani-v-jinem-nez-skolnim-prostredi-domaci-prostred.md"
+      },
+      {
+       "kod": "1.7",
+       "nazev": "Mimoškolní pobyty a výcviky",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Speciálněpedagogická podpora pro zapojení žáka do jednodenních i vícedenních školních akcí (školy v přírodě, výlety, výcviky).",
+       "full": "data/full/pas/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/pas/1-7-mimoskolni-pobyty-a-vycviky.md"
+      },
+      {
+       "kod": "1.8",
+       "nazev": "Volný čas ve školním prostředí",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Speciálněpedagogická podpora žáka při zvládání volného času (přestávky, volné hodiny, oběd, družina, kroužky), jeho organizace a plánování.",
+       "full": "data/full/pas/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/pas/1-8-volny-cas-ve-skolnim-prostredi.md"
+      }
+     ]
+    },
+    {
+     "oblast": 2,
+     "nazev": "Modifikace vyučovacích metod a forem",
+     "full": "data/full/pas/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+     "karty": [
+      {
+       "kod": "2.1",
+       "nazev": "Způsoby výuky adekvátní pedagogické situaci",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Modifikace běžných forem výuky (individuální, frontální, skupinová, projektová) podle možností konkrétního žáka.",
+       "full": "data/full/pas/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/pas/2-1-zpusoby-vyuky-adekvatni-pedagogicke-situaci.md"
+      },
+      {
+       "kod": "2.3",
+       "nazev": "Strukturalizace výuky",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Uplatnění principů strukturovaného učení (TEACCH) — individualizace, strukturalizace prostoru, času a činností, vizuální podpora, motivace.",
+       "full": "data/full/pas/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/pas/2-3-strukturalizace-vyuky.md"
+      },
+      {
+       "kod": "2.7",
+       "nazev": "Podpora motivace žáka",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Cílené využití vnějších motivačních pobídek k posílení pozornosti, výkonu a spolupráce žáka.",
+       "full": "data/full/pas/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/pas/2-7-podpora-motivace-zaka.md"
+      },
+      {
+       "kod": "2.9",
+       "nazev": "Pravidelná kontrola pochopení osvojovaného učiva",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Průběžné ověřování porozumění učivu formou otázek a podpora aplikace naučených dovedností do praxe.",
+       "full": "data/full/pas/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/pas/2-9-pravidelna-kontrola-pochopeni-osvojovaneho-uciva.md"
+      }
+     ]
+    },
+    {
+     "oblast": 3,
+     "nazev": "Intervence",
+     "full": "data/full/pas/oblast-03-intervence.md",
+     "karty": [
+      {
+       "kod": "3.1",
+       "nazev": "Spolupráce rodiny a školy",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Rovnoprávná spolupráce rodiny a školy založená na důvěře a vzájemné výměně zkušeností.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-1-spoluprace-rodiny-a-skoly.md"
+      },
+      {
+       "kod": "3.2",
+       "nazev": "Rozvoj jazykových kompetencí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Rozvoj slovní zásoby, porozumění, výslovnosti, gramatiky, písemného projevu i čtenářských dovedností dle úrovně žáka.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-2-rozvoj-jazykovych-kompetenci.md"
+      },
+      {
+       "kod": "3.2.3",
+       "nazev": "Rozvoj komunikačních schopností – v rovině pragmatické",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Eliminace a rozvoj pragmatických funkcí komunikace v přirozených situacích (pozdrav, oslovení, žádost o pomoc, vykání/tykání, dialog).",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-2-3-rozvoj-komunikacnich-schopnosti-v-rovine-pragmaticke.md"
+      },
+      {
+       "kod": "3.3",
+       "nazev": "Intervenční techniky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Doplňkové terapeutické aktivity (zooterapie, arteterapie, muzikoterapie, ergoterapie, dramaterapie, terapie tancem, snoezelen) s motivačním a relaxačním účinkem.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-3-intervencni-techniky.md"
+      },
+      {
+       "kod": "3.4",
+       "nazev": "Intervence nad rámec běžné výuky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Doučování, procvičování a konzultace nad rámec výuky k doplnění a upevnění zameškaného či nezvládnutého učiva.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-4-intervence-nad-ramec-bezne-vyuky.md"
+      },
+      {
+       "kod": "3.5",
+       "nazev": "Rozvoj specifických dovedností a poznávacích funkcí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Zohlednění deficitů kognitivních funkcí a jejich rozvoj či kompenzace dle možností žáka pomocí strukturovaného učení.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-5-rozvoj-specifickych-dovednosti-a-poznavacich-funkci.md"
+      },
+      {
+       "kod": "3.5.1",
+       "nazev": "Posilování sluchové a zrakové percepce",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Rozvoj a kompenzace sluchového a zrakového vnímání pro efektivní učení tvorbou protetického prostředí.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-5-1-posilovani-sluchove-a-zrakove-percepce.md"
+      },
+      {
+       "kod": "3.5.7",
+       "nazev": "Specifika smyslové integrace",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Podpora integrace smyslového vnímání (sluch, zrak, rovnováha, taktilní, chuť, čich, propriocepce) a kompenzace jeho dysfunkcí.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-5-7-specifika-smyslove-integrace.md"
+      },
+      {
+       "kod": "3.5.8",
+       "nazev": "Rozvoj exekutivních funkcí",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Rozvoj a kompenzace exekutivních funkcí (zahájení a ukončení činnosti, plánování, přizpůsobení) tvorbou systému organizace pomocí strukturovaného učení.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-5-8-rozvoj-exekutivnich-funkci.md"
+      },
+      {
+       "kod": "3.6",
+       "nazev": "Nácvik sebeobslužných dovedností",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Podpora rozvoje sebeobsluhy (WC, oblékání, stravování, hygiena, příprava pomůcek) k co nejvyšší samostatnosti.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-6-nacvik-sebeobsluznych-dovednosti.md"
+      },
+      {
+       "kod": "3.7",
+       "nazev": "Nácvik sociálního chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Rozvoj přiměřených sociálních a sociálněkomunikačních dovedností; při problémovém chování se řeší nejprve ono.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-7-nacvik-socialniho-chovani.md"
+      },
+      {
+       "kod": "3.7.1",
+       "nazev": "Podpora rozvoje emocí",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Dlouhodobý rozvoj emočních kompetencí – vnímání, interpretace a přiměřené vyjadřování emocí.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-7-1-podpora-rozvoje-emoci.md"
+      },
+      {
+       "kod": "3.8",
+       "nazev": "Zvládání náročného chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Stanovení priorit a řešení obtížně zvladatelného chování na základě funkční analýzy (situace, osoby, čas, prostředí, intenzita, frekvence, trvání).",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-8-zvladani-narocneho-chovani.md"
+      },
+      {
+       "kod": "3.9",
+       "nazev": "Metodická intervence směrem k pedagogům ze strany školských poradenských zařízení a školních poradenských pracovišť",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Průběžná metodická podpora pedagogům ze strany ŠPZ, ŠPP i neziskových organizací jako součást dalšího vzdělávání.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-9-metodicka-intervence-smerem-k-pedagogum-ze-strany-skolsk.md"
+      },
+      {
+       "kod": "3.10",
+       "nazev": "Výuka prostřednictvím podporující a alternativní komunikace",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Rozvoj komunikace pomocí alternativních a augmentativních strategií (AAK) pro zvýšení samostatnosti a eliminaci problémového chování.",
+       "full": "data/full/pas/oblast-03-intervence.md",
+       "card": "data/cards/pas/3-10-vyuka-prostrednictvim-podporujici-a-alternativni-komuni.md"
+      }
+     ]
+    },
+    {
+     "oblast": 4,
+     "nazev": "Pomůcky",
+     "full": "data/full/pas/oblast-04-pomucky.md",
+     "karty": [
+      {
+       "kod": "4.1",
+       "nazev": "Didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Běžné pomůcky, které zprostředkovávají realitu, zvyšují názornost a usnadňují výuku.",
+       "full": "data/full/pas/oblast-04-pomucky.md",
+       "card": "data/cards/pas/4-1-didakticke-pomucky.md"
+      },
+      {
+       "kod": "4.2",
+       "nazev": "Speciální didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Tvorba a využití speciálně vyrobených pomůcek pro rozvoj konkrétních dovedností žáka.",
+       "full": "data/full/pas/oblast-04-pomucky.md",
+       "card": "data/cards/pas/4-2-specialni-didakticke-pomucky.md"
+      },
+      {
+       "kod": "4.3",
+       "nazev": "Kompenzační pomůcky, reedukační pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Pomůcky kompenzující deficity — zejména vizuální podpora pro organizaci prostoru, času a činností.",
+       "full": "data/full/pas/oblast-04-pomucky.md",
+       "card": "data/cards/pas/4-3-kompenzacni-pomucky-reedukacni-pomucky.md"
+      },
+      {
+       "kod": "4.3.1",
+       "nazev": "Pomůcky ke zvládnutí organizace vzdělávání",
+       "oblast": 4,
+       "typ": "podkarta",
+       "anotace": "Vizuální podpora usnadňující samostatné zvládnutí organizace prostoru, času a jednotlivých činností.",
+       "full": "data/full/pas/oblast-04-pomucky.md",
+       "card": "data/cards/pas/4-3-1-pomucky-ke-zvladnuti-organizace-vzdelavani.md"
+      }
+     ]
+    },
+    {
+     "oblast": 5,
+     "nazev": "Úprava obsahu vzdělávání",
+     "full": "data/full/pas/oblast-05-uprava-obsahu-vzdelavani.md",
+     "karty": [
+      {
+       "kod": "5.1",
+       "nazev": "Respektování specifik žáka",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Přijetí specifik z diagnózy a individuální přístup podle potřeb žáka.",
+       "full": "data/full/pas/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/pas/5-1-respektovani-specifik-zaka.md"
+      },
+      {
+       "kod": "5.2",
+       "nazev": "Úprava rozsahu a obsahu učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Redukce obsahu a rozsahu učiva podle individuálních možností žáka.",
+       "full": "data/full/pas/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/pas/5-2-uprava-rozsahu-a-obsahu-uciva.md"
+      },
+      {
+       "kod": "5.3",
+       "nazev": "Rozložení učiva z důvodu těžkého deficitu",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Rozložení učiva do delšího časového úseku podle aktuálních možností žáka.",
+       "full": "data/full/pas/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/pas/5-3-rozlozeni-uciva-z-duvodu-tezkeho-deficitu.md"
+      },
+      {
+       "kod": "5.5",
+       "nazev": "Obohacování učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Přiměřené rozšiřování základního učiva podle možností a schopností žáka.",
+       "full": "data/full/pas/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/pas/5-5-obohacovani-uciva.md"
+      }
+     ]
+    },
+    {
+     "oblast": 6,
+     "nazev": "Hodnocení",
+     "full": "data/full/pas/oblast-06-hodnoceni.md",
+     "karty": [
+      {
+       "kod": "6.1",
+       "nazev": "Individualizace hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Úprava způsobů prověřování a hodnocení podle vývojové úrovně a specifik žáka.",
+       "full": "data/full/pas/oblast-06-hodnoceni.md",
+       "card": "data/cards/pas/6-1-individualizace-hodnoceni.md"
+      },
+      {
+       "kod": "6.2",
+       "nazev": "Podmínky a metody dlouhodobého sledování žáků",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Volba vhodných způsobů dlouhodobého hodnocení klíčových kompetencí dle možností žáka.",
+       "full": "data/full/pas/oblast-06-hodnoceni.md",
+       "card": "data/cards/pas/6-2-podminky-a-metody-dlouhodobeho-sledovani-zaku.md"
+      }
+     ]
+    },
+    {
+     "oblast": 7,
+     "nazev": "Příprava na výuku",
+     "full": "data/full/pas/oblast-07-priprava-na-vyuku.md",
+     "karty": [
+      {
+       "kod": "7.1",
+       "nazev": "Jiné formy přípravy na vyučování",
+       "oblast": 7,
+       "typ": "karta",
+       "anotace": "Vytváření vhodných podmínek pro domácí přípravu — jasné zadání, rozsah i obsahové úpravy úkolů.",
+       "full": "data/full/pas/oblast-07-priprava-na-vyuku.md",
+       "card": "data/cards/pas/7-1-jine-formy-pripravy-na-vyucovani.md"
+      }
+     ]
+    },
+    {
+     "oblast": 8,
+     "nazev": "Podpora sociální a zdravotní",
+     "full": "data/full/pas/oblast-08-podpora-socialni-a-zdravotni.md",
+     "karty": [
+      {
+       "kod": "8.2",
+       "nazev": "Odlišné stravování",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Umožnění odlišného způsobu stravování a zajištění podmínek pro jeho podávání.",
+       "full": "data/full/pas/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/pas/8-2-odlisne-stravovani.md"
+      },
+      {
+       "kod": "8.3",
+       "nazev": "Podávání medikace",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Podávání léků v průběhu vzdělávání dle potřeb žáka — pravidelně, nebo v akutních případech.",
+       "full": "data/full/pas/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/pas/8-3-podavani-medikace.md"
+      },
+      {
+       "kod": "8.4",
+       "nazev": "Spolupráce s externími poskytovateli služeb",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Spolupráce s externími poskytovateli služeb (vč.",
+       "full": "data/full/pas/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/pas/8-4-spoluprace-s-externimi-poskytovateli-sluzeb.md"
+      }
+     ]
+    },
+    {
+     "oblast": 9,
+     "nazev": "Práce s třídním kolektivem",
+     "full": "data/full/pas/oblast-09-prace-s-tridnim-kolektivem.md",
+     "karty": [
+      {
+       "kod": "9.1",
+       "nazev": "Klima třídy",
+       "oblast": 9,
+       "typ": "karta",
+       "anotace": "Každodenní práce pedagoga s kolektivem — informování o projevech žáka, hledání cest k porozumění a eliminace patologických jevů.",
+       "full": "data/full/pas/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/pas/9-1-klima-tridy.md"
+      },
+      {
+       "kod": "9.1.5",
+       "nazev": "Příprava na příchod a následná adaptační fáze PO příchodu žáka se speciálními vzdělávacími potřebami do třídy",
+       "oblast": 9,
+       "typ": "podkarta",
+       "anotace": "Vytváření podmínek pro zvládnutí adaptace žáka na nové prostředí, osoby i vrstevnickou skupinu.",
+       "full": "data/full/pas/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/pas/9-1-5-priprava-na-prichod-a-nasledna-adaptacni-faze-po-prich.md"
+      }
+     ]
+    },
+    {
+     "oblast": 10,
+     "nazev": "Úprava prostředí",
+     "full": "data/full/pas/oblast-10-uprava-prostredi.md",
+     "karty": [
+      {
+       "kod": "10.1",
+       "nazev": "Úprava pracovního prostředí",
+       "oblast": 10,
+       "typ": "karta",
+       "anotace": "Celková úprava prostředí výuky v souladu s metodikou strukturovaného učení.",
+       "full": "data/full/pas/oblast-10-uprava-prostredi.md",
+       "card": "data/cards/pas/10-1-uprava-pracovniho-prostredi.md"
+      }
+     ]
+    }
+   ]
+  },
+  "szn": {
+   "nazev": "Sociální znevýhodnění",
+   "cilova_skupina": "žáci se sociálním znevýhodněním",
+   "typ": "dilci",
+   "zdroj": "katalog-szn.pdf",
+   "prehled": "data/cards/szn/_prehled.md",
+   "all": "data/cards/szn/_all.md",
+   "pocet_karet": 77,
+   "oblasti": [
+    {
+     "oblast": 1,
+     "nazev": "Organizace výuky",
+     "full": "data/full/szn/oblast-01-organizace-vyuky.md",
+     "karty": [
+      {
+       "kod": "1.1",
+       "nazev": "Úprava režimu výuky (časová a místní)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Zastřešující opatření – úprava prostorového uspořádání třídy a časového členění výuky (začátek, délka jednotek, poměr dopolední/odpolední výuky, strukturace do kratších celků) podle aktuálních potřeb žáků.",
+       "full": "data/full/szn/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/szn/1-1-uprava-rezimu-vyuky-casova-a-mistni.md"
+      },
+      {
+       "kod": "1.1.3",
+       "nazev": "Úprava časového uspořádání výuky",
+       "oblast": 1,
+       "typ": "podkarta",
+       "anotace": "Úprava zahájení výuky, délky jednotek, poměru dopolední/odpolední výuky a strukturace činností do kratších celků.",
+       "full": "data/full/szn/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/szn/1-1-3-uprava-casoveho-usporadani-vyuky.md"
+      },
+      {
+       "kod": "1.2",
+       "nazev": "Další pracovní místo pro žáka (ve třídě i mimo třídu)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Vyčleněné místo (ve třídě i mimo ni) pro individuální práci, jiné tempo/úkoly, relaxaci či zklidnění po afektu.",
+       "full": "data/full/szn/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/szn/1-2-dalsi-pracovni-misto-pro-zaka-ve-tride-i-mimo-tridu.md"
+      },
+      {
+       "kod": "1.3",
+       "nazev": "Jiné prostorové uspořádání výuky",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Proměnlivé uspořádání třídy (nábytek, pomůcky, relaxační zóny) podle plánované činnosti a potřeb žáků.",
+       "full": "data/full/szn/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/szn/1-3-jine-prostorove-usporadani-vyuky.md"
+      },
+      {
+       "kod": "1.4",
+       "nazev": "Úprava zasedacího pořádku",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Volba vhodného pracovního místa pro žáka, popř.",
+       "full": "data/full/szn/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/szn/1-4-uprava-zasedaciho-poradku.md"
+      },
+      {
+       "kod": "1.5",
+       "nazev": "Snížení počtu žáků ve třídě",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Snížení počtu žáků připadajících na jednoho pedagoga; výuka v menších skupinách umožňující individualizaci.",
+       "full": "data/full/szn/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/szn/1-5-snizeni-poctu-zaku-ve-tride.md"
+      },
+      {
+       "kod": "1.6",
+       "nazev": "Vzdělávání v jiném než školním prostředí (domácí prostředí nebo jiné než školské zařízení)",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Přechodná úprava způsobu a rozsahu docházky pro žáka, který se ze závažných sociálních důvodů nemůže účastnit běžné výuky; obvykle s IVP.",
+       "full": "data/full/szn/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/szn/1-6-vzdelavani-v-jinem-nez-skolnim-prostredi-domaci-prostred.md"
+      },
+      {
+       "kod": "1.7",
+       "nazev": "Mimoškolní pobyty a výcviky",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Nabídka sociální zkušenosti mimo školu (výlety, školy v přírodě, kurzy, adaptační pobyty), významná zejména pro žáky se sociálním znevýhodněním.",
+       "full": "data/full/szn/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/szn/1-7-mimoskolni-pobyty-a-vycviky.md"
+      },
+      {
+       "kod": "1.8",
+       "nazev": "Volný čas ve školním prostředí",
+       "oblast": 1,
+       "typ": "karta",
+       "anotace": "Podpora žáka při trávení času mimo výuku (přestávky, volné hodiny) – pedagogická, speciálně pedagogická i psychologická.",
+       "full": "data/full/szn/oblast-01-organizace-vyuky.md",
+       "card": "data/cards/szn/1-8-volny-cas-ve-skolnim-prostredi.md"
+      }
+     ]
+    },
+    {
+     "oblast": 2,
+     "nazev": "Modifikace vyučovacích metod a forem",
+     "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+     "karty": [
+      {
+       "kod": "2.1",
+       "nazev": "Způsoby výuky adekvátní pedagogické situaci",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Zastřešující opatření – volba a střídání vhodných metod a forem výuky podle aktuálních schopností a potřeb žáků na základě dobré pedagogické diagnostiky.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-1-zpusoby-vyuky-adekvatni-pedagogicke-situaci.md"
+      },
+      {
+       "kod": "2.1.1",
+       "nazev": "Skupinová výuka",
+       "oblast": 2,
+       "typ": "podkarta",
+       "anotace": "Vytváření skupin žáků pro určité činnosti (na rozdíl od kooperativního učení nevyžaduje nutně spolupráci na společném cíli).",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-1-1-skupinova-vyuka.md"
+      },
+      {
+       "kod": "2.1.2",
+       "nazev": "Vizualizace obsahu a procesu vzdělávání",
+       "oblast": 2,
+       "typ": "podkarta",
+       "anotace": "Doplnění výkladu vizuálními prostředky (obrázek, graf, tabulka); u žáků s OMJ tzv.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-1-2-vizualizace-obsahu-a-procesu-vzdelavani.md"
+      },
+      {
+       "kod": "2.1.3",
+       "nazev": "Cílené vytváření prostoru a příležitostí pro seberealizaci žáků",
+       "oblast": 2,
+       "typ": "podkarta",
+       "anotace": "Cílené vytváření podmínek, aby každý žák mohl uplatnit své silné stránky a zažít úspěch; založené na pečlivé pedagogické diagnostice.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-1-3-cilene-vytvareni-prostoru-a-prilezitosti-pro-sebereali.md"
+      },
+      {
+       "kod": "2.1.4",
+       "nazev": "Podpora jazykových kompetencí ve všech předmětech",
+       "oblast": 2,
+       "typ": "podkarta",
+       "anotace": "Rozvoj jazykových dovedností (slovní zásoba, vyjadřování, interpretace) v každém předmětu vedle odborného výkladu.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-1-4-podpora-jazykovych-kompetenci-ve-vsech-predmetech.md"
+      },
+      {
+       "kod": "2.2",
+       "nazev": "Individuální práce se žákem",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Vnitřní diferenciace výuky – různé cíle, obsah, metody i čas podle možností žáků tak, aby každý dosáhl cíle vlastním způsobem.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-2-individualni-prace-se-zakem.md"
+      },
+      {
+       "kod": "2.2.1",
+       "nazev": "Individualizace časové dotace pro práci při výuce",
+       "oblast": 2,
+       "typ": "podkarta",
+       "anotace": "Přizpůsobení času a množství požadované práce osobnímu tempu žáka.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-2-1-individualizace-casove-dotace-pro-praci-pri-vyuce.md"
+      },
+      {
+       "kod": "2.3",
+       "nazev": "Strukturalizace výuky",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Vizuální pomůcky a postupy usnadňující orientaci v čase, prostoru školy a v požadavcích; zejména pro žáky s OMJ v adaptační fázi.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-3-strukturalizace-vyuky.md"
+      },
+      {
+       "kod": "2.4",
+       "nazev": "Kooperativní učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Systematické zařazování kooperativně uspořádaných úkolů – žáci pracují v menších heterogenních skupinách s pozitivní vzájemnou závislostí.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-4-kooperativni-uceni.md"
+      },
+      {
+       "kod": "2.4.1",
+       "nazev": "Skupinová práce podporující komunikaci",
+       "oblast": 2,
+       "typ": "podkarta",
+       "anotace": "Skupinová práce cílená tak, aby každý žák musel mluvit a měl příležitost se vyjadřovat.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-4-1-skupinova-prace-podporujici-komunikaci.md"
+      },
+      {
+       "kod": "2.5",
+       "nazev": "Metody aktivního učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Metody, při nichž žáci sami pracují, formulují hypotézy a pracují s vlastními prekoncepty; trvaleji si osvojují učivo.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-5-metody-aktivniho-uceni.md"
+      },
+      {
+       "kod": "2.6",
+       "nazev": "Výuka respektující styly učení",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Zprostředkování učiva způsoby odpovídajícími zjištěným učebním stylům žáků a pomoc žákovi jeho styl rozpoznat.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-6-vyuka-respektujici-styly-uceni.md"
+      },
+      {
+       "kod": "2.7",
+       "nazev": "Podpora motivace žáka",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Volba metod a forem práce podněcujících aktivní zapojení a vnitřní motivaci; vyvážené využití vnitřní i vnější motivace dle cíle.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-7-podpora-motivace-zaka.md"
+      },
+      {
+       "kod": "2.8",
+       "nazev": "Prevence únavy a podpora koncentrace pozornosti",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Zastřešující opatření – prevence únavy (relaxace, spolupráce s rodiči na životosprávě) a podpora koncentrace (úprava prostředí, strukturace úkolů, časový režim, motivace, nácvik pozornosti).",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-8-prevence-unavy-a-podpora-koncentrace-pozornosti.md"
+      },
+      {
+       "kod": "2.8.1",
+       "nazev": "Prevence únavy",
+       "oblast": 2,
+       "typ": "podkarta",
+       "anotace": "Vhodná strukturace činností, pravidelná relaxace a spolupráce s rodiči na životosprávě žáka.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-8-1-prevence-unavy.md"
+      },
+      {
+       "kod": "2.8.2",
+       "nazev": "Podpora koncentrace pozornosti",
+       "oblast": 2,
+       "typ": "podkarta",
+       "anotace": "Úprava prostředí a pracovního místa, strukturace činností, podpora motivace a nácvik pozornosti.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-8-2-podpora-koncentrace-pozornosti.md"
+      },
+      {
+       "kod": "2.9",
+       "nazev": "Pravidelná kontrola pochopení osvojovaného učiva",
+       "oblast": 2,
+       "typ": "karta",
+       "anotace": "Pravidelná průběžná kontrola míry pochopení látky; učitel střídá metody pro celou skupinu s individuálním dotazováním.",
+       "full": "data/full/szn/oblast-02-modifikace-vyucovacich-metod-a-forem.md",
+       "card": "data/cards/szn/2-9-pravidelna-kontrola-pochopeni-osvojovaneho-uciva.md"
+      }
+     ]
+    },
+    {
+     "oblast": 3,
+     "nazev": "Intervence",
+     "full": "data/full/szn/oblast-03-intervence.md",
+     "karty": [
+      {
+       "kod": "3.1",
+       "nazev": "Spolupráce rodiny a školy",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Opatření řeší selhávající komunikaci mezi školou a rodinou žáka a zvládání krizových situací; buduje důvěru a vhodné podmínky pro formální i neformální spolupráci.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-1-spoluprace-rodiny-a-skoly.md"
+      },
+      {
+       "kod": "3.1.1",
+       "nazev": "Zahájení spolupráce rodiny a školy",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Nastavení systému včasného odhalení a řešení problémů ve spolupráci školy a rodiny hned od nástupu dítěte.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-1-1-zahajeni-spoluprace-rodiny-a-skoly.md"
+      },
+      {
+       "kod": "3.1.2",
+       "nazev": "Průběžná spolupráce rodiny a školy",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Trvalý systém různých forem komunikace a spolupráce s různými typy rodičů, který zmírňuje nedůvěru a posiluje podporu žáka doma.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-1-2-prubezna-spoluprace-rodiny-a-skoly.md"
+      },
+      {
+       "kod": "3.2",
+       "nazev": "Rozvoj jazykových kompetencí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Cílené a systematické zařazování aktivit rozvíjejících slovní zásobu, porozumění významům slov a praktické užití jazyka, ve výuce i nad její rámec.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-2-rozvoj-jazykovych-kompetenci.md"
+      },
+      {
+       "kod": "3.2.6",
+       "nazev": "Jazyková podpora v češtině jako druhém jazyce",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Výuka češtiny jako druhého (cizího) jazyka vycházející z konkrétních potřeb žáka a aktuálně probíraného učiva; navazuje po jazykové přípravě (3.4.1).",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-2-6-jazykova-podpora-v-cestine-jako-druhem-jazyce.md"
+      },
+      {
+       "kod": "3.3",
+       "nazev": "Intervenční techniky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Uplatňování intervenčních technik a programů (na jednotlivce i skupinu) doplňujících běžnou výuku podle potřeb žáka.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-3-intervencni-techniky.md"
+      },
+      {
+       "kod": "3.4",
+       "nazev": "Intervence nad rámec běžné výuky",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Individuální či skupinová podpora zpravidla mimo vyučování, která vyrovnává překážky ve vzdělávání se zaměřením na zvládnutí vyučovacího jazyka, odstranění komunikačních bariér a využití tlumočnických služeb.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-4-intervence-nad-ramec-bezne-vyuky.md"
+      },
+      {
+       "kod": "3.4.1",
+       "nazev": "Jazyková příprava pro žáky s odlišným mateřským jazykem",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Organizovaná výuka základů češtiny jako druhého jazyka po příchodu žáka bez znalosti češtiny, aby rychle vyrovnal komunikační bariéru.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-4-1-jazykova-priprava-pro-zaky-s-odlisnym-materskym-jazyke.md"
+      },
+      {
+       "kod": "3.4.2",
+       "nazev": "Využití tlumočnických služeb",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Využití tlumočníka ke zprostředkování komunikace mezi školou a žákem či rodiči s OMJ, kteří nerozumějí česky.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-4-2-vyuziti-tlumocnickych-sluzeb.md"
+      },
+      {
+       "kod": "3.5",
+       "nazev": "Rozvoj specifických dovedností a poznávacích funkcí",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Podpora zejména před nástupem a v prvním roce školní docházky zaměřená na rozvoj dílčích funkcí (zrakové a sluchové vnímání, prostorová orientace, jemná motorika, vnímání časového sledu) a věku přiměřených myšlenkových operací nezbytných pro čtení, psaní a počítání.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-5-rozvoj-specifickych-dovednosti-a-poznavacich-funkci.md"
+      },
+      {
+       "kod": "3.5.2",
+       "nazev": "Podpora rozvoje myšlenkových operací",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Nácvik toho, jak o věcech přemýšlet: obohacení pojmů, kategorizace, analýza, syntéza a uvažování na základě analogií.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-5-2-podpora-rozvoje-myslenkovych-operaci.md"
+      },
+      {
+       "kod": "3.5.3",
+       "nazev": "Trénink paměti",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Rozvoj a zkvalitňování paměťových mechanismů ovlivňujících učení a školní úspěšnost žáka.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-5-3-trenink-pameti.md"
+      },
+      {
+       "kod": "3.5.6",
+       "nazev": "Rozvoj dílčích funkcí",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Pravidelné (nejlépe každodenní) zařazování činností na rozvoj konkrétní funkce před nástupem a na počátku docházky (zrak, sluch, jemná motorika/grafomotorika, prostorová orientace, intermodalita, serialita).",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-5-6-rozvoj-dilcich-funkci.md"
+      },
+      {
+       "kod": "3.5.8",
+       "nazev": "Rozvoj exekutivních funkcí",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Cílený rozvoj funkcí odpovídajících za cílevědomou činnost, plánování, pracovní paměť, flexibilitu a hodnocení vlastní činnosti.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-5-8-rozvoj-exekutivnich-funkci.md"
+      },
+      {
+       "kod": "3.6",
+       "nazev": "Nácvik sebeobslužných dovedností",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Cílený individuální nácvik sebeobsluhy na základní úrovni (hygiena, oblékání, stolování, pomůcky) i vyšší (nákup, doprava) k dosažení maximální samostatnosti.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-6-nacvik-sebeobsluznych-dovednosti.md"
+      },
+      {
+       "kod": "3.7",
+       "nazev": "Nácvik sociálního chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Nácvik pozitivních vzorců chování ve vztahu k ostatním s důrazem na seberegulaci, tak aby se naučená dovednost přenesla do reálného života.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-7-nacvik-socialniho-chovani.md"
+      },
+      {
+       "kod": "3.7.1",
+       "nazev": "Podpora rozvoje emocí",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Vytváření bezpečného prostoru, kde žáci mohou projevit a kultivovat emoce a rozvíjet emoční inteligenci (rozpoznání a zvládání emocí, empatie).",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-7-1-podpora-rozvoje-emoci.md"
+      },
+      {
+       "kod": "3.7.2",
+       "nazev": "Podpora zvládání emoční zátěže spojené s nástupem do školy",
+       "oblast": 3,
+       "typ": "podkarta",
+       "anotace": "Podpora dobrého startu školní docházky a začlenění do nového kolektivu, aby žák přijal školu jako přátelské prostředí.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-7-2-podpora-zvladani-emocni-zateze-spojene-s-nastupem-do-s.md"
+      },
+      {
+       "kod": "3.8",
+       "nazev": "Zvládání náročného chování",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Cílené a situaci přiměřené usměrnění nevhodných projevů a motivace žáka k jejich nahrazení sociálně přijatelnými vzorci chování.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-8-zvladani-narocneho-chovani.md"
+      },
+      {
+       "kod": "3.9",
+       "nazev": "Metodická intervence k pedagogům ze strany ŠPZ a ŠPP",
+       "oblast": 3,
+       "typ": "karta",
+       "anotace": "Metodická podpora učitelů ze strany ŠPZ a ŠPP na vyžádání, zejména v poradenství při vzdělávání žáků se SVP a žáků nadaných.",
+       "full": "data/full/szn/oblast-03-intervence.md",
+       "card": "data/cards/szn/3-9-metodicka-intervence-k-pedagogum-ze-strany-spz-a-spp.md"
+      }
+     ]
+    },
+    {
+     "oblast": 4,
+     "nazev": "Pomůcky",
+     "full": "data/full/szn/oblast-04-pomucky.md",
+     "karty": [
+      {
+       "kod": "4.1",
+       "nazev": "Didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Předměty zprostředkující realitu názorně, umožňující manipulaci a zapojení více smyslů k osvojení učiva.",
+       "full": "data/full/szn/oblast-04-pomucky.md",
+       "card": "data/cards/szn/4-1-didakticke-pomucky.md"
+      },
+      {
+       "kod": "4.1.1",
+       "nazev": "Výukové materiály pro žáky s odlišným mateřským jazykem",
+       "oblast": 4,
+       "typ": "podkarta",
+       "anotace": "Zajištění vhodných výukových materiálů pro rozvoj češtiny jako druhého jazyka.",
+       "full": "data/full/szn/oblast-04-pomucky.md",
+       "card": "data/cards/szn/4-1-1-vyukove-materialy-pro-zaky-s-odlisnym-materskym-jazyke.md"
+      },
+      {
+       "kod": "4.2",
+       "nazev": "Speciální didaktické pomůcky",
+       "oblast": 4,
+       "typ": "karta",
+       "anotace": "Speciální nebo upravené běžné pomůcky přizpůsobené aktuálním potřebám konkrétního žáka.",
+       "full": "data/full/szn/oblast-04-pomucky.md",
+       "card": "data/cards/szn/4-2-specialni-didakticke-pomucky.md"
+      }
+     ]
+    },
+    {
+     "oblast": 5,
+     "nazev": "Úprava obsahu vzdělávání",
+     "full": "data/full/szn/oblast-05-uprava-obsahu-vzdelavani.md",
+     "karty": [
+      {
+       "kod": "5.1",
+       "nazev": "Respektování specifik žáka",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Úprava vzdělávání žáka z kulturně odlišného prostředí s respektem k jeho kulturním a individuálním odlišnostem.",
+       "full": "data/full/szn/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/szn/5-1-respektovani-specifik-zaka.md"
+      },
+      {
+       "kod": "5.1.1",
+       "nazev": "Podpora rozvoje mateřského jazyka u žáků s odlišným mateřským jazykem",
+       "oblast": 5,
+       "typ": "podkarta",
+       "anotace": "Poskytování příležitostí pro rozvoj mateřského jazyka ve vztahu k obsahu vzdělávání.",
+       "full": "data/full/szn/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/szn/5-1-1-podpora-rozvoje-materskeho-jazyka-u-zaku-s-odlisnym-ma.md"
+      },
+      {
+       "kod": "5.2",
+       "nazev": "Úprava obsahu a rozsahu učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Snížení nároků redukcí obsahu i rozsahu učiva dle možností žáka, dočasně nebo dlouhodobě.",
+       "full": "data/full/szn/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/szn/5-2-uprava-obsahu-a-rozsahu-uciva.md"
+      },
+      {
+       "kod": "5.4",
+       "nazev": "Rozložení učiva pro žáky ohrožené předčasným odchodem ze vzdělávání",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Soubor opatření (odklad, přípravná třída, kurzy pro získání základního vzdělání, přerušení/opakování na SŠ) snižujících riziko předčasného odchodu.",
+       "full": "data/full/szn/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/szn/5-4-rozlozeni-uciva-pro-zaky-ohrozene-predcasnym-odchodem-ze.md"
+      },
+      {
+       "kod": "5.5",
+       "nazev": "Obohacování učiva",
+       "oblast": 5,
+       "typ": "karta",
+       "anotace": "Obohacení učiva o interkulturní dovednosti pro sebepoznání a vhodnou komunikaci se členy jiných kultur.",
+       "full": "data/full/szn/oblast-05-uprava-obsahu-vzdelavani.md",
+       "card": "data/cards/szn/5-5-obohacovani-uciva.md"
+      }
+     ]
+    },
+    {
+     "oblast": 6,
+     "nazev": "Hodnocení",
+     "full": "data/full/szn/oblast-06-hodnoceni.md",
+     "karty": [
+      {
+       "kod": "6.1",
+       "nazev": "Individualizace hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Individuální přístup k hodnocení dle svébytnosti žáka s jasnými pravidly a referenčním rámcem.",
+       "full": "data/full/szn/oblast-06-hodnoceni.md",
+       "card": "data/cards/szn/6-1-individualizace-hodnoceni.md"
+      },
+      {
+       "kod": "6.1.1",
+       "nazev": "Diferenciace učebních cílů dle možností žáků",
+       "oblast": 6,
+       "typ": "podkarta",
+       "anotace": "Volba učebních cílů odpovídajících možnostem žáka s využitím taxonomií vzdělávacích cílů.",
+       "full": "data/full/szn/oblast-06-hodnoceni.md",
+       "card": "data/cards/szn/6-1-1-diferenciace-ucebnich-cilu-dle-moznosti-zaku.md"
+      },
+      {
+       "kod": "6.2",
+       "nazev": "Podmínky a metody dlouhodobého sledování žáků",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Komplexní systém sledování školní i domácí práce žáka (analýza potřeb, plány, portfolio, konzultace) pro maximální učební pokrok.",
+       "full": "data/full/szn/oblast-06-hodnoceni.md",
+       "card": "data/cards/szn/6-2-podminky-a-metody-dlouhodobeho-sledovani-zaku.md"
+      },
+      {
+       "kod": "6.2.1",
+       "nazev": "Plánování dle časových a tematických celků",
+       "oblast": 6,
+       "typ": "podkarta",
+       "anotace": "Plánování výuky do tematických/časových celků se zapojením žáků do přípravy i hodnocení.",
+       "full": "data/full/szn/oblast-06-hodnoceni.md",
+       "card": "data/cards/szn/6-2-1-planovani-dle-casovych-a-tematickych-celku.md"
+      },
+      {
+       "kod": "6.2.2",
+       "nazev": "Formativní hodnocení",
+       "oblast": 6,
+       "typ": "podkarta",
+       "anotace": "Průběžné interaktivní hodnocení pokroku žáka rozvíjející jeho sebehodnocení a schopnost „učit se učit\".",
+       "full": "data/full/szn/oblast-06-hodnoceni.md",
+       "card": "data/cards/szn/6-2-2-formativni-hodnoceni.md"
+      },
+      {
+       "kod": "6.3",
+       "nazev": "Rozšířené formy hodnocení",
+       "oblast": 6,
+       "typ": "karta",
+       "anotace": "Užívání rozšířených forem hodnocení (slovní, kombinované, kriteriální, hodnocení klíčových kompetencí).",
+       "full": "data/full/szn/oblast-06-hodnoceni.md",
+       "card": "data/cards/szn/6-3-rozsirene-formy-hodnoceni.md"
+      }
+     ]
+    },
+    {
+     "oblast": 7,
+     "nazev": "Příprava na výuku",
+     "full": "data/full/szn/oblast-07-priprava-na-vyuku.md",
+     "karty": [
+      {
+       "kod": "7.1",
+       "nazev": "Jiné formy přípravy na vyučování",
+       "oblast": 7,
+       "typ": "karta",
+       "anotace": "Vytváření vhodných podmínek pro domácí přípravu žáka ve škole i doma, aby dosáhl svého vzdělávacího maxima.",
+       "full": "data/full/szn/oblast-07-priprava-na-vyuku.md",
+       "card": "data/cards/szn/7-1-jine-formy-pripravy-na-vyucovani.md"
+      }
+     ]
+    },
+    {
+     "oblast": 8,
+     "nazev": "Podpora sociální a zdravotní",
+     "full": "data/full/szn/oblast-08-podpora-socialni-a-zdravotni.md",
+     "karty": [
+      {
+       "kod": "8.2",
+       "nazev": "Odlišné stravování",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Zohlednění individuálních stravovacích potřeb žáka v rámci školního stravování.",
+       "full": "data/full/szn/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/szn/8-2-odlisne-stravovani.md"
+      },
+      {
+       "kod": "8.3",
+       "nazev": "Podávání medikace",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Zajištění podávání léků ve škole určenou osobou, když žák ani rodič nezvládají pravidelné užívání.",
+       "full": "data/full/szn/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/szn/8-3-podavani-medikace.md"
+      },
+      {
+       "kod": "8.4",
+       "nazev": "Spolupráce s externími poskytovateli služeb",
+       "oblast": 8,
+       "typ": "karta",
+       "anotace": "Dlouhodobá spolupráce školy s externími poskytovateli (neziskové organizace, OSPOD) při řešení potíží spojených se vzděláváním.",
+       "full": "data/full/szn/oblast-08-podpora-socialni-a-zdravotni.md",
+       "card": "data/cards/szn/8-4-spoluprace-s-externimi-poskytovateli-sluzeb.md"
+      }
+     ]
+    },
+    {
+     "oblast": 9,
+     "nazev": "Práce s třídním kolektivem",
+     "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+     "karty": [
+      {
+       "kod": "9.1",
+       "nazev": "Klima třídy",
+       "oblast": 9,
+       "typ": "karta",
+       "anotace": "Práce s třídním kolektivem (preventivní i intervenční) směřující k harmonizaci vztahů a klimatu ve třídě.",
+       "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/szn/9-1-klima-tridy.md"
+      },
+      {
+       "kod": "9.1.1",
+       "nazev": "Podpora žáků při formování žákovské skupiny",
+       "oblast": 9,
+       "typ": "podkarta",
+       "anotace": "Aktivní podpora pozitivní komunikace a dobrých vztahů ve třídě i individuální podpora žáků, kteří se obtížně začleňují.",
+       "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/szn/9-1-1-podpora-zaku-pri-formovani-zakovske-skupiny.md"
+      },
+      {
+       "kod": "9.1.2",
+       "nazev": "Podpora kladných vztahů mezi žáky",
+       "oblast": 9,
+       "typ": "podkarta",
+       "anotace": "Průběžné monitorování vztahů ve třídě, včasná detekce změn a účinná podpora žáků při řešení konfliktů.",
+       "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/szn/9-1-2-podpora-kladnych-vztahu-mezi-zaky.md"
+      },
+      {
+       "kod": "9.1.3",
+       "nazev": "Nácvik řešení krizové situace",
+       "oblast": 9,
+       "typ": "podkarta",
+       "anotace": "Připravené strategie a plán pro konfliktní a mimořádné situace, aby se krize neprohlubovala.",
+       "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/szn/9-1-3-nacvik-reseni-krizove-situace.md"
+      },
+      {
+       "kod": "9.1.4",
+       "nazev": "Zajištění klimatu pro bezpečnou komunikaci mezi žáky i učiteli",
+       "oblast": 9,
+       "typ": "podkarta",
+       "anotace": "Cílená podpora důvěry a kooperativní atmosféry ve vztahu žáci–učitelé volbou vhodné komunikace a prostoru pro bezpečný kontakt.",
+       "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/szn/9-1-4-zajisteni-klimatu-pro-bezpecnou-komunikaci-mezi-zaky-i.md"
+      },
+      {
+       "kod": "9.1.5",
+       "nazev": "Příprava na příchod a následná adaptační fáze PO příchodu žáka se speciálními vzdělávacími potřebami do třídy",
+       "oblast": 9,
+       "typ": "podkarta",
+       "anotace": "Příprava školy, učitelů i žáků na příchod žáka se zvýšenou potřebou podpory a jeho následná adaptace.",
+       "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/szn/9-1-5-priprava-na-prichod-a-nasledna-adaptacni-faze-po-prich.md"
+      },
+      {
+       "kod": "9.1.6",
+       "nazev": "Ovlivňování postojů žáků v přijímání různosti",
+       "oblast": 9,
+       "typ": "podkarta",
+       "anotace": "Předávání informací, postojů a zkušeností podporujících přijetí různosti jako běžné a obohacující součásti společnosti.",
+       "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/szn/9-1-6-ovlivnovani-postoju-zaku-v-prijimani-ruznosti.md"
+      },
+      {
+       "kod": "9.1.7",
+       "nazev": "Rozvoj dovedností a kompetencí zprostředkovaných jedincem s odlišností",
+       "oblast": 9,
+       "typ": "podkarta",
+       "anotace": "Učit žáky vnímat odlišnost druhého jako prvek, který skupinu přirozeně obohacuje.",
+       "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/szn/9-1-7-rozvoj-dovednosti-a-kompetenci-zprostredkovanych-jedin.md"
+      },
+      {
+       "kod": "9.1.8",
+       "nazev": "Využití „peer“ efektu (posílení vazeb napříč ročníky a stupni vzdělávání)",
+       "oblast": 9,
+       "typ": "podkarta",
+       "anotace": "Dlouhodobý program primární prevence, kde proškolení vrstevníci (peer aktivisté) působí na mladší spolužáky.",
+       "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/szn/9-1-8-vyuziti-peer-efektu-posileni-vazeb-napric-rocniky-a-st.md"
+      },
+      {
+       "kod": "9.1.9",
+       "nazev": "Systematická podpora osobnostně-sociálního rozvoje žáků",
+       "oblast": 9,
+       "typ": "podkarta",
+       "anotace": "Systematický rozvoj osobnostních a sociálních dovedností s využitím dynamiky třídní skupiny.",
+       "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/szn/9-1-9-systematicka-podpora-osobnostne-socialniho-rozvoje-zak.md"
+      },
+      {
+       "kod": "9.1.10",
+       "nazev": "Tvorba pravidel třídy a hodnocení jejich dodržování",
+       "oblast": 9,
+       "typ": "podkarta",
+       "anotace": "Stanovení jasných, konkrétních a srozumitelných hranic v chování žáků.",
+       "full": "data/full/szn/oblast-09-prace-s-tridnim-kolektivem.md",
+       "card": "data/cards/szn/9-1-10-tvorba-pravidel-tridy-a-hodnoceni-jejich-dodrzovani.md"
+      }
+     ]
+    },
+    {
+     "oblast": 10,
+     "nazev": "Úprava prostředí",
+     "full": "data/full/szn/oblast-10-uprava-prostredi.md",
+     "karty": [
+      {
+       "kod": "10.1",
+       "nazev": "Úprava pracovního prostředí",
+       "oblast": 10,
+       "typ": "karta",
+       "anotace": "Klidné místo (ve třídě nebo samostatná místnost) pro odpočinek a zklidnění žáka pod dohledem.",
+       "full": "data/full/szn/oblast-10-uprava-prostredi.md",
+       "card": "data/cards/szn/10-1-uprava-pracovniho-prostredi.md"
+      },
+      {
+       "kod": "10.2",
+       "nazev": "Stavební úpravy, bezbariérovost",
+       "oblast": 10,
+       "typ": "karta",
+       "anotace": "Zpřístupnění školy všem na úrovni lidských zdrojů, programové vybavenosti a technických opatření (bezbariérovost).",
+       "full": "data/full/szn/oblast-10-uprava-prostredi.md",
+       "card": "data/cards/szn/10-2-stavebni-upravy-bezbarierovost.md"
+      }
+     ]
+    }
+   ]
+  },
+  "szn-metodika": {
+   "nazev": "Metodika k sociálnímu znevýhodnění",
+   "cilova_skupina": "metodická podpora k SZN",
+   "typ": "obecna",
+   "zdroj": "katalog-szn-metodika.pdf",
+   "prehled": "data/cards/szn-metodika/_prehled.md",
+   "kapitoly": [
+    {
+     "nazev": "Úvod",
+     "full": "data/full/szn-metodika/01-uvod.md"
+    },
+    {
+     "nazev": "Dynamická diagnostika",
+     "full": "data/full/szn-metodika/02-dynamicka-diagnostika.md"
+    },
+    {
+     "nazev": "Sociálně-právní ochrana dětí a škola",
+     "full": "data/full/szn-metodika/03-socialne-pravni-ochrana-deti-a-skola.md"
+    },
+    {
+     "nazev": "Vybrané oblasti pedagogické diagnostiky",
+     "full": "data/full/szn-metodika/04-vybrane-oblasti-pedagogicke-diagnostiky.md"
+    },
+    {
+     "nazev": "Posuzovací schéma",
+     "full": "data/full/szn-metodika/05-posuzovaci-schema.md"
+    },
+    {
+     "nazev": "Literatura",
+     "full": "data/full/szn-metodika/06-literatura.md"
+    },
+    {
+     "nazev": "Přílohy",
+     "full": "data/full/szn-metodika/07-prilohy.md"
+    },
+    {
+     "nazev": "Shrnutí",
+     "full": "data/full/szn-metodika/08-shrnuti.md"
+    }
+   ]
+  },
+  "spuch": {
+   "nazev": "Specifické poruchy učení a chování",
+   "cilova_skupina": "žáci se specifickými poruchami učení a chování (dyslexie, dysgrafie, dysortografie, dyskalkulie, ADHD/ADD)",
+   "typ": "dilci",
+   "zdroj": "KPO_cast_SPUCH.pdf",
+   "poznamka": "Prozaická struktura (kapitoly 1–7), ne oblasti/karty PO. Destilované karty odpovídají kapitolám podpůrných opatření (kap. 4).",
+   "prehled": "data/cards/spuch/_prehled.md",
+   "all": "data/cards/spuch/_all.md",
+   "pocet_karet": 18,
+   "kapitoly_full": [
+    "data/full/spuch/01-uvod.md",
+    "data/full/spuch/02-charakteristika-znevyhodneni.md",
+    "data/full/spuch/03-dopady-znevyhodneni-na-vzdelavani.md",
+    "data/full/spuch/04-pedagogicka-diagnostika-spu-a-spch.md",
+    "data/full/spuch/05-po-individualni-vzdelavaci-plan.md",
+    "data/full/spuch/06-po-metody-vyuky.md",
+    "data/full/spuch/07-po-organizace-vyuky.md",
+    "data/full/spuch/08-po-uprava-obsahu-a-vystupu-vzdelavani.md",
+    "data/full/spuch/09-po-predmety-specialnepedagogicke-pece.md",
+    "data/full/spuch/10-po-intervence-pocet-zaku-personalni-podpora.md",
+    "data/full/spuch/11-po-hodnoceni.md",
+    "data/full/spuch/12-po-pomucky.md",
+    "data/full/spuch/13-po-podpurna-opatreni-jineho-druhu.md",
+    "data/full/spuch/14-slovnik-odbornych-pojmu.md",
+    "data/full/spuch/15-uzitecne-odkazy.md",
+    "data/full/spuch/16-seznam-pouzite-literatury.md"
+   ],
+   "karty": [
+    {
+     "kod": "4.1",
+     "nazev": "Individuální vzdělávací plán (IVP)",
+     "card": "data/cards/spuch/4-1-individualni-vzdelavaci-plan.md"
+    },
+    {
+     "kod": "4.2.1.1",
+     "nazev": "Metody výuky — dyslexie",
+     "card": "data/cards/spuch/4-2-1-1-metody-vyuky-dyslexie.md"
+    },
+    {
+     "kod": "4.2.1.2",
+     "nazev": "Metody výuky — dysgrafie",
+     "card": "data/cards/spuch/4-2-1-2-metody-vyuky-dysgrafie.md"
+    },
+    {
+     "kod": "4.2.1.3",
+     "nazev": "Metody výuky — dysortografie",
+     "card": "data/cards/spuch/4-2-1-3-metody-vyuky-dysortografie.md"
+    },
+    {
+     "kod": "4.2.1.4",
+     "nazev": "Metody výuky — dyskalkulie",
+     "card": "data/cards/spuch/4-2-1-4-metody-vyuky-dyskalkulie.md"
+    },
+    {
+     "kod": "4.2.1.5",
+     "nazev": "Metody výuky — kombinace SPU a efektivní strategie učení",
+     "card": "data/cards/spuch/4-2-1-5-metody-vyuky-kombinace-spu.md"
+    },
+    {
+     "kod": "4.2.2.1",
+     "nazev": "Metody výuky — porucha pozornosti",
+     "card": "data/cards/spuch/4-2-2-1-metody-vyuky-porucha-pozornosti.md"
+    },
+    {
+     "kod": "4.2.2.2",
+     "nazev": "Metody výuky — hyperaktivita",
+     "card": "data/cards/spuch/4-2-2-2-metody-vyuky-hyperaktivita.md"
+    },
+    {
+     "kod": "4.2.2.3",
+     "nazev": "Metody výuky — impulzivita",
+     "card": "data/cards/spuch/4-2-2-3-metody-vyuky-impulzivita.md"
+    },
+    {
+     "kod": "4.2.2.4",
+     "nazev": "Strukturalizace výuky",
+     "card": "data/cards/spuch/4-2-2-4-strukturalizace-vyuky.md"
+    },
+    {
+     "kod": "4.2.2.5",
+     "nazev": "Efektivní výukové postupy",
+     "card": "data/cards/spuch/4-2-2-5-efektivni-vyukove-postupy.md"
+    },
+    {
+     "kod": "4.3",
+     "nazev": "Organizace výuky",
+     "card": "data/cards/spuch/4-3-organizace-vyuky.md"
+    },
+    {
+     "kod": "4.4",
+     "nazev": "Úprava obsahu a očekávaných výstupů vzdělávání",
+     "card": "data/cards/spuch/4-4-uprava-obsahu-a-vystupu-vzdelavani.md"
+    },
+    {
+     "kod": "4.6",
+     "nazev": "Předměty speciálněpedagogické péče (reedukace)",
+     "card": "data/cards/spuch/4-6-predmety-specialnepedagogicke-pece-reedukace.md"
+    },
+    {
+     "kod": "4.7",
+     "nazev": "Pedagogická intervence, snížený počet žáků, personální podpora",
+     "card": "data/cards/spuch/4-7-intervence-pocet-zaku-personalni-podpora.md"
+    },
+    {
+     "kod": "4.10",
+     "nazev": "Hodnocení žáků se SPU a SPCH",
+     "card": "data/cards/spuch/4-10-hodnoceni.md"
+    },
+    {
+     "kod": "4.11",
+     "nazev": "Pomůcky",
+     "card": "data/cards/spuch/4-11-pomucky.md"
+    },
+    {
+     "kod": "4.12",
+     "nazev": "Podpůrná opatření jiného druhu (práce s třídním kolektivem)",
+     "card": "data/cards/spuch/4-12-podpurna-opatreni-jineho-druhu.md"
+    }
+   ]
+  }
+ }
+}
