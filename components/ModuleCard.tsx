@@ -2,12 +2,18 @@ import Link from "next/link";
 import { FileText } from "lucide-react";
 import type { ModuleWithLatestVersion } from "@/lib/types";
 
-export function ModuleCard({ module }: { module: ModuleWithLatestVersion }) {
+export function ModuleCard({
+  module,
+  countryId,
+}: {
+  module: ModuleWithLatestVersion;
+  countryId: string;
+}) {
   const latest = module.latest_version;
 
   return (
     <Link
-      href={`/modules/${module.id}`}
+      href={`/modules/${module.id}?country=${countryId}`}
       className="flex flex-col gap-3 rounded-2xl border border-haze bg-white p-5 transition hover:border-coral"
     >
       <div className="flex items-center justify-between">
