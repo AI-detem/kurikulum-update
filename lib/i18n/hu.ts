@@ -28,6 +28,8 @@ export const hu: Dictionary = {
   loadingPdf: "PDF betöltése...",
   pdfLoadFailed: "A PDF-et nem sikerült betölteni",
   openInDrive: "Megnyitás a Google Drive-ban",
+  changesPanelTitle: "Mi változott ebben a verzióban",
+  changesPanelEmpty: "Még nincs megjelölve semmi.",
 
   uploadNewVersion: "Új verzió feltöltése",
   module: "Modul",

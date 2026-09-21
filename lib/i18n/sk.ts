@@ -28,6 +28,8 @@ export const sk: Dictionary = {
   loadingPdf: "Načítavam PDF...",
   pdfLoadFailed: "PDF sa nepodarilo načítať",
   openInDrive: "Otvoriť v Google Drive",
+  changesPanelTitle: "Čo sa v tejto verzii zmenilo",
+  changesPanelEmpty: "Zatiaľ nič označené.",
 
   uploadNewVersion: "Nahrať novú verziu",
   module: "Modul",

@@ -1,3 +1,6 @@
+"use client";
+
+import { useState } from "react";
 import type { Change, DocumentVersion } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 import { PdfPreview } from "@/components/PdfPreview";
@@ -11,13 +14,17 @@ export function VersionHistory({
   versions: VersionWithChanges[];
   t: Dictionary;
 }) {
+  // Rozbalená je vždy nejvýš jedna verze (ta nejnovější na začátku), aby se
+  // nevykreslovalo deset dokumentů najednou.
+  const [openId, setOpenId] = useState<string | null>(versions[0]?.id ?? null);
+
   if (versions.length === 0) {
     return <p className="text-sm text-ink/50">{t.noVersions}</p>;
   }
 
   return (
     <ol className="flex flex-col gap-4">
-      {versions.map((version, index) => (
+      {versions.map((version) => (
         <li key={version.id} className="rounded-2xl border border-haze p-5">
           <span className="font-heading text-lg font-bold text-ink">
             {t.version} {version.version_number}
@@ -36,16 +43,15 @@ export function VersionHistory({
             ))}
           </ul>
 
-          {/* Vlevo dokument, vpravo panel pro popisy změn (zatím prázdný).
-              Na užších obrazovkách se sloupce skládají pod sebe. */}
-          <div className="mt-4 grid grid-cols-1 gap-4 doc:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
-            <div>
-              {/* Verze jsou seřazené od nejnovější, takže první z nich má
-                  dokument otevřený rovnou. */}
-              <PdfPreview fileUrl={version.file_url} defaultOpen={index === 0} t={t} />
-            </div>
-
-            <aside className="hidden min-h-32 rounded-xl bg-haze/30 doc:block" />
+          <div className="mt-4">
+            <PdfPreview
+              fileUrl={version.file_url}
+              open={openId === version.id}
+              onToggle={() =>
+                setOpenId((current) => (current === version.id ? null : version.id))
+              }
+              t={t}
+            />
           </div>
         </li>
       ))}

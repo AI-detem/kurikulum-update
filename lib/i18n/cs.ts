@@ -35,6 +35,8 @@ export const cs = {
   loadingPdf: "Načítám PDF...",
   pdfLoadFailed: "PDF se nepodařilo načíst",
   openInDrive: "Otevřít v Google Drive",
+  changesPanelTitle: "Co se v této verzi změnilo",
+  changesPanelEmpty: "Zatím nic označeného.",
 
   // nahrání nové verze
   uploadNewVersion: "Nahrát novou verzi",

@@ -4,6 +4,7 @@ import { resolveActiveCountry } from "@/lib/active-country";
 import { getModuleDetail } from "@/lib/modules-data";
 import { VersionHistory } from "@/components/VersionHistory";
 import { CountrySwitcher } from "@/components/CountrySwitcher";
+import { ChangesPanel } from "@/components/ChangesPanel";
 
 export default async function ModuleDetailPage({
   params,
@@ -30,7 +31,7 @@ export default async function ModuleDetailPage({
   if (!module) notFound();
 
   return (
-    <div className="max-w-4xl">
+    <div>
       {countries.length > 0 && (
         <div className="mb-5">
           <CountrySwitcher
@@ -43,7 +44,13 @@ export default async function ModuleDetailPage({
 
       <p className="badge-pill mb-3">{module.category ?? t.noCategory}</p>
       <h1 className="mb-6 font-heading text-3xl font-bold text-ink">{module.name}</h1>
-      <VersionHistory versions={versions} t={t} />
+
+      {/* Dokument zabírá zbytek šířky, panel změn má pevných 340 px.
+          Pod 820 px se sloupce skládají pod sebe. */}
+      <div className="grid grid-cols-1 gap-6 doc:grid-cols-[minmax(0,1fr)_340px]">
+        <VersionHistory versions={versions} t={t} />
+        <ChangesPanel t={t} />
+      </div>
     </div>
   );
 }

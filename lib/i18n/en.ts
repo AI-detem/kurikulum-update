@@ -28,6 +28,8 @@ export const en: Dictionary = {
   loadingPdf: "Loading PDF...",
   pdfLoadFailed: "The PDF could not be loaded",
   openInDrive: "Open in Google Drive",
+  changesPanelTitle: "What changed in this version",
+  changesPanelEmpty: "Nothing marked yet.",
 
   uploadNewVersion: "Upload new version",
   module: "Module",

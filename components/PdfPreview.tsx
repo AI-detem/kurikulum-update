@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import dynamic from "next/dynamic";
 import { Download, FileText } from "lucide-react";
 import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
@@ -12,19 +11,19 @@ const PdfViewer = dynamic(
   { ssr: false }
 );
 
-// PDF vykreslené vlastním rendererem. U nejnovější verze je otevřené rovnou
-// (defaultOpen), u starších se rozbalí po kliknutí.
+// PDF vykreslené vlastním rendererem. Jestli je dokument rozbalený, řídí
+// seznam verzí – vykresluje se vždy nejvýš jeden.
 export function PdfPreview({
   fileUrl,
-  defaultOpen = false,
+  open,
+  onToggle,
   t,
 }: {
   fileUrl: string;
-  defaultOpen?: boolean;
+  open: boolean;
+  onToggle: () => void;
   t: Dictionary;
 }) {
-  const [open, setOpen] = useState(defaultOpen);
-
   // Starší verze z doby, kdy se PDF nahrávala do Supabase Storage, nemají
   // odkaz na Drive – ty už appka zobrazit neumí.
   const fileId = extractDriveFileId(fileUrl);
@@ -41,7 +40,7 @@ export function PdfPreview({
         {/* Na širší obrazovce se dokument rozbalí přímo ve stránce. */}
         <button
           type="button"
-          onClick={() => setOpen((isOpen) => !isOpen)}
+          onClick={onToggle}
           className="hidden items-center gap-1.5 text-sm font-medium text-coral hover:underline sm:flex"
         >
           <FileText size={16} />
