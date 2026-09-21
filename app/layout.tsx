@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { getCurrentUser } from "@/lib/current-user";
+import { resolveActiveCountry } from "@/lib/active-country";
 import { getNotificationsForCurrentUser } from "@/lib/notifications-data";
+import { getRequestedCountryId } from "@/lib/request-url";
 import { Sidebar } from "@/components/Sidebar";
 import { NotificationBell } from "@/components/NotificationBell";
 
@@ -17,24 +19,29 @@ export default async function RootLayout({
 }) {
   const user = await getCurrentUser();
 
+  if (!user) {
+    return (
+      <html lang="cs">
+        <body className="font-sans antialiased">{children}</body>
+      </html>
+    );
+  }
+
+  const { t } = await resolveActiveCountry(user, await getRequestedCountryId());
+  const notifications = await getNotificationsForCurrentUser(user.id);
+
   return (
     <html lang="cs">
       <body className="font-sans antialiased">
-        {user ? (
-          <div className="flex">
-            <Sidebar user={user} />
-            <div className="flex-1">
-              <header className="flex justify-end border-b border-haze px-8 py-4">
-                <NotificationBell
-                  initialNotifications={await getNotificationsForCurrentUser(user.id)}
-                />
-              </header>
-              <main className="px-8 py-8">{children}</main>
-            </div>
+        <div className="flex">
+          <Sidebar user={user} t={t} />
+          <div className="flex-1">
+            <header className="flex justify-end border-b border-haze px-8 py-4">
+              <NotificationBell initialNotifications={notifications} t={t} />
+            </header>
+            <main className="px-8 py-8">{children}</main>
           </div>
-        ) : (
-          children
-        )}
+        </div>
       </body>
     </html>
   );

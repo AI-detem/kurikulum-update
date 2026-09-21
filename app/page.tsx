@@ -11,14 +11,12 @@ export default async function DashboardPage({
 }) {
   const user = await requireUser();
   const { country } = await searchParams;
-  const { activeCountryId, countries } = await resolveActiveCountry(user, country);
+  const { activeCountryId, countries, t } = await resolveActiveCountry(user, country);
 
   if (!activeCountryId) {
     return (
       <p className="text-sm text-ink/60">
-        {user.role === "admin"
-          ? "Zatím není založená žádná země. Přidej ji v Administraci."
-          : "Zatím ti není přiřazená žádná země. Ozvi se administrátorovi appky."}
+        {user.role === "admin" ? t.noCountriesYet : t.noCountryAssigned}
       </p>
     );
   }
@@ -28,7 +26,7 @@ export default async function DashboardPage({
   return (
     <div>
       <div className="mb-6 flex items-center justify-between gap-4">
-        <h1 className="font-heading text-3xl font-bold text-ink">Metodiky</h1>
+        <h1 className="font-heading text-3xl font-bold text-ink">{t.methodologies}</h1>
         <CountrySwitcher
           countries={countries}
           activeCountryId={activeCountryId}
@@ -37,11 +35,16 @@ export default async function DashboardPage({
       </div>
 
       {modules.length === 0 ? (
-        <p className="text-sm text-ink/50">Zatím tu nejsou žádné moduly.</p>
+        <p className="text-sm text-ink/50">{t.noModules}</p>
       ) : (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {modules.map((module) => (
-            <ModuleCard key={module.id} module={module} countryId={activeCountryId} />
+            <ModuleCard
+              key={module.id}
+              module={module}
+              countryId={activeCountryId}
+              t={t}
+            />
           ))}
         </div>
       )}

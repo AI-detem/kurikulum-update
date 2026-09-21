@@ -2,11 +2,20 @@
 // požadavku, aby uživatel nebyl náhodou odhlášen, i když je token starší.
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
+import { URL_HEADER } from "@/lib/request-url";
 
 type CookieToSet = { name: string; value: string; options: CookieOptions };
 
+// Adresu požadavku posíláme dál jako hlavičku, aby si z ní layout mohl
+// přečíst vybranou zemi (viz lib/request-url.ts).
+function nextWithUrlHeader(request: NextRequest) {
+  const headers = new Headers(request.headers);
+  headers.set(URL_HEADER, request.url);
+  return NextResponse.next({ request: { headers } });
+}
+
 export async function updateSession(request: NextRequest) {
-  let response = NextResponse.next({ request });
+  let response = nextWithUrlHeader(request);
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -20,7 +29,7 @@ export async function updateSession(request: NextRequest) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
-          response = NextResponse.next({ request });
+          response = nextWithUrlHeader(request);
           cookiesToSet.forEach(({ name, value, options }) =>
             response.cookies.set(name, value, options)
           );

@@ -4,11 +4,14 @@ import { useState } from "react";
 import { Bell } from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
 import type { NotificationWithDetails } from "@/lib/notifications-data";
+import type { Dictionary } from "@/lib/i18n";
 
 export function NotificationBell({
   initialNotifications,
+  t,
 }: {
   initialNotifications: NotificationWithDetails[];
+  t: Dictionary;
 }) {
   const [notifications, setNotifications] = useState(initialNotifications);
   const [open, setOpen] = useState(false);
@@ -31,7 +34,7 @@ export function NotificationBell({
       <button
         onClick={() => setOpen((v) => !v)}
         className="relative flex h-9 w-9 items-center justify-center rounded-full hover:bg-haze"
-        aria-label="Notifikace"
+        aria-label={t.notifications}
       >
         <Bell size={18} />
         {unreadCount > 0 && (
@@ -43,9 +46,9 @@ export function NotificationBell({
 
       {open && (
         <div className="absolute right-0 z-10 mt-2 w-80 rounded-xl border border-haze bg-white p-2 shadow-lg">
-          <p className="px-2 py-1 text-xs font-semibold text-ink/60">Notifikace</p>
+          <p className="px-2 py-1 text-xs font-semibold text-ink/60">{t.notifications}</p>
           {notifications.length === 0 && (
-            <p className="px-2 py-4 text-sm text-ink/50">Zatím žádné notifikace.</p>
+            <p className="px-2 py-4 text-sm text-ink/50">{t.noNotifications}</p>
           )}
           <ul className="max-h-80 overflow-y-auto">
             {notifications.map((n) => (

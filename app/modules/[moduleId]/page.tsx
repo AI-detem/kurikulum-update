@@ -15,14 +15,12 @@ export default async function ModuleDetailPage({
   const user = await requireUser();
   const { moduleId } = await params;
   const { country } = await searchParams;
-  const { activeCountryId, countries } = await resolveActiveCountry(user, country);
+  const { activeCountryId, countries, t } = await resolveActiveCountry(user, country);
 
   if (!activeCountryId) {
     return (
       <p className="text-sm text-ink/60">
-        {user.role === "admin"
-          ? "Zatím není založená žádná země. Přidej ji v Administraci."
-          : "Zatím ti není přiřazená žádná země. Ozvi se administrátorovi appky."}
+        {user.role === "admin" ? t.noCountriesYet : t.noCountryAssigned}
       </p>
     );
   }
@@ -43,9 +41,9 @@ export default async function ModuleDetailPage({
         </div>
       )}
 
-      <p className="badge-pill mb-3">{module.category ?? "Bez kategorie"}</p>
+      <p className="badge-pill mb-3">{module.category ?? t.noCategory}</p>
       <h1 className="mb-6 font-heading text-3xl font-bold text-ink">{module.name}</h1>
-      <VersionHistory versions={versions} />
+      <VersionHistory versions={versions} t={t} />
     </div>
   );
 }

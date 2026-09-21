@@ -1,11 +1,19 @@
 import { redirect } from "next/navigation";
 import { requireUser, canUpload } from "@/lib/current-user";
+import { resolveActiveCountry } from "@/lib/active-country";
 import { createClient } from "@/lib/supabase/server";
 import { uploadDocumentVersion } from "./actions";
 
-export default async function UploadPage() {
+export default async function UploadPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ country?: string }>;
+}) {
   const user = await requireUser();
   if (!canUpload(user)) redirect("/");
+
+  const { country } = await searchParams;
+  const { activeCountryId, t } = await resolveActiveCountry(user, country);
 
   const supabase = await createClient();
   const { data: modules } = await supabase.from("modules").select("*").order("name");
@@ -13,10 +21,10 @@ export default async function UploadPage() {
 
   return (
     <div className="max-w-xl">
-      <h1 className="mb-6 font-heading text-3xl font-bold text-ink">Nahrát novou verzi</h1>
+      <h1 className="mb-6 font-heading text-3xl font-bold text-ink">{t.uploadNewVersion}</h1>
 
       <form action={uploadDocumentVersion} className="flex flex-col gap-4">
-        <Field label="Modul">
+        <Field label={t.module}>
           <select name="moduleId" required className="input">
             {modules?.map((m) => (
               <option key={m.id} value={m.id}>
@@ -26,9 +34,14 @@ export default async function UploadPage() {
           </select>
         </Field>
 
-        <Field label="Země">
+        <Field label={t.country}>
           {user.role === "admin" ? (
-            <select name="countryId" required defaultValue={user.country_id ?? ""} className="input">
+            <select
+              name="countryId"
+              required
+              defaultValue={activeCountryId ?? ""}
+              className="input"
+            >
               {countries?.map((c) => (
                 <option key={c.id} value={c.id}>
                   {c.name}
@@ -38,37 +51,34 @@ export default async function UploadPage() {
           ) : (
             <>
               {/* Editor může nahrávat jen pro svou vlastní zemi. */}
-              <input
-                type="hidden"
-                name="countryId"
-                value={user.country_id ?? ""}
-              />
+              <input type="hidden" name="countryId" value={user.country_id ?? ""} />
               <p className="input bg-haze/40 text-ink/60">
-                {countries?.find((c) => c.id === user.country_id)?.name ?? "Bez přiřazené země"}
+                {countries?.find((c) => c.id === user.country_id)?.name ??
+                  t.noCountryForUpload}
               </p>
             </>
           )}
         </Field>
 
-        <Field label="PDF soubor">
+        <Field label={t.pdfFile}>
           <input type="file" name="file" accept="application/pdf" required className="input" />
         </Field>
 
-        <Field label="Kategorie změny (volitelné)">
+        <Field label={`${t.changeCategory} (${t.optional})`}>
           <input
             type="text"
             name="category"
-            placeholder="např. oprava, nový obsah, překlad"
+            placeholder={t.changeCategoryPlaceholder}
             className="input"
           />
         </Field>
 
-        <Field label="Co a proč se změnilo">
+        <Field label={t.whatChanged}>
           <textarea
             name="note"
             required
             rows={4}
-            placeholder="Popiš stručně změnu, ať čtenáři vědí, co se aktualizovalo."
+            placeholder={t.whatChangedPlaceholder}
             className="input"
           />
         </Field>
@@ -77,7 +87,7 @@ export default async function UploadPage() {
           type="submit"
           className="mt-2 rounded-xl bg-coral px-4 py-2.5 font-medium text-white transition hover:opacity-90"
         >
-          Nahrát a odeslat notifikaci
+          {t.uploadAndNotify}
         </button>
       </form>
     </div>

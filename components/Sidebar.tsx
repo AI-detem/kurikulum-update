@@ -2,8 +2,9 @@ import Link from "next/link";
 import { LayoutGrid, UploadCloud, Settings, LogOut } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import type { AppUser } from "@/lib/types";
+import type { Dictionary } from "@/lib/i18n";
 
-export function Sidebar({ user }: { user: AppUser }) {
+export function Sidebar({ user, t }: { user: AppUser; t: Dictionary }) {
   const canManage = user.role === "admin" || user.role === "editor";
 
   return (
@@ -13,16 +14,16 @@ export function Sidebar({ user }: { user: AppUser }) {
       </div>
 
       <nav className="flex flex-1 flex-col gap-1">
-        <SidebarLink href="/" icon={<LayoutGrid size={18} />} label="Přehled" />
+        <SidebarLink href="/" icon={<LayoutGrid size={18} />} label={t.overview} />
         {canManage && (
           <SidebarLink
             href="/admin/upload"
             icon={<UploadCloud size={18} />}
-            label="Nahrát novou verzi"
+            label={t.upload}
           />
         )}
         {user.role === "admin" && (
-          <SidebarLink href="/admin" icon={<Settings size={18} />} label="Administrace" />
+          <SidebarLink href="/admin" icon={<Settings size={18} />} label={t.admin} />
         )}
       </nav>
 
@@ -34,7 +35,7 @@ export function Sidebar({ user }: { user: AppUser }) {
             className="mt-2 flex w-full items-center gap-2 rounded-lg px-2 py-2 text-sm text-ink/70 hover:bg-haze"
           >
             <LogOut size={16} />
-            Odhlásit se
+            {t.logout}
           </button>
         </form>
       </div>

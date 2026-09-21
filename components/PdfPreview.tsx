@@ -2,20 +2,23 @@
 
 import { useState } from "react";
 import { Download, FileText } from "lucide-react";
+import type { Dictionary } from "@/lib/i18n";
 
 // Náhled PDF přímo v appce. U nejnovější verze je otevřený rovnou
 // (defaultOpen), u starších se rozbalí až po kliknutí.
 export function PdfPreview({
   fileUrl,
   defaultOpen = false,
+  t,
 }: {
   fileUrl: string;
   defaultOpen?: boolean;
+  t: Dictionary;
 }) {
   const [open, setOpen] = useState(defaultOpen);
 
   if (!fileUrl) {
-    return <p className="text-sm text-ink/50">Soubor se nepodařilo načíst.</p>;
+    return <p className="text-sm text-ink/50">{t.fileUnavailable}</p>;
   }
 
   // Supabase vrací odkaz ke čtení; parametr download navíc říká prohlížeči,
@@ -34,7 +37,7 @@ export function PdfPreview({
           className="hidden items-center gap-1.5 text-sm font-medium text-coral hover:underline sm:flex"
         >
           <FileText size={16} />
-          {open ? "Skrýt PDF" : "Zobrazit PDF"}
+          {open ? t.hidePdf : t.viewPdf}
         </button>
 
         {/* Na mobilu bývá vložený náhled PDF nepoužitelný, tam proto
@@ -46,7 +49,7 @@ export function PdfPreview({
           className="flex items-center gap-1.5 text-sm font-medium text-coral hover:underline sm:hidden"
         >
           <FileText size={16} />
-          Otevřít PDF
+          {t.openPdf}
         </a>
 
         <a
@@ -54,7 +57,7 @@ export function PdfPreview({
           className="flex items-center gap-1.5 text-sm font-medium text-ink/60 hover:underline"
         >
           <Download size={16} />
-          Stáhnout PDF
+          {t.downloadPdf}
         </a>
       </div>
 
@@ -63,8 +66,8 @@ export function PdfPreview({
           // Parametry za # jsou pokyny pro prohlížečovou čtečku PDF: skryj
           // boční panel s náhledy stránek a přizpůsob dokument šířce okna.
           src={`${fileUrl}#navpanes=0&view=FitH`}
-          title="Náhled PDF"
-          className="mt-3 hidden h-[80vh] w-full rounded-xl border border-haze sm:block"
+          title={t.pdfPreview}
+          className="mt-3 hidden h-[80vh] w-full border-0 sm:block"
         />
       )}
     </div>

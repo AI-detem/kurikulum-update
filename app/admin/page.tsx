@@ -1,10 +1,18 @@
 import { requireAdmin } from "@/lib/current-user";
+import { resolveActiveCountry } from "@/lib/active-country";
 import { createClient } from "@/lib/supabase/server";
 import { addCountry, inviteUser, updateUserRoleAndCountry } from "./actions";
 import type { Country, AppUser } from "@/lib/types";
+import type { Dictionary } from "@/lib/i18n";
 
-export default async function AdminPage() {
-  await requireAdmin();
+export default async function AdminPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ country?: string }>;
+}) {
+  const user = await requireAdmin();
+  const { country } = await searchParams;
+  const { t } = await resolveActiveCountry(user, country);
 
   const supabase = await createClient();
   const { data: countries } = await supabase.from("countries").select("*").order("name");
@@ -12,10 +20,10 @@ export default async function AdminPage() {
 
   return (
     <div className="flex max-w-3xl flex-col gap-10">
-      <h1 className="font-heading text-3xl font-bold text-ink">Administrace</h1>
+      <h1 className="font-heading text-3xl font-bold text-ink">{t.admin}</h1>
 
       <section>
-        <h2 className="mb-3 font-heading text-xl font-bold text-ink">Země</h2>
+        <h2 className="mb-3 font-heading text-xl font-bold text-ink">{t.countries}</h2>
         <ul className="mb-4 flex flex-wrap gap-2">
           {countries?.map((c) => (
             <li key={c.id} className="badge-pill">
@@ -24,21 +32,30 @@ export default async function AdminPage() {
           ))}
         </ul>
         <form action={addCountry} className="flex gap-2">
-          <input name="name" placeholder="Název země" required className="input flex-1" />
-          <input name="locale" placeholder="jazyk (cs, sk, en...)" required className="input w-40" />
-          <button type="submit" className="rounded-xl bg-coral px-4 py-2.5 font-medium text-white hover:opacity-90">
-            Přidat zemi
+          <input name="name" placeholder={t.countryName} required className="input flex-1" />
+          <input name="locale" placeholder={t.languageCode} required className="input w-40" />
+          <button
+            type="submit"
+            className="rounded-xl bg-coral px-4 py-2.5 font-medium text-white hover:opacity-90"
+          >
+            {t.addCountry}
           </button>
         </form>
       </section>
 
       <section>
-        <h2 className="mb-3 font-heading text-xl font-bold text-ink">Uživatelé</h2>
-        <UsersTable users={users ?? []} countries={countries ?? []} />
+        <h2 className="mb-3 font-heading text-xl font-bold text-ink">{t.users}</h2>
+        <UsersTable users={users ?? []} countries={countries ?? []} t={t} />
 
-        <h3 className="mb-2 mt-6 text-sm font-semibold text-ink/70">Pozvat nového uživatele</h3>
+        <h3 className="mb-2 mt-6 text-sm font-semibold text-ink/70">{t.inviteUser}</h3>
         <form action={inviteUser} className="flex flex-wrap gap-2">
-          <input name="email" type="email" placeholder="e-mail" required className="input flex-1" />
+          <input
+            name="email"
+            type="email"
+            placeholder={t.email}
+            required
+            className="input flex-1"
+          />
           <select name="countryId" required className="input">
             {countries?.map((c) => (
               <option key={c.id} value={c.id}>
@@ -47,12 +64,15 @@ export default async function AdminPage() {
             ))}
           </select>
           <select name="role" required defaultValue="viewer" className="input">
-            <option value="viewer">viewer (čtenář)</option>
-            <option value="editor">editor</option>
-            <option value="admin">admin</option>
+            <option value="viewer">{t.roleViewer}</option>
+            <option value="editor">{t.roleEditor}</option>
+            <option value="admin">{t.roleAdmin}</option>
           </select>
-          <button type="submit" className="rounded-xl bg-coral px-4 py-2.5 font-medium text-white hover:opacity-90">
-            Pozvat
+          <button
+            type="submit"
+            className="rounded-xl bg-coral px-4 py-2.5 font-medium text-white hover:opacity-90"
+          >
+            {t.invite}
           </button>
         </form>
       </section>
@@ -60,13 +80,21 @@ export default async function AdminPage() {
   );
 }
 
-function UsersTable({ users, countries }: { users: AppUser[]; countries: Country[] }) {
+function UsersTable({
+  users,
+  countries,
+  t,
+}: {
+  users: AppUser[];
+  countries: Country[];
+  t: Dictionary;
+}) {
   return (
     <table className="w-full text-left text-sm">
       <thead>
         <tr className="dashed-divider text-ink/50">
-          <th className="py-2 font-medium">E-mail</th>
-          <th className="py-2 font-medium">Země / role</th>
+          <th className="py-2 font-medium">{t.email}</th>
+          <th className="py-2 font-medium">{t.countryAndRole}</th>
         </tr>
       </thead>
       <tbody>
@@ -85,12 +113,12 @@ function UsersTable({ users, countries }: { users: AppUser[]; countries: Country
                   ))}
                 </select>
                 <select name="role" defaultValue={u.role} className="input py-1">
-                  <option value="viewer">viewer</option>
-                  <option value="editor">editor</option>
-                  <option value="admin">admin</option>
+                  <option value="viewer">{t.roleViewer}</option>
+                  <option value="editor">{t.roleEditor}</option>
+                  <option value="admin">{t.roleAdmin}</option>
                 </select>
                 <button type="submit" className="text-coral hover:underline">
-                  Uložit
+                  {t.save}
                 </button>
               </form>
             </td>
