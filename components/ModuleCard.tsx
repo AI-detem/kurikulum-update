@@ -1,0 +1,36 @@
+import Link from "next/link";
+import { FileText } from "lucide-react";
+import type { ModuleWithLatestVersion } from "@/lib/types";
+
+export function ModuleCard({ module }: { module: ModuleWithLatestVersion }) {
+  const latest = module.latest_version;
+
+  return (
+    <Link
+      href={`/modules/${module.id}`}
+      className="flex flex-col gap-3 rounded-2xl border border-haze bg-white p-5 transition hover:border-coral"
+    >
+      <div className="flex items-center justify-between">
+        {module.category && <span className="badge-pill">{module.category}</span>}
+        <FileText size={18} className="text-ink/40" />
+      </div>
+
+      <h3 className="font-heading text-lg font-bold text-ink">{module.name}</h3>
+
+      {latest ? (
+        <div className="mt-auto text-sm text-ink/60">
+          <p>Aktuální verze: v{latest.version_number}</p>
+          {latest.changes[0] && (
+            <p className="mt-1 line-clamp-2 text-ink/50">{latest.changes[0].note}</p>
+          )}
+        </div>
+      ) : (
+        <p className="mt-auto text-sm text-ink/40">Zatím žádná nahraná verze.</p>
+      )}
+
+      <p className="dashed-divider pt-2 text-xs text-ink/40">
+        {module.version_count} {module.version_count === 1 ? "verze" : "verzí"} celkem
+      </p>
+    </Link>
+  );
+}

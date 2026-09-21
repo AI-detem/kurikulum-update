@@ -1,0 +1,71 @@
+"use client";
+
+import { useState } from "react";
+import { Bell } from "lucide-react";
+import { createClient } from "@/lib/supabase/client";
+import type { NotificationWithDetails } from "@/lib/notifications-data";
+
+export function NotificationBell({
+  initialNotifications,
+}: {
+  initialNotifications: NotificationWithDetails[];
+}) {
+  const [notifications, setNotifications] = useState(initialNotifications);
+  const [open, setOpen] = useState(false);
+  const supabase = createClient();
+
+  const unreadCount = notifications.filter((n) => !n.read_at).length;
+
+  async function markAsRead(id: string) {
+    setNotifications((prev) =>
+      prev.map((n) => (n.id === id ? { ...n, read_at: new Date().toISOString() } : n))
+    );
+    await supabase
+      .from("notifications")
+      .update({ read_at: new Date().toISOString() })
+      .eq("id", id);
+  }
+
+  return (
+    <div className="relative">
+      <button
+        onClick={() => setOpen((v) => !v)}
+        className="relative flex h-9 w-9 items-center justify-center rounded-full hover:bg-haze"
+        aria-label="Notifikace"
+      >
+        <Bell size={18} />
+        {unreadCount > 0 && (
+          <span className="absolute -right-0.5 -top-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-coral text-[10px] font-semibold text-white">
+            {unreadCount}
+          </span>
+        )}
+      </button>
+
+      {open && (
+        <div className="absolute right-0 z-10 mt-2 w-80 rounded-xl border border-haze bg-white p-2 shadow-lg">
+          <p className="px-2 py-1 text-xs font-semibold text-ink/60">Notifikace</p>
+          {notifications.length === 0 && (
+            <p className="px-2 py-4 text-sm text-ink/50">Zatím žádné notifikace.</p>
+          )}
+          <ul className="max-h-80 overflow-y-auto">
+            {notifications.map((n) => (
+              <li key={n.id}>
+                <button
+                  onClick={() => markAsRead(n.id)}
+                  className={`w-full rounded-lg px-2 py-2 text-left text-sm hover:bg-haze ${
+                    n.read_at ? "text-ink/60" : "text-ink"
+                  }`}
+                >
+                  <span className="block font-medium">
+                    {n.module_name} · v{n.version_number}
+                  </span>
+                  <span className="block truncate text-xs text-ink/60">{n.note}</span>
+                </button>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}

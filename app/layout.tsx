@@ -1,31 +1,41 @@
-import type { Metadata } from 'next';
-import { Space_Grotesk, Inter } from 'next/font/google';
-import './globals.css';
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['500', '600', '700'],
-  variable: '--font-heading',
-  display: 'swap',
-});
-
-const inter = Inter({
-  subsets: ['latin', 'latin-ext'],
-  weight: ['400', '500', '600'],
-  variable: '--font-body',
-  display: 'swap',
-});
+import type { Metadata } from "next";
+import "./globals.css";
+import { getCurrentUser } from "@/lib/current-user";
+import { getNotificationsForCurrentUser } from "@/lib/notifications-data";
+import { Sidebar } from "@/components/Sidebar";
+import { NotificationBell } from "@/components/NotificationBell";
 
 export const metadata: Metadata = {
-  title: 'Asistent pro individualizaci výuky',
-  description:
-    'Konverzační asistent pro učitele — individualizace výuky žáků se SVP na základě Katalogu podpůrných opatření.',
+  title: "AI kurikulum",
+  description: "Sdílení metodik AI kurikula s partnerskými zeměmi",
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  const user = await getCurrentUser();
+
   return (
-    <html lang="cs" className={`${spaceGrotesk.variable} ${inter.variable}`}>
-      <body>{children}</body>
+    <html lang="cs">
+      <body className="font-sans antialiased">
+        {user ? (
+          <div className="flex">
+            <Sidebar user={user} />
+            <div className="flex-1">
+              <header className="flex justify-end border-b border-haze px-8 py-4">
+                <NotificationBell
+                  initialNotifications={await getNotificationsForCurrentUser(user.id)}
+                />
+              </header>
+              <main className="px-8 py-8">{children}</main>
+            </div>
+          </div>
+        ) : (
+          children
+        )}
+      </body>
     </html>
   );
 }
