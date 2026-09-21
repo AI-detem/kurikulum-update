@@ -1,0 +1,33 @@
+// PDF metodik neukládáme u sebe – leží na Google Drive a v databázi
+// máme jen odkaz na ně.
+
+// ID souboru na Drive je dlouhý řetězec písmen, číslic, pomlček a podtržítek.
+const FILE_ID = /^[A-Za-z0-9_-]{10,}$/;
+
+// Z vloženého odkazu vytáhne ID souboru. Zvládne běžné tvary:
+//   https://drive.google.com/file/d/ID/view?usp=sharing
+//   https://drive.google.com/open?id=ID
+//   samotné ID
+// Když odkaz neodpovídá ničemu z toho, vrátí null.
+export function extractDriveFileId(input: string): string | null {
+  const value = input.trim();
+  if (!value) return null;
+
+  const fromPath = value.match(/\/d\/([A-Za-z0-9_-]+)/);
+  if (fromPath) return fromPath[1];
+
+  const fromQuery = value.match(/[?&]id=([A-Za-z0-9_-]+)/);
+  if (fromQuery) return fromQuery[1];
+
+  return FILE_ID.test(value) ? value : null;
+}
+
+// Adresa pro vložený náhled ve stránce – tuhle podobu ukládáme do databáze.
+export function drivePreviewUrl(fileId: string): string {
+  return `https://drive.google.com/file/d/${fileId}/preview`;
+}
+
+// Adresa stránky souboru na Drive, kde má člověk vlastní tlačítko stažení.
+export function driveViewUrl(previewUrl: string): string {
+  return previewUrl.replace(/\/preview$/, "/view");
+}

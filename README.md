@@ -1,21 +1,25 @@
 # AI kurikulum
 
 Appka pro sdílení metodik AI kurikula s partnerskými zeměmi (ČR, Slovensko,
-Velká Británie, Maďarsko). Admin/editor nahraje novou verzi PDF metodiky
+Velká Británie, Maďarsko). Admin/editor přidá novou verzi PDF metodiky
 a napíše, co se změnilo – lidé z dané země dostanou e-mail a notifikaci
 v appce a vidí jen dokumenty pro svou zemi a jazyk.
 
-Postavené na: **Next.js** (appka) + **Supabase** (přihlášení, databáze,
-úložiště PDF) + **Resend** (posílání e-mailů).
+PDF metodik leží na **Google Drive**, appka si k nim ukládá jen odkaz.
+Sdílení souboru v Drive musí být nastavené na „Kdokoli s odkazem“ (režim
+Prohlížející), jinak appka PDF nezobrazí.
+
+Postavené na: **Next.js** (appka) + **Supabase** (přihlášení, databáze)
++ **Resend** (posílání e-mailů).
 
 ## Co appka zatím umí (první verze)
 
 1. Přihlášení přes magic link (odkaz v e-mailu, žádné heslo).
-2. Admin/editor nahraje nové PDF k modulu pro danou zemi + napíše poznámku,
-   co a proč se změnilo.
+2. Admin/editor vloží odkaz na PDF v Google Drive k modulu pro danou zemi
+   + napíše poznámku, co a proč se změnilo.
 3. Čtenář vidí jen moduly/dokumenty pro svou zemi, v mřížce karet, u každého
    modulu historii verzí a poznámky ke změnám.
-4. Při nahrání nové verze appka pošle e-mail (přes Resend) a vytvoří
+4. Při přidání nové verze appka pošle e-mail (přes Resend) a vytvoří
    notifikaci (zvoneček nahoře) všem lidem z dané země.
 5. Základní administrace: přidání země, pozvání nového uživatele a
    přiřazení země/role.
@@ -31,7 +35,7 @@ app/                    – jednotlivé stránky appky (routing podle složek)
   login/page.tsx            – přihlašovací stránka (magic link)
   modules/[moduleId]/       – detail modulu a historie verzí
   admin/                    – administrace (země, uživatelé)
-  admin/upload/              – formulář pro nahrání nové verze PDF
+  admin/upload/              – formulář pro přidání nové verze (odkaz na PDF)
   auth/                     – technické stránky pro přihlášení/odhlášení
 
 components/             – znovupoužitelné kousky UI (karta modulu, sidebar,

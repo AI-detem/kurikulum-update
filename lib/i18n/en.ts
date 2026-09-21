@@ -30,7 +30,15 @@ export const en: Dictionary = {
   uploadNewVersion: "Upload new version",
   module: "Module",
   country: "Country",
-  pdfFile: "PDF file",
+  driveLink: "Google Drive PDF link",
+  driveLinkHelp:
+    "The Drive file or folder must be shared as “Anyone with the link” (Viewer), otherwise the app cannot display the PDF.",
+  driveLinkNotRecognized:
+    "The Google Drive link could not be recognised, please check the format.",
+  uploadMissingFields: "Please fill in the module, country, PDF link and the change note.",
+  uploadNotAllowed: "You don't have permission to add new versions.",
+  saveFailed: "Saving failed.",
+  saving: "Saving...",
   changeCategory: "Change category",
   changeCategoryPlaceholder: "e.g. fix, new content, translation",
   whatChanged: "What changed",

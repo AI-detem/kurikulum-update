@@ -51,21 +51,13 @@ export async function getModuleDetail(moduleId: string, countryId: string) {
     .eq("country_id", countryId)
     .order("version_number", { ascending: false });
 
-  // file_url v databázi je jen cesta v privátním bucketu – pro zobrazení
-  // potřebujeme dočasný (1 hodinu platný) podepsaný odkaz ke stažení.
-  const versionsWithSignedUrls = await Promise.all(
-    (versions ?? []).map(async (v) => {
-      const { data: signed } = await supabase.storage
-        .from("documents")
-        .createSignedUrl(v.file_url, 60 * 60);
-
-      return {
-        ...v,
-        file_url: signed?.signedUrl ?? "",
-        changes: [...v.changes].sort((a, b) => (a.created_at < b.created_at ? 1 : -1)),
-      };
-    })
-  );
-
-  return { module, versions: versionsWithSignedUrls };
+  // file_url je hotový odkaz na náhled souboru v Google Drive, takže se
+  // používá rovnou tak, jak je uložený.
+  return {
+    module,
+    versions: (versions ?? []).map((v) => ({
+      ...v,
+      changes: [...v.changes].sort((a, b) => (a.created_at < b.created_at ? 1 : -1)),
+    })),
+  };
 }

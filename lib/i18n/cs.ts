@@ -38,7 +38,15 @@ export const cs = {
   uploadNewVersion: "Nahrát novou verzi",
   module: "Modul",
   country: "Země",
-  pdfFile: "PDF soubor",
+  driveLink: "Odkaz na PDF v Google Drive",
+  driveLinkHelp:
+    "Ve složce/souboru v Drive musí být sdílení nastavené na „Kdokoli s odkazem“ (režim Prohlížející), jinak appka PDF nezobrazí.",
+  driveLinkNotRecognized:
+    "Nepodařilo se rozpoznat odkaz na Google Drive, zkontroluj prosím formát.",
+  uploadMissingFields: "Vyplň prosím modul, zemi, odkaz na PDF i poznámku ke změně.",
+  uploadNotAllowed: "Nemáš oprávnění přidávat nové verze.",
+  saveFailed: "Uložení se nepodařilo.",
+  saving: "Ukládám...",
   changeCategory: "Kategorie změny",
   changeCategoryPlaceholder: "např. oprava, nový obsah, překlad",
   whatChanged: "Co se změnilo",

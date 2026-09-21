@@ -30,7 +30,16 @@ export const hu: Dictionary = {
   uploadNewVersion: "Új verzió feltöltése",
   module: "Modul",
   country: "Ország",
-  pdfFile: "PDF fájl",
+  driveLink: "Google Drive PDF-link",
+  driveLinkHelp:
+    "A Drive-fájl vagy -mappa megosztását „Bárki, aki rendelkezik a linkkel” (Megtekintő) értékre kell állítani, különben az alkalmazás nem tudja megjeleníteni a PDF-et.",
+  driveLinkNotRecognized:
+    "A Google Drive-link nem ismerhető fel, ellenőrizd a formátumot.",
+  uploadMissingFields:
+    "Töltsd ki a modult, az országot, a PDF-linket és a változás leírását.",
+  uploadNotAllowed: "Nincs jogosultságod új verziót hozzáadni.",
+  saveFailed: "A mentés nem sikerült.",
+  saving: "Mentés folyamatban...",
   changeCategory: "Változás kategóriája",
   changeCategoryPlaceholder: "pl. javítás, új tartalom, fordítás",
   whatChanged: "Mi változott",

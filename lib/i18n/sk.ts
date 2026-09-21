@@ -30,7 +30,15 @@ export const sk: Dictionary = {
   uploadNewVersion: "Nahrať novú verziu",
   module: "Modul",
   country: "Krajina",
-  pdfFile: "PDF súbor",
+  driveLink: "Odkaz na PDF v Google Drive",
+  driveLinkHelp:
+    "V priečinku/súbore v Drive musí byť zdieľanie nastavené na „Ktokoľvek s odkazom“ (režim Prezerajúci), inak appka PDF nezobrazí.",
+  driveLinkNotRecognized:
+    "Nepodarilo sa rozpoznať odkaz na Google Drive, skontroluj prosím formát.",
+  uploadMissingFields: "Vyplň prosím modul, krajinu, odkaz na PDF aj poznámku k zmene.",
+  uploadNotAllowed: "Nemáš oprávnenie pridávať nové verzie.",
+  saveFailed: "Uloženie sa nepodarilo.",
+  saving: "Ukladám...",
   changeCategory: "Kategória zmeny",
   changeCategoryPlaceholder: "napr. oprava, nový obsah, preklad",
   whatChanged: "Čo sa zmenilo",

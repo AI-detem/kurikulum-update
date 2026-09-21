@@ -2,10 +2,11 @@
 
 import { useState } from "react";
 import { Download, FileText } from "lucide-react";
+import { driveViewUrl } from "@/lib/drive";
 import type { Dictionary } from "@/lib/i18n";
 
-// Náhled PDF přímo v appce. U nejnovější verze je otevřený rovnou
-// (defaultOpen), u starších se rozbalí až po kliknutí.
+// Náhled PDF z Google Drive přímo v appce. U nejnovější verze je otevřený
+// rovnou (defaultOpen), u starších se rozbalí až po kliknutí.
 export function PdfPreview({
   fileUrl,
   defaultOpen = false,
@@ -17,15 +18,14 @@ export function PdfPreview({
 }) {
   const [open, setOpen] = useState(defaultOpen);
 
-  if (!fileUrl) {
+  // Starší verze z doby, kdy se PDF nahrávala do Supabase Storage, mají
+  // v file_url jen cestu k souboru – ty už appka zobrazit neumí.
+  if (!fileUrl.startsWith("http")) {
     return <p className="text-sm text-ink/50">{t.fileUnavailable}</p>;
   }
 
-  // Supabase vrací odkaz ke čtení; parametr download navíc říká prohlížeči,
-  // že se má soubor stáhnout místo zobrazit.
-  const downloadUrl = fileUrl.includes("?")
-    ? `${fileUrl}&download=`
-    : `${fileUrl}?download=`;
+  // Na stránce souboru v Drive má člověk vlastní tlačítko stažení.
+  const viewUrl = driveViewUrl(fileUrl);
 
   return (
     <div>
@@ -43,7 +43,7 @@ export function PdfPreview({
         {/* Na mobilu bývá vložený náhled PDF nepoužitelný, tam proto
             nabízíme otevření v prohlížeči. */}
         <a
-          href={fileUrl}
+          href={viewUrl}
           target="_blank"
           rel="noreferrer"
           className="flex items-center gap-1.5 text-sm font-medium text-coral hover:underline sm:hidden"
@@ -53,7 +53,9 @@ export function PdfPreview({
         </a>
 
         <a
-          href={downloadUrl}
+          href={viewUrl}
+          target="_blank"
+          rel="noreferrer"
           className="flex items-center gap-1.5 text-sm font-medium text-ink/60 hover:underline"
         >
           <Download size={16} />
@@ -63,10 +65,9 @@ export function PdfPreview({
 
       {open && (
         <iframe
-          // Parametry za # jsou pokyny pro prohlížečovou čtečku PDF: skryj
-          // boční panel s náhledy stránek a přizpůsob dokument šířce okna.
-          src={`${fileUrl}#navpanes=0&view=FitH`}
+          src={fileUrl}
           title={t.pdfPreview}
+          allow="autoplay"
           className="mt-3 hidden h-[80vh] w-full border-0 sm:block"
         />
       )}

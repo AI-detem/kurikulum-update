@@ -176,31 +176,8 @@ create policy "notifikace oznaci precteno jen vlastnik" on notifications
   for update to authenticated using (user_id = auth.uid());
 
 -- ---------------------------------------------------------------------
--- 4. Storage bucket pro PDF soubory
+-- 4. PDF soubory
 -- ---------------------------------------------------------------------
--- Soubory se ukládají do cesty: {country_id}/{module_id}/{soubor}.pdf
--- aby šlo podle cesty jednoduše poznat, do které země patří.
-
-insert into storage.buckets (id, name, public)
-values ('documents', 'documents', false)
-on conflict (id) do nothing;
-
-create policy "cteni pdf jen pro svou zemi nebo admina"
-  on storage.objects for select to authenticated
-  using (
-    bucket_id = 'documents'
-    and (
-      public.is_admin()
-      or (storage.foldername(name))[1] = public.current_country_id()::text
-    )
-  );
-
-create policy "nahravani pdf jen admin nebo editor"
-  on storage.objects for insert to authenticated
-  with check (
-    bucket_id = 'documents'
-    and exists (
-      select 1 from public.users
-      where id = auth.uid() and role in ('admin', 'editor')
-    )
-  );
+-- PDF metodik leží na Google Drive, v databázi je jen odkaz na ně
+-- (document_versions.file_url). Appka proto nepotřebuje žádné vlastní
+-- úložiště souborů.

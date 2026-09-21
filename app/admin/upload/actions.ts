@@ -4,23 +4,35 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser, canUpload } from "@/lib/current-user";
+import { resolveActiveCountry } from "@/lib/active-country";
+import { extractDriveFileId, drivePreviewUrl } from "@/lib/drive";
 import { notifyCountryAboutChange } from "@/lib/notify";
 
-export async function uploadDocumentVersion(formData: FormData) {
+// Formulář chybu zobrazí pod tlačítkem, proto ji vracíme místo vyhazování.
+export type UploadState = { error: string } | null;
+
+export async function uploadDocumentVersion(
+  _prevState: UploadState,
+  formData: FormData
+): Promise<UploadState> {
   const user = await requireUser();
-  if (!canUpload(user)) {
-    throw new Error("Nemáš oprávnění nahrávat nové verze.");
+
+  const moduleId = String(formData.get("moduleId") ?? "");
+  const countryId = String(formData.get("countryId") ?? "");
+  const driveLink = String(formData.get("driveLink") ?? "");
+  const note = String(formData.get("note") ?? "");
+  const category = String(formData.get("category") ?? "") || null;
+
+  // Hlášky posíláme v jazyce země, pro kterou se verze přidává.
+  const { t } = await resolveActiveCountry(user, countryId);
+
+  if (!canUpload(user)) return { error: t.uploadNotAllowed };
+  if (!moduleId || !countryId || !driveLink || !note) {
+    return { error: t.uploadMissingFields };
   }
 
-  const moduleId = formData.get("moduleId") as string;
-  const countryId = formData.get("countryId") as string;
-  const note = formData.get("note") as string;
-  const category = (formData.get("category") as string) || null;
-  const file = formData.get("file") as File;
-
-  if (!moduleId || !countryId || !note || !file || file.size === 0) {
-    throw new Error("Vyplň prosím modul, zemi, soubor i poznámku ke změně.");
-  }
+  const fileId = extractDriveFileId(driveLink);
+  if (!fileId) return { error: t.driveLinkNotRecognized };
 
   const supabase = await createClient();
 
@@ -36,26 +48,12 @@ export async function uploadDocumentVersion(formData: FormData) {
 
   const nextVersionNumber = (lastVersion?.version_number ?? 0) + 1;
 
-  // Nahrání PDF do Supabase Storage, cesta podle země a modulu.
-  const filePath = `${countryId}/${moduleId}/v${nextVersionNumber}-${file.name}`;
-  const { error: uploadError } = await supabase.storage
-    .from("documents")
-    .upload(filePath, file, { contentType: "application/pdf" });
-
-  if (uploadError) {
-    throw new Error(`Nahrání souboru selhalo: ${uploadError.message}`);
-  }
-
-  // Bucket "documents" je privátní, takže si do file_url ukládáme jen cestu
-  // k souboru. Skutečná (dočasná) URL pro stažení se generuje až při zobrazení
-  // (viz getSignedPdfUrl v lib/modules-data.ts), aby k PDF nešlo přistoupit
-  // bez přihlášení.
   const { data: version, error: versionError } = await supabase
     .from("document_versions")
     .insert({
       module_id: moduleId,
       country_id: countryId,
-      file_url: filePath,
+      file_url: drivePreviewUrl(fileId),
       version_number: nextVersionNumber,
       uploaded_by: user.id,
     })
@@ -63,7 +61,7 @@ export async function uploadDocumentVersion(formData: FormData) {
     .single();
 
   if (versionError || !version) {
-    throw new Error(`Uložení verze selhalo: ${versionError?.message}`);
+    return { error: `${t.saveFailed} ${versionError?.message ?? ""}`.trim() };
   }
 
   const { data: change, error: changeError } = await supabase
@@ -73,7 +71,7 @@ export async function uploadDocumentVersion(formData: FormData) {
     .single();
 
   if (changeError || !change) {
-    throw new Error(`Uložení poznámky ke změně selhalo: ${changeError?.message}`);
+    return { error: `${t.saveFailed} ${changeError?.message ?? ""}`.trim() };
   }
 
   // Notifikace (in-app + e-mail) posíláme až po úspěšném uložení všeho ostatního.
@@ -93,5 +91,5 @@ export async function uploadDocumentVersion(formData: FormData) {
 
   revalidatePath("/");
   revalidatePath(`/modules/${moduleId}`);
-  redirect(`/modules/${moduleId}`);
+  redirect(`/modules/${moduleId}?country=${countryId}`);
 }
