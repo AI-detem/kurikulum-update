@@ -22,3 +22,6 @@ next-env.d.ts
 
 # typescript
 *.tsbuildinfo
+
+# vlastni vlakno pdf.js se kopiruje z node_modules pri instalaci (viz postinstall)
+/public/pdf.worker.min.mjs

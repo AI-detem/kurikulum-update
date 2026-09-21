@@ -31,8 +31,10 @@ export const cs = {
   viewPdf: "Zobrazit PDF",
   hidePdf: "Skrýt PDF",
   openPdf: "Otevřít PDF",
-  pdfPreview: "Náhled PDF",
   fileUnavailable: "Soubor se nepodařilo načíst.",
+  loadingPdf: "Načítám PDF...",
+  pdfLoadFailed: "PDF se nepodařilo načíst",
+  openInDrive: "Otevřít v Google Drive",
 
   // nahrání nové verze
   uploadNewVersion: "Nahrát novou verzi",

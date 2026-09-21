@@ -36,10 +36,16 @@ export function VersionHistory({
             ))}
           </ul>
 
-          {/* Verze jsou seřazené od nejnovější, takže první z nich má
-              náhled otevřený rovnou. */}
-          <div className="mt-4">
-            <PdfPreview fileUrl={version.file_url} defaultOpen={index === 0} t={t} />
+          {/* Vlevo dokument, vpravo panel pro popisy změn (zatím prázdný).
+              Na užších obrazovkách se sloupce skládají pod sebe. */}
+          <div className="mt-4 grid grid-cols-1 gap-4 doc:grid-cols-[minmax(0,2fr)_minmax(0,1fr)]">
+            <div>
+              {/* Verze jsou seřazené od nejnovější, takže první z nich má
+                  dokument otevřený rovnou. */}
+              <PdfPreview fileUrl={version.file_url} defaultOpen={index === 0} t={t} />
+            </div>
+
+            <aside className="hidden min-h-32 rounded-xl bg-haze/30 doc:block" />
           </div>
         </li>
       ))}

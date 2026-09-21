@@ -7,6 +7,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        // od téhle šířky se detail verze dělí na dokument a boční panel
+        doc: "820px",
+      },
       colors: {
         // barvy podle vizuálního stylu AI dětem
         coral: "#DC5B5B", // primární akcentová barva

@@ -1,12 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { Download, FileText } from "lucide-react";
-import { driveViewUrl, isDrivePreviewUrl } from "@/lib/drive";
+import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
 import type { Dictionary } from "@/lib/i18n";
 
-// Náhled PDF z Google Drive vložený přímo ve stránce. U nejnovější verze
-// je otevřený rovnou (defaultOpen), u starších se rozbalí po kliknutí.
+// Renderer PDF běží jen v prohlížeči, na serveru by sestavení spadlo.
+const PdfViewer = dynamic(
+  () => import("@/components/PdfViewer").then((m) => m.PdfViewer),
+  { ssr: false }
+);
+
+// PDF vykreslené vlastním rendererem. U nejnovější verze je otevřené rovnou
+// (defaultOpen), u starších se rozbalí po kliknutí.
 export function PdfPreview({
   fileUrl,
   defaultOpen = false,
@@ -18,11 +25,10 @@ export function PdfPreview({
 }) {
   const [open, setOpen] = useState(defaultOpen);
 
-  // Jediná podmínka je tvar odkazu. Starší verze z doby, kdy se PDF nahrávala
-  // do Supabase Storage, mají ve file_url jen cestu k souboru – ty appka
-  // zobrazit neumí. Platný odkaz na Drive vkládáme vždy, bez ověřování
-  // dostupnosti (to z prohlížeče stejně nejde).
-  if (!isDrivePreviewUrl(fileUrl)) {
+  // Starší verze z doby, kdy se PDF nahrávala do Supabase Storage, nemají
+  // odkaz na Drive – ty už appka zobrazit neumí.
+  const fileId = extractDriveFileId(fileUrl);
+  if (!fileId) {
     return <p className="text-sm text-ink/50">{t.fileUnavailable}</p>;
   }
 
@@ -32,7 +38,7 @@ export function PdfPreview({
   return (
     <div>
       <div className="flex flex-wrap items-center gap-4">
-        {/* Na širší obrazovce se náhled rozbalí přímo ve stránce. */}
+        {/* Na širší obrazovce se dokument rozbalí přímo ve stránce. */}
         <button
           type="button"
           onClick={() => setOpen((isOpen) => !isOpen)}
@@ -42,8 +48,8 @@ export function PdfPreview({
           {open ? t.hidePdf : t.viewPdf}
         </button>
 
-        {/* Na mobilu bývá vložený náhled nepoužitelný, tam proto nabízíme
-            otevření přímo v Drive. */}
+        {/* Na mobilu je vykreslování PDF pomalé, tam nabízíme otevření
+            přímo v Drive. */}
         <a
           href={viewUrl}
           target="_blank"
@@ -66,12 +72,9 @@ export function PdfPreview({
       </div>
 
       {open && (
-        <iframe
-          src={fileUrl}
-          title={t.pdfPreview}
-          // Poměr stránky A4, ať kolem dokumentu nezůstává prázdné místo.
-          className="mt-3 hidden aspect-[1/1.414] w-full border-0 sm:block"
-        />
+        <div className="mt-3 hidden sm:block">
+          <PdfViewer src={`/api/pdf/${fileId}`} driveUrl={viewUrl} t={t} />
+        </div>
       )}
     </div>
   );

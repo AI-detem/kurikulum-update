@@ -24,8 +24,10 @@ export const en: Dictionary = {
   viewPdf: "View PDF",
   hidePdf: "Hide PDF",
   openPdf: "Open PDF",
-  pdfPreview: "PDF preview",
   fileUnavailable: "The file could not be loaded.",
+  loadingPdf: "Loading PDF...",
+  pdfLoadFailed: "The PDF could not be loaded",
+  openInDrive: "Open in Google Drive",
 
   uploadNewVersion: "Upload new version",
   module: "Module",
