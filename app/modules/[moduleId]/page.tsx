@@ -32,7 +32,7 @@ export default async function ModuleDetailPage({
   if (!module) notFound();
 
   return (
-    <div className="max-w-2xl">
+    <div className="max-w-4xl">
       {countries.length > 0 && (
         <div className="mb-5">
           <CountrySwitcher

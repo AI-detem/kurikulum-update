@@ -9,20 +9,24 @@ body {
   color: #070707;
 }
 
-/* Pilulkový badge pro kategorie/notifikace, v duchu vizuálního stylu AI dětem */
-.badge-pill {
-  @apply inline-flex items-center rounded-pill bg-haze px-3 py-1 text-xs font-medium text-ink;
-}
+/* Vlastní třídy patří do vrstvy "components", aby je šlo v konkrétním místě
+   přebít běžnou Tailwind třídou (např. bg-coral u aktivní pilulky). */
+@layer components {
+  /* Pilulkový badge pro kategorie/notifikace, v duchu vizuálního stylu AI dětem */
+  .badge-pill {
+    @apply inline-flex items-center rounded-pill bg-haze px-3 py-1 text-xs font-medium text-ink;
+  }
 
-/* Čárkovaná linka jako jemný oddělovač sekcí */
-.dashed-divider {
-  border-top: 1px dashed #b3cdd6;
-}
+  /* Čárkovaná linka jako jemný oddělovač sekcí */
+  .dashed-divider {
+    border-top: 1px dashed #b3cdd6;
+  }
 
-/* Společný styl pro formulářové vstupy (input, select, textarea) */
-.input {
-  @apply rounded-xl border border-haze px-4 py-2.5 text-sm outline-none;
-}
-.input:focus {
-  @apply border-coral;
+  /* Společný styl pro formulářové vstupy (input, select, textarea) */
+  .input {
+    @apply rounded-xl border border-haze px-4 py-2.5 text-sm outline-none;
+  }
+  .input:focus {
+    @apply border-coral;
+  }
 }

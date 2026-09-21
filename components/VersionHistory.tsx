@@ -1,5 +1,5 @@
-import { Download } from "lucide-react";
 import type { Change, DocumentVersion } from "@/lib/types";
+import { PdfPreview } from "@/components/PdfPreview";
 
 type VersionWithChanges = DocumentVersion & { changes: Change[] };
 
@@ -10,22 +10,11 @@ export function VersionHistory({ versions }: { versions: VersionWithChanges[] })
 
   return (
     <ol className="flex flex-col gap-4">
-      {versions.map((version) => (
+      {versions.map((version, index) => (
         <li key={version.id} className="rounded-2xl border border-haze p-5">
-          <div className="flex items-center justify-between">
-            <span className="font-heading text-lg font-bold text-ink">
-              Verze {version.version_number}
-            </span>
-            <a
-              href={version.file_url}
-              target="_blank"
-              rel="noreferrer"
-              className="flex items-center gap-1 text-sm font-medium text-coral hover:underline"
-            >
-              <Download size={16} />
-              Stáhnout PDF
-            </a>
-          </div>
+          <span className="font-heading text-lg font-bold text-ink">
+            Verze {version.version_number}
+          </span>
 
           <p className="mt-1 text-xs text-ink/40">
             Nahráno {new Date(version.uploaded_at).toLocaleDateString("cs-CZ")}
@@ -39,6 +28,12 @@ export function VersionHistory({ versions }: { versions: VersionWithChanges[] })
               </li>
             ))}
           </ul>
+
+          {/* Verze jsou seřazené od nejnovější, takže první z nich má
+              náhled otevřený rovnou. */}
+          <div className="mt-4">
+            <PdfPreview fileUrl={version.file_url} defaultOpen={index === 0} />
+          </div>
         </li>
       ))}
     </ol>
