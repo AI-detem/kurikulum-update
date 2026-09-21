@@ -1,28 +1,47 @@
 "use client";
 
-import { useActionState, useState } from "react";
+import { useActionState, useEffect, useState } from "react";
+import Link from "next/link";
 import { uploadDocumentVersion, type UploadState } from "@/app/admin/upload/actions";
 import { AnnotationWorkspace } from "@/components/annotations/AnnotationWorkspace";
 import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
+import { fill, formatDateTime } from "@/lib/format";
 import type { Country, Mark, Module } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
-// Pracovní plocha pro novou verzi: vlevo formulář, uprostřed dokument
-// se značkami, vpravo jejich popisy.
+// Poslední verze pro dvojici modul + země, aby bylo vidět, na co se navazuje.
+export type LatestVersion = {
+  module_id: string;
+  country_id: string;
+  version_number: number;
+  uploaded_at: string;
+  uploaded_by_email: string | null;
+};
+
+// Jak dlouho po posledním úhozu se začne načítat náhled. Bez toho by se
+// dokument překresloval při každém napsaném znaku.
+const LINK_DEBOUNCE_MS = 500;
+
 export function UploadWorkspace({
   modules,
   countries,
   defaultCountryId,
   canChooseCountry,
+  latestVersions,
   t,
 }: {
   modules: Module[];
   countries: Country[];
   defaultCountryId: string | null;
   canChooseCountry: boolean;
+  latestVersions: LatestVersion[];
   t: Dictionary;
 }) {
   const [driveLink, setDriveLink] = useState("");
+  // Odkaz pro načtení dokumentu je oddělený od pole, do kterého se píše.
+  const [linkForPreview, setLinkForPreview] = useState("");
+  const [moduleId, setModuleId] = useState(modules[0]?.id ?? "");
+  const [countryId, setCountryId] = useState(defaultCountryId ?? "");
   const [marks, setMarks] = useState<Mark[]>([]);
   const [summary, setSummary] = useState("");
   const [state, formAction, isPending] = useActionState<UploadState, FormData>(
@@ -30,12 +49,22 @@ export function UploadWorkspace({
     null
   );
 
-  const fileId = extractDriveFileId(driveLink);
+  useEffect(() => {
+    const timer = window.setTimeout(() => setLinkForPreview(driveLink), LINK_DEBOUNCE_MS);
+    return () => window.clearTimeout(timer);
+  }, [driveLink]);
+
+  const fileId = extractDriveFileId(linkForPreview);
+  const latest = latestVersions.find(
+    (version) => version.module_id === moduleId && version.country_id === countryId
+  );
+  const countryName = countries.find((country) => country.id === countryId)?.name ?? "";
 
   return (
     <form action={formAction}>
-      {/* Značky posíláme s formulářem jako jedno pole. */}
+      {/* Značky a stav, ze kterého uživatel vycházel, posíláme s formulářem. */}
       <input type="hidden" name="marks" value={JSON.stringify(marks)} />
+      <input type="hidden" name="knownLatest" value={latest?.version_number ?? 0} />
 
       <AnnotationWorkspace
         fileId={fileId}
@@ -47,7 +76,13 @@ export function UploadWorkspace({
         formColumn={
           <div className="flex flex-col gap-4">
             <Field label={t.module}>
-              <select name="moduleId" required className="input">
+              <select
+                name="moduleId"
+                required
+                value={moduleId}
+                onChange={(event) => setModuleId(event.target.value)}
+                className="input"
+              >
                 {modules.map((module) => (
                   <option key={module.id} value={module.id}>
                     {module.name}
@@ -61,7 +96,8 @@ export function UploadWorkspace({
                 <select
                   name="countryId"
                   required
-                  defaultValue={defaultCountryId ?? ""}
+                  value={countryId}
+                  onChange={(event) => setCountryId(event.target.value)}
                   className="input"
                 >
                   {countries.map((country) => (
@@ -72,14 +108,26 @@ export function UploadWorkspace({
                 </select>
               ) : (
                 <>
-                  <input type="hidden" name="countryId" value={defaultCountryId ?? ""} />
+                  <input type="hidden" name="countryId" value={countryId} />
                   <p className="input bg-haze/40 text-ink/60">
-                    {countries.find((country) => country.id === defaultCountryId)?.name ??
-                      t.noCountryForUpload}
+                    {countryName || t.noCountryForUpload}
                   </p>
                 </>
               )}
             </Field>
+
+            {/* Na co nová verze navazuje a jaké dostane číslo. */}
+            <p className="rounded-xl bg-haze/40 p-3 text-xs text-ink/70">
+              {latest
+                ? fill(t.existingVersionInfo, {
+                    country: countryName,
+                    version: latest.version_number,
+                    when: formatDateTime(latest.uploaded_at, t.dateLocale),
+                    who: latest.uploaded_by_email ?? "?",
+                    next: latest.version_number + 1,
+                  })
+                : fill(t.firstVersionInfo, { country: countryName })}
+            </p>
 
             <Field label={t.driveLink} help={t.driveLinkHelp}>
               <input
@@ -115,7 +163,28 @@ export function UploadWorkspace({
               {isPending ? t.saving : `${t.uploadAndNotify} (${marks.length})`}
             </button>
 
-            {state?.error && <p className="text-sm text-coral">{state.error}</p>}
+            {state && "error" in state && (
+              <p className="text-sm text-coral">{state.error}</p>
+            )}
+
+            {state && "warning" in state && (
+              <div className="rounded-xl border border-coral p-3 text-sm">
+                <p className="text-ink">
+                  {fill(t.concurrentWarning, {
+                    version: state.warning.otherVersion,
+                    who: state.warning.otherAuthor,
+                    when: formatDateTime(state.warning.otherUploadedAt, t.dateLocale),
+                    saved: state.warning.savedVersion,
+                  })}
+                </p>
+                <Link
+                  href={`/modules/${state.warning.moduleId}?country=${state.warning.countryId}`}
+                  className="mt-2 inline-block font-medium text-coral hover:underline"
+                >
+                  {t.openThatVersion}
+                </Link>
+              </div>
+            )}
           </div>
         }
       />

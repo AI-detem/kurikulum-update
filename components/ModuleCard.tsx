@@ -2,6 +2,7 @@ import Link from "next/link";
 import { FileText } from "lucide-react";
 import type { ModuleWithLatestVersion } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
+import { formatDateTime } from "@/lib/format";
 
 export function ModuleCard({
   module,
@@ -30,6 +31,9 @@ export function ModuleCard({
         <div className="mt-auto text-sm text-ink/60">
           <p>
             {t.currentVersion}: v{latest.version_number}
+          </p>
+          <p className="text-xs text-ink/40">
+            {t.uploaded} {formatDateTime(latest.uploaded_at, t.dateLocale)}
           </p>
           {latest.changes[0] && (
             <p className="mt-1 line-clamp-2 text-ink/50">{latest.changes[0].note}</p>

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser, canUpload } from "@/lib/current-user";
+import { resolveActiveCountry } from "@/lib/active-country";
 import type { Mark } from "@/lib/types";
 
 // Uloží označená místa u už existující verze. Admin a editor je smí
@@ -13,18 +14,21 @@ export async function saveAnnotations(
   marks: Mark[]
 ): Promise<{ error: string } | null> {
   const user = await requireUser();
-  if (!canUpload(user)) return { error: "forbidden" };
+  const { t } = await resolveActiveCountry(user);
+
+  if (!canUpload(user)) return { error: t.uploadNotAllowed };
 
   const supabase = await createClient();
 
-  // Značky nahrazujeme celé – je jich řádově jednotky a je to spolehlivější
-  // než párovat, co přibylo a co zmizelo.
-  const { error: deleteError } = await supabase
+  // Nejdřív zjistíme, co je uložené teď – ať je co smazat až poté, co
+  // se nové značky opravdu zapíšou. Kdyby zápis selhal, o původní
+  // popisy uživatel nepřijde.
+  const { data: existing, error: readError } = await supabase
     .from("annotations")
-    .delete()
+    .select("id")
     .eq("document_version_id", versionId);
 
-  if (deleteError) return { error: deleteError.message };
+  if (readError) return { error: `${t.saveFailedDetail} ${readError.message}` };
 
   const described = marks.filter((mark) => mark.note?.trim());
 
@@ -42,7 +46,17 @@ export async function saveAnnotations(
       }))
     );
 
-    if (insertError) return { error: insertError.message };
+    if (insertError) return { error: `${t.saveFailedDetail} ${insertError.message}` };
+  }
+
+  const previousIds = (existing ?? []).map((row) => row.id);
+  if (previousIds.length > 0) {
+    const { error: deleteError } = await supabase
+      .from("annotations")
+      .delete()
+      .in("id", previousIds);
+
+    if (deleteError) return { error: `${t.saveFailedDetail} ${deleteError.message}` };
   }
 
   revalidatePath(`/modules/${moduleId}`);

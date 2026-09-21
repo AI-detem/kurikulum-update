@@ -179,7 +179,10 @@ export function AnnotationWorkspace({
         )}
       </div>
 
-      <aside className="self-start rounded-2xl border border-haze p-5 doc:sticky doc:top-8 doc:max-h-[calc(100vh-6rem)] doc:overflow-y-auto">
+      {/* Buňka mřížky se roztáhne na výšku dokumentu, lepkavý je až panel
+          uvnitř – jinak by neměl kam "cestovat" a při rolování by zmizel. */}
+      <div>
+      <aside className="rounded-2xl border border-haze p-5 doc:sticky doc:top-8 doc:max-h-[calc(100vh-4rem)] doc:overflow-y-auto">
         <h2 className="font-heading text-lg font-bold text-ink">{t.changesPanelTitle}</h2>
 
         {sorted.length === 0 ? (
@@ -217,6 +220,7 @@ export function AnnotationWorkspace({
 
         {panelFooter && <div className="dashed-divider mt-5 pt-4">{panelFooter}</div>}
       </aside>
+      </div>
 
       {toast && (
         <div className="fixed bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-xl bg-ink px-4 py-2.5 text-sm text-white shadow-lg">

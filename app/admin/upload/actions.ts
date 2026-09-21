@@ -7,11 +7,26 @@ import { requireUser, canUpload } from "@/lib/current-user";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { extractDriveFileId, drivePreviewUrl } from "@/lib/drive";
 import { sortMarks } from "@/lib/annotations";
-import { notifyCountryAboutChange } from "@/lib/notify";
+import { notifyCountryAboutChange, notifyPreviousAuthor } from "@/lib/notify";
 import type { Mark } from "@/lib/types";
 
-// Formulář chybu zobrazí pod tlačítkem, proto ji vracíme místo vyhazování.
-export type UploadState = { error: string } | null;
+export type UploadState =
+  | { error: string }
+  | {
+      // Uložilo se, ale mezitím někdo jiný přidal vlastní verzi.
+      warning: {
+        otherVersion: number;
+        otherAuthor: string;
+        otherUploadedAt: string;
+        savedVersion: number;
+        moduleId: string;
+        countryId: string;
+      };
+    }
+  | null;
+
+// Kolikrát zkusíme zápis znovu, když nám někdo souběžně vezme číslo verze.
+const VERSION_ATTEMPTS = 5;
 
 export async function uploadDocumentVersion(
   _prevState: UploadState,
@@ -24,54 +39,63 @@ export async function uploadDocumentVersion(
   const driveLink = String(formData.get("driveLink") ?? "");
   const summary = String(formData.get("note") ?? "").trim();
   const marks = parseMarks(formData.get("marks"));
+  // Nejvyšší číslo verze, které uživatel viděl na obrazovce.
+  const knownLatest = Number(formData.get("knownLatest") ?? 0);
 
-  // Hlášky posíláme v jazyce země, pro kterou se verze přidává.
   const { t } = await resolveActiveCountry(user, countryId);
 
   if (!canUpload(user)) return { error: t.uploadNotAllowed };
-  if (!moduleId || !countryId || !driveLink) {
-    return { error: t.uploadMissingFields };
-  }
-
-  // Popis změn musí být aspoň jeden – buď u konkrétního místa, nebo celkový.
-  if (marks.length === 0 && !summary) {
-    return { error: t.needMarkOrSummary };
-  }
+  if (!moduleId || !countryId || !driveLink) return { error: t.uploadMissingFields };
+  if (marks.length === 0 && !summary) return { error: t.needMarkOrSummary };
 
   const fileId = extractDriveFileId(driveLink);
   if (!fileId) return { error: t.driveLinkNotRecognized };
 
   const supabase = await createClient();
 
-  // Zjistíme, jaké je poslední číslo verze pro tento modul a zemi.
-  const { data: lastVersion } = await supabase
-    .from("document_versions")
-    .select("version_number")
-    .eq("module_id", moduleId)
-    .eq("country_id", countryId)
-    .order("version_number", { ascending: false })
-    .limit(1)
-    .single();
+  // Číslo verze nepřidělujeme dopředu: pokaždé se načte to poslední a zapíše
+  // se o jedno vyšší. Souběžný zápis odmítne databáze (dvojice modul+země+číslo
+  // je unikátní), takže to zkusíme znovu s novým číslem.
+  let version = null;
+  let previous: { version_number: number; uploaded_at: string; uploaded_by: string | null } | null =
+    null;
+  let lastError = "";
 
-  const nextVersionNumber = (lastVersion?.version_number ?? 0) + 1;
+  for (let attempt = 0; attempt < VERSION_ATTEMPTS && !version; attempt++) {
+    const { data: latest } = await supabase
+      .from("document_versions")
+      .select("version_number, uploaded_at, uploaded_by")
+      .eq("module_id", moduleId)
+      .eq("country_id", countryId)
+      .order("version_number", { ascending: false })
+      .limit(1)
+      .maybeSingle();
 
-  const { data: version, error: versionError } = await supabase
-    .from("document_versions")
-    .insert({
-      module_id: moduleId,
-      country_id: countryId,
-      file_url: drivePreviewUrl(fileId),
-      version_number: nextVersionNumber,
-      uploaded_by: user.id,
-    })
-    .select()
-    .single();
+    previous = latest ?? null;
 
-  if (versionError || !version) {
-    return { error: `${t.saveFailed} ${versionError?.message ?? ""}`.trim() };
+    const { data, error } = await supabase
+      .from("document_versions")
+      .insert({
+        module_id: moduleId,
+        country_id: countryId,
+        file_url: drivePreviewUrl(fileId),
+        version_number: (latest?.version_number ?? 0) + 1,
+        uploaded_by: user.id,
+      })
+      .select()
+      .single();
+
+    if (data) {
+      version = data;
+    } else {
+      lastError = error?.message ?? "";
+      // 23505 = číslo verze mezitím zabral někdo jiný, zkusíme další.
+      if (error?.code !== "23505") break;
+    }
   }
 
-  // Popisy označených míst v pořadí čtení – použijí se i v e-mailu.
+  if (!version) return { error: `${t.saveFailedDetail} ${lastError}`.trim() };
+
   const noteList = sortMarks(marks).map((mark) => mark.note);
 
   if (marks.length > 0) {
@@ -88,9 +112,7 @@ export async function uploadDocumentVersion(
       }))
     );
 
-    if (marksError) {
-      return { error: `${t.saveFailed} ${marksError.message}`.trim() };
-    }
+    if (marksError) return { error: `${t.saveFailedDetail} ${marksError.message}` };
   }
 
   const { data: change, error: changeError } = await supabase
@@ -104,28 +126,62 @@ export async function uploadDocumentVersion(
     .single();
 
   if (changeError || !change) {
-    return { error: `${t.saveFailed} ${changeError?.message ?? ""}`.trim() };
+    return { error: `${t.saveFailedDetail} ${changeError?.message ?? ""}`.trim() };
   }
 
-  // Notifikace posíláme až úplně nakonec, aby čtenářům nepřišlo upozornění
-  // na verzi, u které se popisy neuložily.
   const [{ data: moduleData }, { data: countryData }] = await Promise.all([
     supabase.from("modules").select("name").eq("id", moduleId).single(),
     supabase.from("countries").select("name").eq("id", countryId).single(),
   ]);
 
+  // Notifikace posíláme až úplně nakonec, aby čtenářům nepřišlo upozornění
+  // na verzi, u které se popisy neuložily.
   await notifyCountryAboutChange({
     changeId: change.id,
     countryId,
     countryName: countryData?.name ?? "",
     moduleName: moduleData?.name ?? "",
-    versionNumber: nextVersionNumber,
+    versionNumber: version.version_number,
+    uploadedAt: version.uploaded_at,
     summary,
     notes: noteList,
   });
 
+  // Autor předchozí verze se dozví, že k ní přibyla novější.
+  if (previous?.uploaded_by && previous.uploaded_by !== user.id) {
+    await notifyPreviousAuthor({
+      changeId: change.id,
+      authorId: previous.uploaded_by,
+      moduleName: moduleData?.name ?? "",
+      theirVersion: previous.version_number,
+      newVersion: version.version_number,
+    });
+  }
+
   revalidatePath("/");
   revalidatePath(`/modules/${moduleId}`);
+
+  // Když mezitím přibyla cizí verze, nepřesměrováváme – uživatel se to má
+  // dozvědět hned a rozhodnout se, jestli se úpravy nepřekrývají.
+  if (previous && previous.version_number > knownLatest && previous.uploaded_by !== user.id) {
+    const { data: author } = await supabase
+      .from("users")
+      .select("email")
+      .eq("id", previous.uploaded_by ?? "")
+      .maybeSingle();
+
+    return {
+      warning: {
+        otherVersion: previous.version_number,
+        otherAuthor: author?.email ?? "",
+        otherUploadedAt: previous.uploaded_at,
+        savedVersion: version.version_number,
+        moduleId,
+        countryId,
+      },
+    };
+  }
+
   redirect(`/modules/${moduleId}?country=${countryId}`);
 }
 

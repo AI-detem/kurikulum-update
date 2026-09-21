@@ -2,7 +2,7 @@
 // země a pošle jim e-mail. Voláno ze server akce po nahrání nové verze
 // (viz app/admin/upload/actions.ts).
 import { createAdminClient } from "@/lib/supabase/server";
-import { sendChangeNotificationEmail } from "@/lib/resend";
+import { sendChangeNotificationEmail, sendNewerVersionEmail } from "@/lib/resend";
 
 export async function notifyCountryAboutChange(params: {
   changeId: string;
@@ -10,12 +10,13 @@ export async function notifyCountryAboutChange(params: {
   countryName: string;
   moduleName: string;
   versionNumber: number;
+  uploadedAt: string;
   /** Celkové shrnutí, pokud ho editor napsal. */
   summary: string;
   /** Popisy jednotlivých označených míst v pořadí čtení. */
   notes: string[];
 }) {
-  const { changeId, countryId, countryName, moduleName, versionNumber, summary, notes } = params;
+  const { changeId, countryId, countryName, moduleName, versionNumber, uploadedAt, summary, notes } = params;
   const supabase = createAdminClient();
 
   // Všichni uživatelé (viewer i editor/admin) z dané země dostanou notifikaci.
@@ -41,6 +42,7 @@ export async function notifyCountryAboutChange(params: {
         to: recipient.email,
         moduleName,
         versionNumber,
+        uploadedAt,
         summary,
         notes,
         countryName,
@@ -56,5 +58,48 @@ export async function notifyCountryAboutChange(params: {
       // Notifikace v appce zůstane vytvořená, i když se e-mail nepodaří poslat.
       console.error(`Nepodařilo se poslat e-mail na ${recipient.email}:`, emailError);
     }
+  }
+}
+
+// Autor předchozí verze se dozví, že k ní přibyla novější.
+export async function notifyPreviousAuthor(params: {
+  changeId: string;
+  authorId: string;
+  moduleName: string;
+  theirVersion: number;
+  newVersion: number;
+}) {
+  const { changeId, authorId, moduleName, theirVersion, newVersion } = params;
+  const supabase = createAdminClient();
+
+  const { data: author } = await supabase
+    .from("users")
+    .select("email")
+    .eq("id", authorId)
+    .maybeSingle();
+
+  if (!author?.email) return;
+
+  // Notifikaci v appce už mohl dostat jako člen země – pak ji nezdvojujeme.
+  const { data: existing } = await supabase
+    .from("notifications")
+    .select("id")
+    .eq("user_id", authorId)
+    .eq("change_id", changeId)
+    .maybeSingle();
+
+  if (!existing) {
+    await supabase.from("notifications").insert({ user_id: authorId, change_id: changeId });
+  }
+
+  try {
+    await sendNewerVersionEmail({
+      to: author.email,
+      moduleName,
+      theirVersion,
+      newVersion,
+    });
+  } catch (emailError) {
+    console.error(`Nepodařilo se upozornit autora ${author.email}:`, emailError);
   }
 }

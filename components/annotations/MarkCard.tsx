@@ -119,11 +119,10 @@ function MarkEditor({
   }, []);
 
   return (
-    <form
-      onSubmit={(event) => {
-        event.preventDefault();
-        if (note.trim()) onSubmit(note.trim(), category);
-      }}
+    // Záměrně <div>, ne <form>: kartička se zobrazuje i uvnitř formuláře
+    // pro nahrání verze a vnořené formuláře HTML nedovoluje – vnitřní
+    // tlačítko by odeslalo ten vnější.
+    <div
       onKeyDown={(event) => {
         if (event.key === "Escape") onCancel();
       }}
@@ -159,11 +158,14 @@ function MarkEditor({
 
       <div className="mt-3 flex gap-2">
         <button
-          type="submit"
+          type="button"
           disabled={!note.trim()}
+          onClick={() => {
+            if (note.trim()) onSubmit(note.trim(), category);
+          }}
           className="rounded-xl bg-coral px-3 py-1.5 text-sm font-medium text-white disabled:opacity-40"
         >
-          {t.save}
+          {t.done}
         </button>
         <button
           type="button"
@@ -173,6 +175,6 @@ function MarkEditor({
           {t.cancel}
         </button>
       </div>
-    </form>
+    </div>
   );
 }
