@@ -1,21 +1,22 @@
 // Pomocná funkce pro middleware.ts – obnovuje přihlašovací session při každém
 // požadavku, aby uživatel nebyl náhodou odhlášen, i když je token starší.
+// Zároveň drží cookie s prohlíženou zemí v souladu s adresou.
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
-import { URL_HEADER } from "@/lib/request-url";
+import { VIEW_COUNTRY_COOKIE, VIEW_COUNTRY_MAX_AGE } from "@/lib/view-country";
 
 type CookieToSet = { name: string; value: string; options: CookieOptions };
 
-// Adresu požadavku posíláme dál jako hlavičku, aby si z ní layout mohl
-// přečíst vybranou zemi (viz lib/request-url.ts).
-function nextWithUrlHeader(request: NextRequest) {
-  const headers = new Headers(request.headers);
-  headers.set(URL_HEADER, request.url);
-  return NextResponse.next({ request: { headers } });
-}
-
 export async function updateSession(request: NextRequest) {
-  let response = nextWithUrlHeader(request);
+  // Když adresa nese ?country=..., uložíme si zemi do cookie. Zapisujeme ji
+  // i do požadavku, aby ji layout viděl hned při vykreslení téhle stránky,
+  // ne až u dalšího kliknutí.
+  const countryFromUrl = request.nextUrl.searchParams.get("country");
+  if (countryFromUrl) {
+    request.cookies.set(VIEW_COUNTRY_COOKIE, countryFromUrl);
+  }
+
+  let response = NextResponse.next({ request });
 
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
@@ -29,7 +30,7 @@ export async function updateSession(request: NextRequest) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           );
-          response = nextWithUrlHeader(request);
+          response = NextResponse.next({ request });
           cookiesToSet.forEach(({ name, value, options }) =>
             response.cookies.set(name, value, options)
           );
@@ -49,6 +50,14 @@ export async function updateSession(request: NextRequest) {
     const loginUrl = request.nextUrl.clone();
     loginUrl.pathname = "/login";
     return NextResponse.redirect(loginUrl);
+  }
+
+  if (countryFromUrl) {
+    response.cookies.set(VIEW_COUNTRY_COOKIE, countryFromUrl, {
+      path: "/",
+      maxAge: VIEW_COUNTRY_MAX_AGE,
+      sameSite: "lax",
+    });
   }
 
   return response;

@@ -15,6 +15,7 @@
     "next": "^15.5.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "react-pdf": "^9.2.1",
     "resend": "^4.0.1"
   },
   "devDependencies": {

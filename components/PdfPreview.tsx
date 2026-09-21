@@ -1,12 +1,19 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { Download, FileText } from "lucide-react";
-import { driveViewUrl } from "@/lib/drive";
+import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
 import type { Dictionary } from "@/lib/i18n";
 
-// Náhled PDF z Google Drive přímo v appce. U nejnovější verze je otevřený
-// rovnou (defaultOpen), u starších se rozbalí až po kliknutí.
+// Prohlížeč PDF umí běžet jen v prohlížeči, ne na serveru.
+const PdfViewer = dynamic(
+  () => import("@/components/PdfViewer").then((m) => m.PdfViewer),
+  { ssr: false }
+);
+
+// Náhled PDF z Google Drive vykreslený přímo v appce. U nejnovější verze
+// je otevřený rovnou (defaultOpen), u starších se rozbalí po kliknutí.
 export function PdfPreview({
   fileUrl,
   defaultOpen = false,
@@ -20,7 +27,8 @@ export function PdfPreview({
 
   // Starší verze z doby, kdy se PDF nahrávala do Supabase Storage, mají
   // v file_url jen cestu k souboru – ty už appka zobrazit neumí.
-  if (!fileUrl.startsWith("http")) {
+  const fileId = fileUrl.startsWith("http") ? extractDriveFileId(fileUrl) : null;
+  if (!fileId) {
     return <p className="text-sm text-ink/50">{t.fileUnavailable}</p>;
   }
 
@@ -40,8 +48,8 @@ export function PdfPreview({
           {open ? t.hidePdf : t.viewPdf}
         </button>
 
-        {/* Na mobilu bývá vložený náhled PDF nepoužitelný, tam proto
-            nabízíme otevření v prohlížeči. */}
+        {/* Na mobilu je vykreslování PDF pomalé, tam proto nabízíme
+            otevření přímo v Drive. */}
         <a
           href={viewUrl}
           target="_blank"
@@ -64,12 +72,9 @@ export function PdfPreview({
       </div>
 
       {open && (
-        <iframe
-          src={fileUrl}
-          title={t.pdfPreview}
-          allow="autoplay"
-          className="mt-3 hidden h-[80vh] w-full border-0 sm:block"
-        />
+        <div className="hidden sm:block">
+          <PdfViewer src={`/api/pdf/${fileId}`} t={t} />
+        </div>
       )}
     </div>
   );

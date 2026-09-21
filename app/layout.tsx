@@ -3,7 +3,6 @@ import "./globals.css";
 import { getCurrentUser } from "@/lib/current-user";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { getNotificationsForCurrentUser } from "@/lib/notifications-data";
-import { getRequestedCountryId } from "@/lib/request-url";
 import { Sidebar } from "@/components/Sidebar";
 import { NotificationBell } from "@/components/NotificationBell";
 
@@ -27,7 +26,9 @@ export default async function RootLayout({
     );
   }
 
-  const { t } = await resolveActiveCountry(user, await getRequestedCountryId());
+  // Zemi si resolveActiveCountry přečte z cookie – layout parametry
+  // z adresy nedostává.
+  const { t } = await resolveActiveCountry(user);
   const notifications = await getNotificationsForCurrentUser(user.id);
 
   return (

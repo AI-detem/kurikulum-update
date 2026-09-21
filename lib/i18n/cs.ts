@@ -31,7 +31,7 @@ export const cs = {
   viewPdf: "Zobrazit PDF",
   hidePdf: "Skrýt PDF",
   openPdf: "Otevřít PDF",
-  pdfPreview: "Náhled PDF",
+  loadingPdf: "Načítám PDF...",
   fileUnavailable: "Soubor se nepodařilo načíst.",
 
   // nahrání nové verze

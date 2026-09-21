@@ -5,8 +5,10 @@
 // přihlášený sám za sebe, jen si prohlíží obsah a rozhraní dané země.
 // Viewer a editor vidí vždy jen svou vlastní zemi – parametr z adresy se u nich
 // záměrně ignoruje, aby si nešlo zobrazit cizí zemi ručním přepsáním adresy.
+import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
 import { getDictionary, toLocale, type Dictionary } from "@/lib/i18n";
+import { VIEW_COUNTRY_COOKIE } from "@/lib/view-country";
 import type { AppUser, Country } from "@/lib/types";
 
 export type ActiveCountry = {
@@ -44,9 +46,14 @@ export async function resolveActiveCountry(
   const { data } = await supabase.from("countries").select("*").order("name");
   const countries = data ?? [];
 
-  // Vybraná země z adresy, jinak vlastní země admina, jinak první v seznamu.
+  // Layout parametry z adresy nedostává, proto se zemí drží i v cookie.
+  const countryFromCookie = (await cookies()).get(VIEW_COUNTRY_COOKIE)?.value;
+
+  // Pořadí: země z adresy, pak z cookie, pak vlastní země admina,
+  // nakonec první země v seznamu.
   const active =
     countries.find((country) => country.id === requestedCountryId) ??
+    countries.find((country) => country.id === countryFromCookie) ??
     countries.find((country) => country.id === user.country_id) ??
     countries[0] ??
     null;
