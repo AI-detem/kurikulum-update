@@ -27,6 +27,15 @@ export function drivePreviewUrl(fileId: string): string {
   return `https://drive.google.com/file/d/${fileId}/preview`;
 }
 
+const PREVIEW_URL = /^https:\/\/drive\.google\.com\/file\/d\/[A-Za-z0-9_-]+\/preview(\?.*)?$/;
+
+// Odpovídá uložený odkaz tvaru, který umíme vložit do stránky?
+// Nic se neověřuje po síti – dostupnost souboru se z prohlížeče zjistit nedá
+// (Google to kvůli CORS nedovolí) a neúspěšný dotaz by nic nedokazoval.
+export function isDrivePreviewUrl(url: string): boolean {
+  return PREVIEW_URL.test(url);
+}
+
 // Adresa stránky souboru na Drive, kde má člověk vlastní tlačítko stažení.
 export function driveViewUrl(previewUrl: string): string {
   return previewUrl.replace(/\/preview$/, "/view");

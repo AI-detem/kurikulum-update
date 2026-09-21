@@ -1,18 +1,11 @@
 "use client";
 
 import { useState } from "react";
-import dynamic from "next/dynamic";
 import { Download, FileText } from "lucide-react";
-import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
+import { driveViewUrl, isDrivePreviewUrl } from "@/lib/drive";
 import type { Dictionary } from "@/lib/i18n";
 
-// Prohlížeč PDF umí běžet jen v prohlížeči, ne na serveru.
-const PdfViewer = dynamic(
-  () => import("@/components/PdfViewer").then((m) => m.PdfViewer),
-  { ssr: false }
-);
-
-// Náhled PDF z Google Drive vykreslený přímo v appce. U nejnovější verze
+// Náhled PDF z Google Drive vložený přímo ve stránce. U nejnovější verze
 // je otevřený rovnou (defaultOpen), u starších se rozbalí po kliknutí.
 export function PdfPreview({
   fileUrl,
@@ -25,10 +18,11 @@ export function PdfPreview({
 }) {
   const [open, setOpen] = useState(defaultOpen);
 
-  // Starší verze z doby, kdy se PDF nahrávala do Supabase Storage, mají
-  // v file_url jen cestu k souboru – ty už appka zobrazit neumí.
-  const fileId = fileUrl.startsWith("http") ? extractDriveFileId(fileUrl) : null;
-  if (!fileId) {
+  // Jediná podmínka je tvar odkazu. Starší verze z doby, kdy se PDF nahrávala
+  // do Supabase Storage, mají ve file_url jen cestu k souboru – ty appka
+  // zobrazit neumí. Platný odkaz na Drive vkládáme vždy, bez ověřování
+  // dostupnosti (to z prohlížeče stejně nejde).
+  if (!isDrivePreviewUrl(fileUrl)) {
     return <p className="text-sm text-ink/50">{t.fileUnavailable}</p>;
   }
 
@@ -48,7 +42,7 @@ export function PdfPreview({
           {open ? t.hidePdf : t.viewPdf}
         </button>
 
-        {/* Na mobilu je vykreslování PDF pomalé, tam proto nabízíme
+        {/* Na mobilu bývá vložený náhled nepoužitelný, tam proto nabízíme
             otevření přímo v Drive. */}
         <a
           href={viewUrl}
@@ -72,9 +66,12 @@ export function PdfPreview({
       </div>
 
       {open && (
-        <div className="hidden sm:block">
-          <PdfViewer src={`/api/pdf/${fileId}`} t={t} />
-        </div>
+        <iframe
+          src={fileUrl}
+          title={t.pdfPreview}
+          // Poměr stránky A4, ať kolem dokumentu nezůstává prázdné místo.
+          className="mt-3 hidden aspect-[1/1.414] w-full border-0 sm:block"
+        />
       )}
     </div>
   );

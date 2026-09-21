@@ -24,7 +24,7 @@ export const sk: Dictionary = {
   viewPdf: "Zobraziť PDF",
   hidePdf: "Skryť PDF",
   openPdf: "Otvoriť PDF",
-  loadingPdf: "Načítavam PDF...",
+  pdfPreview: "Náhľad PDF",
   fileUnavailable: "Súbor sa nepodarilo načítať.",
 
   uploadNewVersion: "Nahrať novú verziu",

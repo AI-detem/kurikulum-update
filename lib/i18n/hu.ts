@@ -24,7 +24,7 @@ export const hu: Dictionary = {
   viewPdf: "PDF megtekintése",
   hidePdf: "PDF elrejtése",
   openPdf: "PDF megnyitása",
-  loadingPdf: "PDF betöltése...",
+  pdfPreview: "PDF előnézet",
   fileUnavailable: "A fájlt nem sikerült betölteni.",
 
   uploadNewVersion: "Új verzió feltöltése",
