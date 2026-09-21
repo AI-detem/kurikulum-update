@@ -10,6 +10,8 @@ const config: Config = {
       screens: {
         // od téhle šířky se detail verze dělí na dokument a boční panel
         doc: "820px",
+        // od téhle šířky se vedle dokumentu vejde i formulář (obrazovka nahrávání)
+        wide: "1100px",
       },
       colors: {
         // barvy podle vizuálního stylu AI dětem

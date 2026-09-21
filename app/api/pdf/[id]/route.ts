@@ -22,22 +22,42 @@ export async function GET(
   }
 
   const supabase = await createClient();
+  const {
+    data: { user: authUser },
+  } = await supabase.auth.getUser();
 
-  // Soubor pošleme jen tehdy, když k němu v databázi existuje verze, kterou
-  // uživatel smí vidět (o to se starají pravidla Row Level Security).
-  // Jinak by se z appky stala otevřená proxy na libovolný soubor na Drive.
-  const { data: versions } = await supabase
-    .from("document_versions")
-    .select("file_url")
-    .like("file_url", `%${id}%`)
-    .limit(5);
+  if (!authUser) {
+    return new NextResponse("Nepřihlášený uživatel", { status: 401 });
+  }
 
-  const known = (versions ?? []).some(
-    (version) => extractDriveFileId(version.file_url) === id
-  );
+  const { data: appUser } = await supabase
+    .from("users")
+    .select("role")
+    .eq("id", authUser.id)
+    .single();
 
-  if (!known) {
-    return new NextResponse("Dokument nenalezen", { status: 404 });
+  // Admin a editor potřebují vidět náhled ještě předtím, než verzi uloží,
+  // takže jim projde jakékoli ID. Ostatním pošleme soubor jen tehdy, když
+  // k němu v databázi existuje verze, kterou smí vidět (o to se starají
+  // pravidla Row Level Security). Jinak by se z appky stala otevřená proxy
+  // na libovolný soubor na Drive.
+  const canPreviewAnything =
+    appUser?.role === "admin" || appUser?.role === "editor";
+
+  if (!canPreviewAnything) {
+    const { data: versions } = await supabase
+      .from("document_versions")
+      .select("file_url")
+      .like("file_url", `%${id}%`)
+      .limit(5);
+
+    const known = (versions ?? []).some(
+      (version) => extractDriveFileId(version.file_url) === id
+    );
+
+    if (!known) {
+      return new NextResponse("Dokument nenalezen", { status: 404 });
+    }
   }
 
   // confirm=t přeskočí mezistránku s potvrzením, kterou Drive ukazuje

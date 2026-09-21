@@ -56,3 +56,30 @@ export type ModuleWithLatestVersion = Module & {
   latest_version: (DocumentVersion & { changes: Change[] }) | null;
   version_count: number;
 };
+
+export type Annotation = {
+  id: string;
+  document_version_id: string;
+  page: number; // číslováno od 0
+  // poloha jako podíl 0..1 vůči stránce
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  note: string;
+  category: string | null;
+  created_at: string;
+};
+
+// Značka tak, jak s ní pracuje rozhraní – ať už je už uložená v databázi,
+// nebo ji uživatel zrovna nakreslil.
+export type Mark = {
+  id: string;
+  page: number;
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  note: string;
+  category: string | null;
+};

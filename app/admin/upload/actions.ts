@@ -6,7 +6,9 @@ import { createClient } from "@/lib/supabase/server";
 import { requireUser, canUpload } from "@/lib/current-user";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { extractDriveFileId, drivePreviewUrl } from "@/lib/drive";
+import { sortMarks } from "@/lib/annotations";
 import { notifyCountryAboutChange } from "@/lib/notify";
+import type { Mark } from "@/lib/types";
 
 // Formulář chybu zobrazí pod tlačítkem, proto ji vracíme místo vyhazování.
 export type UploadState = { error: string } | null;
@@ -20,15 +22,20 @@ export async function uploadDocumentVersion(
   const moduleId = String(formData.get("moduleId") ?? "");
   const countryId = String(formData.get("countryId") ?? "");
   const driveLink = String(formData.get("driveLink") ?? "");
-  const note = String(formData.get("note") ?? "");
-  const category = String(formData.get("category") ?? "") || null;
+  const summary = String(formData.get("note") ?? "").trim();
+  const marks = parseMarks(formData.get("marks"));
 
   // Hlášky posíláme v jazyce země, pro kterou se verze přidává.
   const { t } = await resolveActiveCountry(user, countryId);
 
   if (!canUpload(user)) return { error: t.uploadNotAllowed };
-  if (!moduleId || !countryId || !driveLink || !note) {
+  if (!moduleId || !countryId || !driveLink) {
     return { error: t.uploadMissingFields };
+  }
+
+  // Popis změn musí být aspoň jeden – buď u konkrétního místa, nebo celkový.
+  if (marks.length === 0 && !summary) {
+    return { error: t.needMarkOrSummary };
   }
 
   const fileId = extractDriveFileId(driveLink);
@@ -64,9 +71,35 @@ export async function uploadDocumentVersion(
     return { error: `${t.saveFailed} ${versionError?.message ?? ""}`.trim() };
   }
 
+  // Popisy označených míst v pořadí čtení – použijí se i v e-mailu.
+  const noteList = sortMarks(marks).map((mark) => mark.note);
+
+  if (marks.length > 0) {
+    const { error: marksError } = await supabase.from("annotations").insert(
+      sortMarks(marks).map((mark) => ({
+        document_version_id: version.id,
+        page: mark.page,
+        x: mark.x,
+        y: mark.y,
+        w: mark.w,
+        h: mark.h,
+        note: mark.note,
+        category: mark.category,
+      }))
+    );
+
+    if (marksError) {
+      return { error: `${t.saveFailed} ${marksError.message}`.trim() };
+    }
+  }
+
   const { data: change, error: changeError } = await supabase
     .from("changes")
-    .insert({ document_version_id: version.id, note, category })
+    .insert({
+      document_version_id: version.id,
+      note: summary || noteList.map((note, index) => `${index + 1}. ${note}`).join("\n"),
+      category: null,
+    })
     .select()
     .single();
 
@@ -74,7 +107,8 @@ export async function uploadDocumentVersion(
     return { error: `${t.saveFailed} ${changeError?.message ?? ""}`.trim() };
   }
 
-  // Notifikace (in-app + e-mail) posíláme až po úspěšném uložení všeho ostatního.
+  // Notifikace posíláme až úplně nakonec, aby čtenářům nepřišlo upozornění
+  // na verzi, u které se popisy neuložily.
   const [{ data: moduleData }, { data: countryData }] = await Promise.all([
     supabase.from("modules").select("name").eq("id", moduleId).single(),
     supabase.from("countries").select("name").eq("id", countryId).single(),
@@ -86,10 +120,22 @@ export async function uploadDocumentVersion(
     countryName: countryData?.name ?? "",
     moduleName: moduleData?.name ?? "",
     versionNumber: nextVersionNumber,
-    note,
+    summary,
+    notes: noteList,
   });
 
   revalidatePath("/");
   revalidatePath(`/modules/${moduleId}`);
   redirect(`/modules/${moduleId}?country=${countryId}`);
+}
+
+function parseMarks(value: FormDataEntryValue | null): Mark[] {
+  if (typeof value !== "string" || !value) return [];
+  try {
+    const parsed = JSON.parse(value) as Mark[];
+    // Bez popisu se značka neukládá.
+    return parsed.filter((mark) => mark.note?.trim());
+  } catch {
+    return [];
+  }
 }

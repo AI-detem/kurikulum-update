@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
-import { requireUser } from "@/lib/current-user";
+import { requireUser, canUpload } from "@/lib/current-user";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { getModuleDetail } from "@/lib/modules-data";
-import { VersionHistory } from "@/components/VersionHistory";
+import { ModuleVersions } from "@/components/ModuleVersions";
 import { CountrySwitcher } from "@/components/CountrySwitcher";
-import { ChangesPanel } from "@/components/ChangesPanel";
 
 export default async function ModuleDetailPage({
   params,
@@ -26,7 +25,7 @@ export default async function ModuleDetailPage({
     );
   }
 
-  const { module, versions } = await getModuleDetail(moduleId, activeCountryId);
+  const { module, versions, marksByVersion } = await getModuleDetail(moduleId, activeCountryId);
 
   if (!module) notFound();
 
@@ -45,12 +44,13 @@ export default async function ModuleDetailPage({
       <p className="badge-pill mb-3">{module.category ?? t.noCategory}</p>
       <h1 className="mb-6 font-heading text-3xl font-bold text-ink">{module.name}</h1>
 
-      {/* Dokument zabírá zbytek šířky, panel změn má pevných 340 px.
-          Pod 820 px se sloupce skládají pod sebe. */}
-      <div className="grid grid-cols-1 gap-6 doc:grid-cols-[minmax(0,1fr)_340px]">
-        <VersionHistory versions={versions} t={t} />
-        <ChangesPanel t={t} />
-      </div>
+      <ModuleVersions
+        moduleId={moduleId}
+        versions={versions}
+        marksByVersion={marksByVersion}
+        editable={canUpload(user)}
+        t={t}
+      />
     </div>
   );
 }

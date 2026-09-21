@@ -38,6 +38,30 @@ export const cs = {
   changesPanelTitle: "Co se v této verzi změnilo",
   changesPanelEmpty: "Zatím nic označeného.",
 
+  // značkování změn v dokumentu
+  annotateHint:
+    "Táhni myší přes místo v dokumentu, které se změnilo — pak napiš, co se tam změnilo.",
+  pasteLinkToSeeDocument: "Vlož odkaz na PDF z Google Drive a dokument se načte sem.",
+  whatChangedHere: "Co se tady změnilo?",
+  cancel: "Zrušit",
+  saved: "Uloženo.",
+  markDiscarded: "Označení zrušeno — bez popisu se neuloží.",
+  markDeleted: "Značka smazána",
+  undo: "Vrátit zpět",
+  hideMarks: "Skrýt značky",
+  showMarks: "Zobrazit značky",
+  pageLabel: "Strana",
+  summaryOptional: "Celkové shrnutí (nepovinné)",
+  demoLabel: "takhle",
+  edit: "Upravit",
+  delete: "Smazat",
+  needMarkOrSummary: "Označ aspoň jedno místo v dokumentu nebo napiš celkové shrnutí.",
+  catContent: "Obsahová změna",
+  catFix: "Oprava chyby",
+  catLocalization: "Lokalizace",
+  catNewPart: "Nová část",
+  catFormal: "Formální úprava",
+
   // nahrání nové verze
   uploadNewVersion: "Nahrát novou verzi",
   module: "Modul",

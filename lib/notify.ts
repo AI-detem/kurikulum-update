@@ -10,9 +10,12 @@ export async function notifyCountryAboutChange(params: {
   countryName: string;
   moduleName: string;
   versionNumber: number;
-  note: string;
+  /** Celkové shrnutí, pokud ho editor napsal. */
+  summary: string;
+  /** Popisy jednotlivých označených míst v pořadí čtení. */
+  notes: string[];
 }) {
-  const { changeId, countryId, countryName, moduleName, versionNumber, note } = params;
+  const { changeId, countryId, countryName, moduleName, versionNumber, summary, notes } = params;
   const supabase = createAdminClient();
 
   // Všichni uživatelé (viewer i editor/admin) z dané země dostanou notifikaci.
@@ -38,7 +41,8 @@ export async function notifyCountryAboutChange(params: {
         to: recipient.email,
         moduleName,
         versionNumber,
-        note,
+        summary,
+        notes,
         countryName,
       });
 

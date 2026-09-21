@@ -5,10 +5,11 @@ export async function sendChangeNotificationEmail(params: {
   to: string;
   moduleName: string;
   versionNumber: number;
-  note: string;
+  summary: string;
+  notes: string[];
   countryName: string;
 }) {
-  const { to, moduleName, versionNumber, note, countryName } = params;
+  const { to, moduleName, versionNumber, summary, notes, countryName } = params;
   const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
   // Klient se vytváří až tady (ne při načtení souboru), aby appka šla
@@ -21,7 +22,12 @@ export async function sendChangeNotificationEmail(params: {
     subject: `Nová verze metodiky: ${moduleName} (${countryName})`,
     text:
       `Modul "${moduleName}" má novou verzi (v${versionNumber}).\n\n` +
-      `Co se změnilo:\n${note}\n\n` +
+      (summary ? `Co se změnilo:\n${summary}\n\n` : "") +
+      (notes.length
+        ? `Označená místa v dokumentu:\n${notes
+            .map((note, index) => `${index + 1}. ${note}`)
+            .join("\n")}\n\n`
+        : "") +
       `Otevřít appku: ${siteUrl}`,
   });
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
 import { Document, Page, pdfjs } from "react-pdf";
 import "react-pdf/dist/esm/Page/TextLayer.css";
 import "react-pdf/dist/esm/Page/AnnotationLayer.css";
@@ -18,11 +18,14 @@ export function PdfViewer({
   src,
   driveUrl,
   t,
+  renderPageOverlay,
 }: {
   src: string;
   /** Odkaz na soubor v Drive pro případ, že se vykreslení nepovede. */
   driveUrl: string;
   t: Dictionary;
+  /** Vrstva kreslená přes stránku – používá se pro značkování změn. */
+  renderPageOverlay?: (pageIndex: number) => ReactNode;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
@@ -51,13 +54,19 @@ export function PdfViewer({
       >
         {width > 0 &&
           Array.from({ length: pageCount }, (_, index) => (
-            <Page
+            <div
               key={index}
-              pageNumber={index + 1}
-              width={width}
-              renderAnnotationLayer={false}
-              className="mb-3 bg-white shadow-sm last:mb-0"
-            />
+              id={`pdf-page-${index}`}
+              className="relative mb-3 w-fit last:mb-0"
+            >
+              <Page
+                pageNumber={index + 1}
+                width={width}
+                renderAnnotationLayer={false}
+                className="bg-white shadow-sm"
+              />
+              {renderPageOverlay?.(index)}
+            </div>
           ))}
       </Document>
     </div>
