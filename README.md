@@ -108,6 +108,19 @@ Postup je stejný jako u předchozí appky v tomhle repu:
    ti Vercel přidělí).
 3. Deploy.
 
+Na co si dát pozor v Environment Variables na Vercelu:
+- Názvy proměnných musí sedět přesně včetně `NEXT_PUBLIC_` na začátku.
+  Bez toho prefixu je appka nenajde a spadne na hlášce
+  "Your project's URL and Key are required to create a Supabase client".
+- Proměnné s `NEXT_PUBLIC_` zakládej jako typ **Config** (ne Secret) –
+  appka je potřebuje číst už při sestavování. U anon klíče Vercel upozorní,
+  že by mohl být citlivý; u Supabase anon klíče je to v pořádku ("Mark as
+  Safe"), chrání ho pravidla Row Level Security v databázi.
+- `SUPABASE_SERVICE_ROLE_KEY` naopak nech jako **Secret** a nikdy mu
+  nedávej prefix `NEXT_PUBLIC_` – ten se nesmí dostat do prohlížeče.
+- Nové proměnné se projeví až při dalším sestavení appky. Po jejich přidání
+  je potřeba appku znovu nasadit (Redeploy nebo nový commit).
+
 Po nasazení nezapomeň v Supabase (**Authentication → URL Configuration**)
 změnit Site URL na ostrou adresu appky, jinak magic-link odkazy budou mířit
 na localhost.
