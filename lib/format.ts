@@ -1,12 +1,13 @@
 // Datum a čas verze. V databázi je uložený v UTC, tady se převádí
 // do místního času prohlížeče, ať jdou rozlišit dvě verze z jednoho dne.
-export function formatDateTime(value: string, locale: string): string {
+export function formatDateTime(value: string, locale: string, timeZone?: string): string {
   return new Date(value).toLocaleString(locale, {
     day: "numeric",
     month: "numeric",
     year: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    timeZone,
   });
 }
 

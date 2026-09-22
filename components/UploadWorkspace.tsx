@@ -12,6 +12,7 @@ import {
 import { AnnotationWorkspace } from "@/components/annotations/AnnotationWorkspace";
 import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
 import { fill, formatDateTime } from "@/lib/format";
+import { LocalDateTime } from "@/components/LocalDateTime";
 import type { Country, Mark, Module } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -59,22 +60,30 @@ export function UploadWorkspace({
   const [draftChoice, setDraftChoice] = useState<"ask" | "continue" | "fresh">(
     existingDraft ? "ask" : "fresh"
   );
-  const resumed = draftChoice === "continue" && existingDraft;
-
-  const [moduleId, setModuleId] = useState(
-    resumed ? existingDraft.module_id : modules[0]?.id ?? ""
-  );
-  const [countryId, setCountryId] = useState(
-    resumed ? existingDraft.country_id : defaultCountryId ?? ""
-  );
-  const [driveLink, setDriveLink] = useState(resumed ? existingDraft.file_url : "");
-  const [linkForPreview, setLinkForPreview] = useState(resumed ? existingDraft.file_url : "");
-  const [marks, setMarks] = useState<Mark[]>(resumed ? existingDraft.marks : []);
+  const [moduleId, setModuleId] = useState(modules[0]?.id ?? "");
+  const [countryId, setCountryId] = useState(defaultCountryId ?? "");
+  const [driveLink, setDriveLink] = useState("");
+  const [linkForPreview, setLinkForPreview] = useState("");
+  const [marks, setMarks] = useState<Mark[]>([]);
   const [summary, setSummary] = useState("");
-  const [draftId, setDraftId] = useState<string | null>(resumed ? existingDraft.id : null);
+  const [draftId, setDraftId] = useState<string | null>(null);
   const [saveState, setSaveState] = useState<{ saving: boolean; savedAt: string | null; error?: string }>(
-    { saving: false, savedAt: resumed ? existingDraft.saved_at : null }
+    { saving: false, savedAt: null }
   );
+
+  // Navázání na rozdělanou práci. Musí se dít tady, ne v počátečních
+  // hodnotách stavu – ty se podruhé nespustí a odkaz na dokument by
+  // zůstal prázdný.
+  function continueDraft(draft: ExistingDraft) {
+    setModuleId(draft.module_id);
+    setCountryId(draft.country_id);
+    setDriveLink(draft.file_url);
+    setLinkForPreview(draft.file_url);
+    setMarks(draft.marks);
+    setDraftId(draft.id);
+    setSaveState({ saving: false, savedAt: draft.saved_at });
+    setDraftChoice("continue");
+  }
 
   const [state, formAction, isPending] = useActionState<PublishState, FormData>(
     publishVersion,
@@ -145,13 +154,13 @@ export function UploadWorkspace({
           {fill(t.draftFound, {
             module: draftModule,
             country: draftCountry,
-            time: formatDateTime(existingDraft.saved_at, t.dateLocale),
+            time: formatDateTime(existingDraft.saved_at, t.dateLocale, "UTC"),
           })}
         </p>
         <div className="mt-4 flex gap-2">
           <button
             type="button"
-            onClick={() => setDraftChoice("continue")}
+            onClick={() => continueDraft(existingDraft)}
             className="rounded-xl bg-coral px-4 py-2 text-sm font-medium text-white"
           >
             {t.continueDraft}
@@ -231,7 +240,7 @@ export function UploadWorkspace({
                 ? fill(t.existingVersionInfo, {
                     country: countryName,
                     version: latest.version_number,
-                    when: formatDateTime(latest.uploaded_at, t.dateLocale),
+                    when: formatDateTime(latest.uploaded_at, t.dateLocale, "UTC"),
                     who: latest.uploaded_by_email ?? "?",
                     next: latest.version_number + 1,
                   })
@@ -272,7 +281,10 @@ export function UploadWorkspace({
                   ? t.savingDraft
                   : saveState.savedAt
                     ? fill(t.draftSaved, {
-                        time: formatDateTime(saveState.savedAt, t.dateLocale).split(", ")[1] ?? "",
+                        time: new Date(saveState.savedAt).toLocaleTimeString(t.dateLocale, {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }),
                       })
                     : ""}
             </p>
@@ -293,7 +305,7 @@ export function UploadWorkspace({
                   {fill(t.concurrentWarning, {
                     version: state.warning.otherVersion,
                     who: state.warning.otherAuthor,
-                    when: formatDateTime(state.warning.otherUploadedAt, t.dateLocale),
+                    when: formatDateTime(state.warning.otherUploadedAt, t.dateLocale, "UTC"),
                     saved: state.warning.savedVersion,
                   })}
                 </p>

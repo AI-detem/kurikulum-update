@@ -69,6 +69,9 @@ export function MarkLayer({
 
   function handlePointerDown(event: React.PointerEvent) {
     if (!editable || hidden || event.button !== 0) return;
+    // Bez tohohle prohlížeč začne tažením označovat text stránky
+    // místo kreslení značky.
+    event.preventDefault();
 
     if (event.pointerType === "touch") {
       const pointerId = event.pointerId;
@@ -136,7 +139,7 @@ export function MarkLayer({
       onPointerCancel={handlePointerUp}
       // z-10: textová vrstva react-pdf má z-index 2 a bez tohohle by
       // zachytávala myš místo kreslení
-      className={`absolute inset-0 z-10 ${editable && !hidden ? "cursor-crosshair" : ""}`}
+      className={`absolute inset-0 z-10 select-none ${editable && !hidden ? "cursor-crosshair" : ""}`}
       style={{ touchAction: "pan-y" }}
     >
       {!hidden &&

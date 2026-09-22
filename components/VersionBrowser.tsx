@@ -7,7 +7,8 @@ import { MarkLayer } from "@/components/annotations/MarkLayer";
 import { MarkCard } from "@/components/annotations/MarkCard";
 import { numberMarks, sortMarks } from "@/lib/annotations";
 import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
-import { fill, formatDateTime, pluralCount } from "@/lib/format";
+import { fill, pluralCount } from "@/lib/format";
+import { LocalDateTime } from "@/components/LocalDateTime";
 import type { Change, DocumentVersion, Mark } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -78,7 +79,7 @@ export function VersionBrowser({
               {index === 0 && <span className="text-ink/50"> · {t.latest}</span>}
             </span>
             <span className="block text-xs text-ink/40">
-              {formatDateTime(version.uploaded_at, t.dateLocale)}
+              <LocalDateTime value={version.uploaded_at} locale={t.dateLocale} />
             </span>
             {version.unread && (
               <span className="absolute right-1.5 top-1.5 h-2 w-2 rounded-full bg-coral" />
@@ -91,7 +92,7 @@ export function VersionBrowser({
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3 text-sm text-ink/60">
         <p>
           {fill(t.uploadedByWho, { who: selected.uploaded_by_email ?? "?" })} ·{" "}
-          {formatDateTime(selected.uploaded_at, t.dateLocale)} ·{" "}
+          <LocalDateTime value={selected.uploaded_at} locale={t.dateLocale} /> ·{" "}
           {pluralCount(marks.length, t.markedChangesForms, t.dateLocale)}
         </p>
 

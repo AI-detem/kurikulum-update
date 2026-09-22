@@ -123,15 +123,25 @@ function MarkEditor({
   const latest = useRef({ note, category: chosenCategory(), onSubmit, onCancel });
   latest.current = { note, category: chosenCategory(), onSubmit, onCancel };
 
-  useEffect(
-    () => () => {
+  // Uložení se odkládá o jeden takt. React ve vývojovém režimu efekty
+  // schválně jednou "odmountuje" a hned namountuje zpátky – bez odkladu
+  // by se čerstvě nakreslená značka rovnou zase zahodila.
+  const pending = useRef<number | null>(null);
+  useEffect(() => {
+    if (pending.current !== null) {
+      window.clearTimeout(pending.current);
+      pending.current = null;
+    }
+
+    return () => {
       if (closing.current) return;
-      const current = latest.current;
-      if (current.note.trim()) current.onSubmit(current.note.trim(), current.category);
-      else current.onCancel();
-    },
-    []
-  );
+      pending.current = window.setTimeout(() => {
+        const current = latest.current;
+        if (current.note.trim()) current.onSubmit(current.note.trim(), current.category);
+        else current.onCancel();
+      }, 0);
+    };
+  }, []);
 
   // Záměrně <div>, ne <form>: kartička se zobrazuje i uvnitř formuláře
   // pro nahrání verze a vnořené formuláře HTML nedovoluje.
