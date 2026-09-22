@@ -10,10 +10,141 @@ import { sortMarks } from "@/lib/annotations";
 import { notifyCountryAboutChange, notifyPreviousAuthor } from "@/lib/notify";
 import type { Mark } from "@/lib/types";
 
-export type UploadState =
+// Kolikrát zkusíme zveřejnění znovu, když nám někdo souběžně vezme číslo verze.
+const VERSION_ATTEMPTS = 5;
+
+// ---------------------------------------------------------------------
+// Rozpracovaná verze (draft)
+// ---------------------------------------------------------------------
+// Vzniká, jakmile je vyplněný modul, země a platný odkaz. Značky se k ní
+// ukládají průběžně. V přehledu se neukazuje a notifikace neposílá –
+// to obojí se děje až při zveřejnění.
+
+export async function ensureDraftVersion(
+  moduleId: string,
+  countryId: string,
+  driveLink: string
+): Promise<{ draftId: string; savedAt: string } | { error: string }> {
+  const user = await requireUser();
+  const { t } = await resolveActiveCountry(user, countryId);
+
+  if (!canUpload(user)) return { error: t.uploadNotAllowed };
+
+  const fileId = extractDriveFileId(driveLink);
+  if (!fileId) return { error: t.driveLinkNotRecognized };
+  if (!moduleId || !countryId) return { error: t.uploadMissingFields };
+
+  const supabase = await createClient();
+  const fileUrl = drivePreviewUrl(fileId);
+
+  // Jeden rozpracovaný záznam na uživatele – když mezitím změnil modul,
+  // zemi nebo odkaz, jen ho přepíšeme.
+  const { data: existing } = await supabase
+    .from("document_versions")
+    .select("id")
+    .eq("uploaded_by", user.id)
+    .eq("status", "draft")
+    .limit(1)
+    .maybeSingle();
+
+  if (existing) {
+    const { error } = await supabase
+      .from("document_versions")
+      .update({ module_id: moduleId, country_id: countryId, file_url: fileUrl })
+      .eq("id", existing.id);
+
+    if (error) return { error: `${t.saveFailedDetail} ${error.message}` };
+    return { draftId: existing.id, savedAt: new Date().toISOString() };
+  }
+
+  const { data, error } = await supabase
+    .from("document_versions")
+    .insert({
+      module_id: moduleId,
+      country_id: countryId,
+      file_url: fileUrl,
+      status: "draft",
+      version_number: null,
+      uploaded_by: user.id,
+    })
+    .select("id")
+    .single();
+
+  if (error || !data) return { error: `${t.saveFailedDetail} ${error?.message ?? ""}` };
+  return { draftId: data.id, savedAt: new Date().toISOString() };
+}
+
+export async function saveDraftMarks(
+  draftId: string,
+  marks: Mark[]
+): Promise<{ savedAt: string } | { error: string }> {
+  const user = await requireUser();
+  const { t } = await resolveActiveCountry(user);
+
+  if (!canUpload(user)) return { error: t.uploadNotAllowed };
+
+  const supabase = await createClient();
+
+  // Nové značky zapisujeme dřív, než smažeme ty původní – kdyby zápis
+  // selhal, o rozdělanou práci uživatel nepřijde.
+  const { data: existing, error: readError } = await supabase
+    .from("annotations")
+    .select("id")
+    .eq("document_version_id", draftId);
+
+  if (readError) return { error: `${t.saveFailedDetail} ${readError.message}` };
+
+  const described = marks.filter((mark) => mark.note?.trim());
+
+  if (described.length > 0) {
+    const { error } = await supabase.from("annotations").insert(
+      described.map((mark) => ({
+        document_version_id: draftId,
+        page: mark.page,
+        x: mark.x,
+        y: mark.y,
+        w: mark.w,
+        h: mark.h,
+        note: mark.note,
+        category: mark.category,
+      }))
+    );
+
+    if (error) return { error: `${t.saveFailedDetail} ${error.message}` };
+  }
+
+  const previousIds = (existing ?? []).map((row) => row.id);
+  if (previousIds.length > 0) {
+    const { error } = await supabase.from("annotations").delete().in("id", previousIds);
+    if (error) return { error: `${t.saveFailedDetail} ${error.message}` };
+  }
+
+  return { savedAt: new Date().toISOString() };
+}
+
+export async function discardDraft(draftId: string): Promise<{ error: string } | null> {
+  const user = await requireUser();
+  if (!canUpload(user)) return { error: "forbidden" };
+
+  const supabase = await createClient();
+  // Značky zmizí samy, mají v databázi nastavené mazání spolu s verzí.
+  const { error } = await supabase
+    .from("document_versions")
+    .delete()
+    .eq("id", draftId)
+    .eq("status", "draft");
+
+  return error ? { error: error.message } : null;
+}
+
+// ---------------------------------------------------------------------
+// Zveřejnění
+// ---------------------------------------------------------------------
+
+export type PublishState =
   | { error: string }
   | {
-      // Uložilo se, ale mezitím někdo jiný přidal vlastní verzi.
+      // Zveřejnilo se, ale mezitím někdo jiný přidal vlastní verzi.
       warning: {
         otherVersion: number;
         otherAuthor: string;
@@ -25,48 +156,53 @@ export type UploadState =
     }
   | null;
 
-// Kolikrát zkusíme zápis znovu, když nám někdo souběžně vezme číslo verze.
-const VERSION_ATTEMPTS = 5;
-
-export async function uploadDocumentVersion(
-  _prevState: UploadState,
+export async function publishVersion(
+  _prevState: PublishState,
   formData: FormData
-): Promise<UploadState> {
+): Promise<PublishState> {
   const user = await requireUser();
 
-  const moduleId = String(formData.get("moduleId") ?? "");
-  const countryId = String(formData.get("countryId") ?? "");
-  const driveLink = String(formData.get("driveLink") ?? "");
+  const draftId = String(formData.get("draftId") ?? "");
   const summary = String(formData.get("note") ?? "").trim();
-  const marks = parseMarks(formData.get("marks"));
-  // Nejvyšší číslo verze, které uživatel viděl na obrazovce.
   const knownLatest = Number(formData.get("knownLatest") ?? 0);
-
-  const { t } = await resolveActiveCountry(user, countryId);
-
-  if (!canUpload(user)) return { error: t.uploadNotAllowed };
-  if (!moduleId || !countryId || !driveLink) return { error: t.uploadMissingFields };
-  if (marks.length === 0 && !summary) return { error: t.needMarkOrSummary };
-
-  const fileId = extractDriveFileId(driveLink);
-  if (!fileId) return { error: t.driveLinkNotRecognized };
 
   const supabase = await createClient();
 
-  // Číslo verze nepřidělujeme dopředu: pokaždé se načte to poslední a zapíše
-  // se o jedno vyšší. Souběžný zápis odmítne databáze (dvojice modul+země+číslo
-  // je unikátní), takže to zkusíme znovu s novým číslem.
-  let version = null;
+  const { data: draft } = await supabase
+    .from("document_versions")
+    .select("id, module_id, country_id")
+    .eq("id", draftId)
+    .eq("status", "draft")
+    .maybeSingle();
+
+  const { t } = await resolveActiveCountry(user, draft?.country_id);
+
+  if (!canUpload(user)) return { error: t.uploadNotAllowed };
+  if (!draft) return { error: t.uploadMissingFields };
+
+  const { module_id: moduleId, country_id: countryId } = draft;
+
+  const { data: marks } = await supabase
+    .from("annotations")
+    .select("*")
+    .eq("document_version_id", draftId);
+
+  if ((marks ?? []).length === 0 && !summary) return { error: t.needMarkOrSummary };
+
+  // Číslo verze přidělujeme až tady. Souběžný zápis odmítne databáze
+  // (dvojice modul+země+číslo je unikátní), takže to zkusíme s dalším číslem.
+  let published: { version_number: number; uploaded_at: string } | null = null;
   let previous: { version_number: number; uploaded_at: string; uploaded_by: string | null } | null =
     null;
   let lastError = "";
 
-  for (let attempt = 0; attempt < VERSION_ATTEMPTS && !version; attempt++) {
+  for (let attempt = 0; attempt < VERSION_ATTEMPTS && !published; attempt++) {
     const { data: latest } = await supabase
       .from("document_versions")
       .select("version_number, uploaded_at, uploaded_by")
       .eq("module_id", moduleId)
       .eq("country_id", countryId)
+      .eq("status", "published")
       .order("version_number", { ascending: false })
       .limit(1)
       .maybeSingle();
@@ -75,50 +211,42 @@ export async function uploadDocumentVersion(
 
     const { data, error } = await supabase
       .from("document_versions")
-      .insert({
-        module_id: moduleId,
-        country_id: countryId,
-        file_url: drivePreviewUrl(fileId),
+      .update({
         version_number: (latest?.version_number ?? 0) + 1,
-        uploaded_by: user.id,
+        status: "published",
+        published_at: new Date().toISOString(),
       })
-      .select()
+      .eq("id", draftId)
+      .select("version_number, uploaded_at")
       .single();
 
     if (data) {
-      version = data;
+      published = data;
     } else {
       lastError = error?.message ?? "";
-      // 23505 = číslo verze mezitím zabral někdo jiný, zkusíme další.
       if (error?.code !== "23505") break;
     }
   }
 
-  if (!version) return { error: `${t.saveFailedDetail} ${lastError}`.trim() };
+  if (!published) return { error: `${t.saveFailedDetail} ${lastError}`.trim() };
 
-  const noteList = sortMarks(marks).map((mark) => mark.note);
-
-  if (marks.length > 0) {
-    const { error: marksError } = await supabase.from("annotations").insert(
-      sortMarks(marks).map((mark) => ({
-        document_version_id: version.id,
-        page: mark.page,
-        x: mark.x,
-        y: mark.y,
-        w: mark.w,
-        h: mark.h,
-        note: mark.note,
-        category: mark.category,
-      }))
-    );
-
-    if (marksError) return { error: `${t.saveFailedDetail} ${marksError.message}` };
-  }
+  const noteList = sortMarks(
+    (marks ?? []).map((mark) => ({
+      id: mark.id,
+      page: mark.page,
+      x: mark.x,
+      y: mark.y,
+      w: mark.w,
+      h: mark.h,
+      note: mark.note,
+      category: mark.category,
+    }))
+  ).map((mark) => mark.note);
 
   const { data: change, error: changeError } = await supabase
     .from("changes")
     .insert({
-      document_version_id: version.id,
+      document_version_id: draftId,
       note: summary || noteList.map((note, index) => `${index + 1}. ${note}`).join("\n"),
       category: null,
     })
@@ -134,27 +262,25 @@ export async function uploadDocumentVersion(
     supabase.from("countries").select("name").eq("id", countryId).single(),
   ]);
 
-  // Notifikace posíláme až úplně nakonec, aby čtenářům nepřišlo upozornění
-  // na verzi, u které se popisy neuložily.
+  // Notifikace odcházejí jednou, až je verze opravdu zveřejněná.
   await notifyCountryAboutChange({
     changeId: change.id,
     countryId,
     countryName: countryData?.name ?? "",
     moduleName: moduleData?.name ?? "",
-    versionNumber: version.version_number,
-    uploadedAt: version.uploaded_at,
+    versionNumber: published.version_number,
+    uploadedAt: published.uploaded_at,
     summary,
     notes: noteList,
   });
 
-  // Autor předchozí verze se dozví, že k ní přibyla novější.
   if (previous?.uploaded_by && previous.uploaded_by !== user.id) {
     await notifyPreviousAuthor({
       changeId: change.id,
       authorId: previous.uploaded_by,
       moduleName: moduleData?.name ?? "",
       theirVersion: previous.version_number,
-      newVersion: version.version_number,
+      newVersion: published.version_number,
     });
   }
 
@@ -175,7 +301,7 @@ export async function uploadDocumentVersion(
         otherVersion: previous.version_number,
         otherAuthor: author?.email ?? "",
         otherUploadedAt: previous.uploaded_at,
-        savedVersion: version.version_number,
+        savedVersion: published.version_number,
         moduleId,
         countryId,
       },
@@ -183,15 +309,4 @@ export async function uploadDocumentVersion(
   }
 
   redirect(`/modules/${moduleId}?country=${countryId}`);
-}
-
-function parseMarks(value: FormDataEntryValue | null): Mark[] {
-  if (typeof value !== "string" || !value) return [];
-  try {
-    const parsed = JSON.parse(value) as Mark[];
-    // Bez popisu se značka neukládá.
-    return parsed.filter((mark) => mark.note?.trim());
-  } catch {
-    return [];
-  }
 }

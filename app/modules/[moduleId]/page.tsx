@@ -1,8 +1,8 @@
 import { notFound } from "next/navigation";
-import { requireUser, canUpload } from "@/lib/current-user";
+import { requireUser } from "@/lib/current-user";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { getModuleDetail } from "@/lib/modules-data";
-import { ModuleVersions } from "@/components/ModuleVersions";
+import { VersionBrowser } from "@/components/VersionBrowser";
 import { CountrySwitcher } from "@/components/CountrySwitcher";
 
 export default async function ModuleDetailPage({
@@ -44,13 +44,7 @@ export default async function ModuleDetailPage({
       <p className="badge-pill mb-3">{module.category ?? t.noCategory}</p>
       <h1 className="mb-6 font-heading text-3xl font-bold text-ink">{module.name}</h1>
 
-      <ModuleVersions
-        moduleId={moduleId}
-        versions={versions}
-        marksByVersion={marksByVersion}
-        editable={canUpload(user)}
-        t={t}
-      />
+      <VersionBrowser versions={versions} marksByVersion={marksByVersion} t={t} />
     </div>
   );
 }

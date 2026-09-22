@@ -16,3 +16,15 @@ export function fill(template: string, values: Record<string, string | number>):
     key in values ? String(values[key]) : match
   );
 }
+
+// Počet s tvarem podle češtiny/slovenštiny (1 / 2–4 / 5 a víc).
+// Tvary jsou ve slovníku oddělené svislítkem.
+export function pluralCount(count: number, forms: string, locale: string): string {
+  const [one, few, many] = forms.split("|");
+  if (locale.startsWith("cs") || locale.startsWith("sk")) {
+    if (count === 1) return `${count} ${one}`;
+    if (count >= 2 && count <= 4) return `${count} ${few}`;
+    return `${count} ${many ?? few}`;
+  }
+  return `${count} ${count === 1 ? one : few}`;
+}

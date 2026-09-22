@@ -2,7 +2,11 @@ import { redirect } from "next/navigation";
 import { requireUser, canUpload } from "@/lib/current-user";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { createClient } from "@/lib/supabase/server";
-import { UploadWorkspace, type LatestVersion } from "@/components/UploadWorkspace";
+import {
+  UploadWorkspace,
+  type ExistingDraft,
+  type LatestVersion,
+} from "@/components/UploadWorkspace";
 
 export default async function UploadPage({
   searchParams,
@@ -19,11 +23,12 @@ export default async function UploadPage({
   const { data: modules } = await supabase.from("modules").select("*").order("name");
   const { data: countries } = await supabase.from("countries").select("*").order("name");
 
-  // Poslední verze pro každou dvojici modul + země, ať je na obrazovce vidět,
+  // Poslední zveřejněná verze pro každou dvojici modul + země, ať je vidět,
   // na co se navazuje a jaké číslo nová verze dostane.
   const { data: versions } = await supabase
     .from("document_versions")
     .select("module_id, country_id, version_number, uploaded_at, users:uploaded_by (email)")
+    .eq("status", "published")
     .order("version_number", { ascending: false });
 
   const latestVersions: LatestVersion[] = [];
@@ -42,6 +47,42 @@ export default async function UploadPage({
     });
   }
 
+  // Rozdělaná práce z minulé návštěvy.
+  const { data: draft } = await supabase
+    .from("document_versions")
+    .select("id, module_id, country_id, file_url, uploaded_at")
+    .eq("uploaded_by", user.id)
+    .eq("status", "draft")
+    .order("uploaded_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  let existingDraft: ExistingDraft | null = null;
+  if (draft) {
+    const { data: annotations } = await supabase
+      .from("annotations")
+      .select("*")
+      .eq("document_version_id", draft.id);
+
+    existingDraft = {
+      id: draft.id,
+      module_id: draft.module_id,
+      country_id: draft.country_id,
+      file_url: draft.file_url,
+      saved_at: draft.uploaded_at,
+      marks: (annotations ?? []).map((annotation) => ({
+        id: annotation.id,
+        page: annotation.page,
+        x: annotation.x,
+        y: annotation.y,
+        w: annotation.w,
+        h: annotation.h,
+        note: annotation.note,
+        category: annotation.category,
+      })),
+    };
+  }
+
   return (
     <div>
       <h1 className="mb-6 font-heading text-3xl font-bold text-ink">{t.uploadNewVersion}</h1>
@@ -52,6 +93,7 @@ export default async function UploadPage({
         defaultCountryId={user.role === "admin" ? activeCountryId : user.country_id}
         canChooseCountry={user.role === "admin"}
         latestVersions={latestVersions}
+        existingDraft={existingDraft}
         t={t}
       />
     </div>

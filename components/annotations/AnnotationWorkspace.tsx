@@ -116,6 +116,15 @@ export function AnnotationWorkspace({
     }
   }
 
+  // Klik na značku i na kartičku otevře psaní popisu; čtenáři jen odroluje
+  // dokument na dané místo.
+  function openMark(id: string) {
+    const mark = marks.find((item) => item.id === id);
+    if (!mark) return;
+    if (editable) setEditingId(id);
+    else scrollToMark(mark);
+  }
+
   function scrollToMark(mark: Mark) {
     document.getElementById(`pdf-page-${mark.page}`)?.scrollIntoView({
       behavior: "smooth",
@@ -173,6 +182,7 @@ export function AnnotationWorkspace({
               onUpdate={handleUpdate}
               onDelete={handleDelete}
               onHover={setHoveredId}
+              onOpen={openMark}
             />
           )}
         />
@@ -205,8 +215,7 @@ export function AnnotationWorkspace({
                       dimmed={hoveredId !== null && hoveredId !== mark.id}
                       t={t}
                       onHover={setHoveredId}
-                      onSelect={() => scrollToMark(mark)}
-                      onEdit={() => setEditingId(mark.id)}
+                      onOpen={() => openMark(mark.id)}
                       onDelete={() => handleDelete(mark.id)}
                       onSubmit={(note, category) => handleSubmitNote(mark.id, note, category)}
                       onCancel={() => handleCancelNote(mark.id)}

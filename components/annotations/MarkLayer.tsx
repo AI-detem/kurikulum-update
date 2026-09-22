@@ -31,6 +31,7 @@ export function MarkLayer({
   onUpdate,
   onDelete,
   onHover,
+  onOpen,
 }: {
   marks: Mark[];
   /** Pořadové číslo značky podle pořadí čtení. */
@@ -44,6 +45,7 @@ export function MarkLayer({
   onUpdate: (id: string, rect: Rect) => void;
   onDelete: (id: string) => void;
   onHover: (id: string | null) => void;
+  onOpen: (id: string) => void;
 }) {
   const layerRef = useRef<HTMLDivElement>(null);
   const [drag, setDrag] = useState<Drag | null>(null);
@@ -149,6 +151,7 @@ export function MarkLayer({
             t={t}
             onHover={onHover}
             onDelete={() => onDelete(mark.id)}
+            onOpen={() => onOpen(mark.id)}
             onStartMove={(event) => {
               const { x, y } = toFraction(event);
               layerRef.current?.setPointerCapture(event.pointerId);
@@ -188,6 +191,7 @@ function MarkBox({
   t,
   onHover,
   onDelete,
+  onOpen,
   onStartMove,
   onStartResize,
 }: {
@@ -199,10 +203,12 @@ function MarkBox({
   t: Dictionary;
   onHover: (id: string | null) => void;
   onDelete: () => void;
+  onOpen: () => void;
   onStartMove: (event: React.PointerEvent) => void;
   onStartResize: (event: React.PointerEvent, anchorX: number, anchorY: number) => void;
 }) {
   const [hover, setHover] = useState(false);
+  const [pressedAt, setPressedAt] = useState<{ x: number; y: number } | null>(null);
 
   // Protější roh zůstává při zvětšování na místě.
   const corners = [
@@ -215,9 +221,17 @@ function MarkBox({
   return (
     <div
       onPointerDown={(event) => {
-        if (!editable) return;
         event.stopPropagation();
-        onStartMove(event);
+        setPressedAt({ x: event.clientX, y: event.clientY });
+        if (editable) onStartMove(event);
+      }}
+      onPointerUp={(event) => {
+        // Krátké kliknutí (ne tažení) otevře kartičku s popisem.
+        const moved =
+          pressedAt &&
+          Math.hypot(event.clientX - pressedAt.x, event.clientY - pressedAt.y) > 4;
+        setPressedAt(null);
+        if (!moved) onOpen();
       }}
       onMouseEnter={() => {
         setHover(true);

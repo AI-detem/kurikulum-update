@@ -1,12 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { CATEGORY_KEYS, categoryLabel } from "@/lib/annotations";
 import type { Mark } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
-// Kartička jednoho označeného místa v pravém panelu.
+// Kartička jednoho označeného místa v pravém panelu. Kliknutím kamkoli
+// na kartičku se otevře k psaní – tužka na to není potřeba.
 export function MarkCard({
   mark,
   number,
@@ -15,8 +16,7 @@ export function MarkCard({
   dimmed,
   t,
   onHover,
-  onSelect,
-  onEdit,
+  onOpen,
   onDelete,
   onSubmit,
   onCancel,
@@ -28,8 +28,8 @@ export function MarkCard({
   dimmed: boolean;
   t: Dictionary;
   onHover: (id: string | null) => void;
-  onSelect: () => void;
-  onEdit: () => void;
+  /** Klik na kartičku: u editora otevře psaní, u čtenáře odroluje dokument. */
+  onOpen: () => void;
   onDelete: () => void;
   onSubmit: (note: string, category: string | null) => void;
   onCancel: () => void;
@@ -52,7 +52,7 @@ export function MarkCard({
     <div
       onMouseEnter={() => onHover(mark.id)}
       onMouseLeave={() => onHover(null)}
-      onClick={onSelect}
+      onClick={onOpen}
       className={`cursor-pointer rounded-xl border border-haze p-3 transition-opacity ${
         dimmed ? "opacity-40" : ""
       }`}
@@ -64,39 +64,28 @@ export function MarkCard({
         <p className="flex-1 text-sm text-ink">{mark.note}</p>
 
         {editable && (
-          <div className="flex shrink-0 gap-1">
-            <button
-              type="button"
-              aria-label={t.edit}
-              onClick={(event) => {
-                event.stopPropagation();
-                onEdit();
-              }}
-              className="text-ink/40 hover:text-ink"
-            >
-              <Pencil size={14} />
-            </button>
-            <button
-              type="button"
-              aria-label={t.delete}
-              onClick={(event) => {
-                event.stopPropagation();
-                onDelete();
-              }}
-              className="text-ink/40 hover:text-coral"
-            >
-              <Trash2 size={14} />
-            </button>
-          </div>
+          <button
+            type="button"
+            aria-label={t.delete}
+            onClick={(event) => {
+              event.stopPropagation();
+              onDelete();
+            }}
+            className="shrink-0 text-ink/40 hover:text-coral"
+          >
+            <Trash2 size={14} />
+          </button>
         )}
       </div>
 
-      {label && <span className="badge-pill mt-2">{label}</span>}
+      <span className={`badge-pill mt-2 ${label ? "" : "text-ink/40"}`}>
+        {label ?? t.noCategory2}
+      </span>
     </div>
   );
 }
 
-// Formulář pro popis značky. Bez popisu se značka neuloží.
+// Psaní popisu. Bez popisu se značka při zavření zahodí.
 function MarkEditor({
   mark,
   number,
@@ -111,20 +100,48 @@ function MarkEditor({
   onCancel: () => void;
 }) {
   const [note, setNote] = useState(mark.note);
-  const [category, setCategory] = useState<string | null>(mark.category);
+  // Vlastní kategorie je všechno, co není z pevné nabídky.
+  const isCustom =
+    mark.category !== null && !CATEGORY_KEYS.includes(mark.category as (typeof CATEGORY_KEYS)[number]);
+  const [category, setCategory] = useState<string | null>(isCustom ? null : mark.category);
+  const [customOpen, setCustomOpen] = useState(isCustom);
+  const [custom, setCustom] = useState(isCustom ? mark.category ?? "" : "");
   const inputRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
     inputRef.current?.focus();
   }, []);
 
+  function chosenCategory(): string | null {
+    if (customOpen) return custom.trim() || null;
+    return category;
+  }
+
+  // Kliknutí na jinou kartičku tuhle zavře – rozepsaný popis se přitom
+  // nesmí ztratit, proto se při zavření sám uloží (a bez popisu zahodí).
+  const closing = useRef(false);
+  const latest = useRef({ note, category: chosenCategory(), onSubmit, onCancel });
+  latest.current = { note, category: chosenCategory(), onSubmit, onCancel };
+
+  useEffect(
+    () => () => {
+      if (closing.current) return;
+      const current = latest.current;
+      if (current.note.trim()) current.onSubmit(current.note.trim(), current.category);
+      else current.onCancel();
+    },
+    []
+  );
+
+  // Záměrně <div>, ne <form>: kartička se zobrazuje i uvnitř formuláře
+  // pro nahrání verze a vnořené formuláře HTML nedovoluje.
   return (
-    // Záměrně <div>, ne <form>: kartička se zobrazuje i uvnitř formuláře
-    // pro nahrání verze a vnořené formuláře HTML nedovoluje – vnitřní
-    // tlačítko by odeslalo ten vnější.
     <div
       onKeyDown={(event) => {
-        if (event.key === "Escape") onCancel();
+        if (event.key === "Escape") {
+          closing.current = true;
+          onCancel();
+        }
       }}
       className="rounded-xl border border-coral p-3"
     >
@@ -148,20 +165,45 @@ function MarkEditor({
           <button
             key={key}
             type="button"
-            onClick={() => setCategory(category === key ? null : key)}
-            className={`badge-pill ${category === key ? "bg-coral text-white" : ""}`}
+            onClick={() => {
+              setCustomOpen(false);
+              setCategory(category === key ? null : key);
+            }}
+            className={`badge-pill ${category === key && !customOpen ? "bg-coral text-white" : ""}`}
           >
             {categoryLabel(key, t)}
           </button>
         ))}
+
+        <button
+          type="button"
+          onClick={() => {
+            setCustomOpen((open) => !open);
+            setCategory(null);
+          }}
+          className={`badge-pill ${customOpen ? "bg-coral text-white" : ""}`}
+        >
+          {t.otherCategory}
+        </button>
       </div>
+
+      {customOpen && (
+        <input
+          type="text"
+          value={custom}
+          onChange={(event) => setCustom(event.target.value)}
+          placeholder={t.otherCategoryPlaceholder}
+          className="input mt-2 w-full"
+        />
+      )}
 
       <div className="mt-3 flex gap-2">
         <button
           type="button"
           disabled={!note.trim()}
           onClick={() => {
-            if (note.trim()) onSubmit(note.trim(), category);
+            closing.current = true;
+            if (note.trim()) onSubmit(note.trim(), chosenCategory());
           }}
           className="rounded-xl bg-coral px-3 py-1.5 text-sm font-medium text-white disabled:opacity-40"
         >
@@ -169,7 +211,10 @@ function MarkEditor({
         </button>
         <button
           type="button"
-          onClick={onCancel}
+          onClick={() => {
+            closing.current = true;
+            onCancel();
+          }}
           className="rounded-xl px-3 py-1.5 text-sm text-ink/60 hover:bg-haze"
         >
           {t.cancel}

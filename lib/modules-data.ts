@@ -19,6 +19,7 @@ export async function getModulesForCountry(
     .from("document_versions")
     .select("*, changes (*)")
     .eq("country_id", countryId)
+    .eq("status", "published")
     .order("version_number", { ascending: false });
 
   return modules.map((module) => {
@@ -46,10 +47,30 @@ export async function getModuleDetail(moduleId: string, countryId: string) {
 
   const { data: versions } = await supabase
     .from("document_versions")
-    .select("*, changes (*)")
+    .select("*, changes (*), users:uploaded_by (email)")
     .eq("module_id", moduleId)
     .eq("country_id", countryId)
+    .eq("status", "published")
     .order("version_number", { ascending: false });
+
+  // Verze, u kterých má přihlášený uživatel nepřečtenou notifikaci, se
+  // v záložkách označí tečkou.
+  const {
+    data: { user: authUser },
+  } = await supabase.auth.getUser();
+
+  const { data: unread } = await supabase
+    .from("notifications")
+    .select("changes (document_version_id)")
+    .eq("user_id", authUser?.id ?? "")
+    .is("read_at", null);
+
+  const unreadVersionIds = new Set(
+    (unread ?? []).flatMap((row) => {
+      const change = Array.isArray(row.changes) ? row.changes[0] : row.changes;
+      return change?.document_version_id ? [change.document_version_id] : [];
+    })
+  );
 
   // Označená místa v dokumentu, seskupená podle verze.
   const { data: annotations } = await supabase
@@ -79,10 +100,15 @@ export async function getModuleDetail(moduleId: string, countryId: string) {
   // používá rovnou tak, jak je uložený.
   return {
     module,
-    versions: (versions ?? []).map((v) => ({
-      ...v,
-      changes: [...v.changes].sort((a, b) => (a.created_at < b.created_at ? 1 : -1)),
-    })),
+    versions: (versions ?? []).map((v) => {
+      const uploader = Array.isArray(v.users) ? v.users[0] : v.users;
+      return {
+        ...v,
+        changes: [...v.changes].sort((a, b) => (a.created_at < b.created_at ? 1 : -1)),
+        uploaded_by_email: uploader?.email ?? null,
+        unread: unreadVersionIds.has(v.id),
+      };
+    }),
     marksByVersion,
   };
 }

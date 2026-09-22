@@ -1,15 +1,20 @@
 "use client";
 
-import { useActionState, useEffect, useState } from "react";
+import { useActionState, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { uploadDocumentVersion, type UploadState } from "@/app/admin/upload/actions";
+import {
+  discardDraft,
+  ensureDraftVersion,
+  publishVersion,
+  saveDraftMarks,
+  type PublishState,
+} from "@/app/admin/upload/actions";
 import { AnnotationWorkspace } from "@/components/annotations/AnnotationWorkspace";
 import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
 import { fill, formatDateTime } from "@/lib/format";
 import type { Country, Mark, Module } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
-// Poslední verze pro dvojici modul + země, aby bylo vidět, na co se navazuje.
 export type LatestVersion = {
   module_id: string;
   country_id: string;
@@ -18,9 +23,20 @@ export type LatestVersion = {
   uploaded_by_email: string | null;
 };
 
-// Jak dlouho po posledním úhozu se začne načítat náhled. Bez toho by se
-// dokument překresloval při každém napsaném znaku.
+// Rozpracovaná verze, kterou uživatel nechal rozdělanou při minulé návštěvě.
+export type ExistingDraft = {
+  id: string;
+  module_id: string;
+  country_id: string;
+  file_url: string;
+  saved_at: string;
+  marks: Mark[];
+};
+
+// Jak dlouho po posledním úhozu se začne načítat náhled.
 const LINK_DEBOUNCE_MS = 500;
+// Jak dlouho po poslední změně značek se ukládá na server.
+const MARKS_DEBOUNCE_MS = 800;
 
 export function UploadWorkspace({
   modules,
@@ -28,6 +44,7 @@ export function UploadWorkspace({
   defaultCountryId,
   canChooseCountry,
   latestVersions,
+  existingDraft,
   t,
 }: {
   modules: Module[];
@@ -35,17 +52,32 @@ export function UploadWorkspace({
   defaultCountryId: string | null;
   canChooseCountry: boolean;
   latestVersions: LatestVersion[];
+  existingDraft: ExistingDraft | null;
   t: Dictionary;
 }) {
-  const [driveLink, setDriveLink] = useState("");
-  // Odkaz pro načtení dokumentu je oddělený od pole, do kterého se píše.
-  const [linkForPreview, setLinkForPreview] = useState("");
-  const [moduleId, setModuleId] = useState(modules[0]?.id ?? "");
-  const [countryId, setCountryId] = useState(defaultCountryId ?? "");
-  const [marks, setMarks] = useState<Mark[]>([]);
+  // Dokud se uživatel nerozhodne, co s rozdělanou prací, nic nezobrazujeme.
+  const [draftChoice, setDraftChoice] = useState<"ask" | "continue" | "fresh">(
+    existingDraft ? "ask" : "fresh"
+  );
+  const resumed = draftChoice === "continue" && existingDraft;
+
+  const [moduleId, setModuleId] = useState(
+    resumed ? existingDraft.module_id : modules[0]?.id ?? ""
+  );
+  const [countryId, setCountryId] = useState(
+    resumed ? existingDraft.country_id : defaultCountryId ?? ""
+  );
+  const [driveLink, setDriveLink] = useState(resumed ? existingDraft.file_url : "");
+  const [linkForPreview, setLinkForPreview] = useState(resumed ? existingDraft.file_url : "");
+  const [marks, setMarks] = useState<Mark[]>(resumed ? existingDraft.marks : []);
   const [summary, setSummary] = useState("");
-  const [state, formAction, isPending] = useActionState<UploadState, FormData>(
-    uploadDocumentVersion,
+  const [draftId, setDraftId] = useState<string | null>(resumed ? existingDraft.id : null);
+  const [saveState, setSaveState] = useState<{ saving: boolean; savedAt: string | null; error?: string }>(
+    { saving: false, savedAt: resumed ? existingDraft.saved_at : null }
+  );
+
+  const [state, formAction, isPending] = useActionState<PublishState, FormData>(
+    publishVersion,
     null
   );
 
@@ -55,15 +87,93 @@ export function UploadWorkspace({
   }, [driveLink]);
 
   const fileId = extractDriveFileId(linkForPreview);
+
+  // Jakmile je vyplněný modul, země a platný odkaz, založí se na pozadí
+  // rozpracovaná verze, ke které se pak průběžně ukládají značky.
+  useEffect(() => {
+    if (!fileId || !moduleId || !countryId || draftChoice === "ask") return;
+    let cancelled = false;
+
+    (async () => {
+      const result = await ensureDraftVersion(moduleId, countryId, linkForPreview);
+      if (cancelled) return;
+      if ("error" in result) setSaveState((s) => ({ ...s, error: result.error }));
+      else setDraftId(result.draftId);
+    })();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [fileId, moduleId, countryId, linkForPreview, draftChoice]);
+
+  // Průběžné ukládání značek. Posun a zvětšování vyvolá spoustu změn za sebou,
+  // proto se ukládá až chvíli po té poslední.
+  const firstRun = useRef(true);
+  useEffect(() => {
+    if (!draftId) return;
+    if (firstRun.current) {
+      firstRun.current = false;
+      return;
+    }
+
+    setSaveState((s) => ({ ...s, saving: true, error: undefined }));
+    const timer = window.setTimeout(async () => {
+      const result = await saveDraftMarks(draftId, marks);
+      setSaveState(
+        "error" in result
+          ? { saving: false, savedAt: null, error: result.error }
+          : { saving: false, savedAt: result.savedAt }
+      );
+    }, MARKS_DEBOUNCE_MS);
+
+    return () => window.clearTimeout(timer);
+  }, [marks, draftId]);
+
   const latest = latestVersions.find(
     (version) => version.module_id === moduleId && version.country_id === countryId
   );
   const countryName = countries.find((country) => country.id === countryId)?.name ?? "";
+  const canPublish = Boolean(draftId) && (marks.length > 0 || summary.trim().length > 0);
+
+  if (draftChoice === "ask" && existingDraft) {
+    const draftModule = modules.find((m) => m.id === existingDraft.module_id)?.name ?? "";
+    const draftCountry = countries.find((c) => c.id === existingDraft.country_id)?.name ?? "";
+
+    return (
+      <div className="max-w-xl rounded-2xl border border-coral p-5">
+        <p className="text-sm text-ink">
+          {fill(t.draftFound, {
+            module: draftModule,
+            country: draftCountry,
+            time: formatDateTime(existingDraft.saved_at, t.dateLocale),
+          })}
+        </p>
+        <div className="mt-4 flex gap-2">
+          <button
+            type="button"
+            onClick={() => setDraftChoice("continue")}
+            className="rounded-xl bg-coral px-4 py-2 text-sm font-medium text-white"
+          >
+            {t.continueDraft}
+          </button>
+          <button
+            type="button"
+            onClick={async () => {
+              await discardDraft(existingDraft.id);
+              setDraftChoice("fresh");
+            }}
+            className="rounded-xl px-4 py-2 text-sm text-ink/60 hover:bg-haze"
+          >
+            {t.startOver}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <form action={formAction}>
-      {/* Značky a stav, ze kterého uživatel vycházel, posíláme s formulářem. */}
-      <input type="hidden" name="marks" value={JSON.stringify(marks)} />
+      <input type="hidden" name="draftId" value={draftId ?? ""} />
       <input type="hidden" name="knownLatest" value={latest?.version_number ?? 0} />
 
       <AnnotationWorkspace
@@ -116,7 +226,6 @@ export function UploadWorkspace({
               )}
             </Field>
 
-            {/* Na co nová verze navazuje a jaké dostane číslo. */}
             <p className="rounded-xl bg-haze/40 p-3 text-xs text-ink/70">
               {latest
                 ? fill(t.existingVersionInfo, {
@@ -155,17 +264,28 @@ export function UploadWorkspace({
               />
             </Field>
 
+            {/* Stav průběžného ukládání rozpracované verze. */}
+            <p id="draft-status" className="text-xs text-ink/50">
+              {saveState.error
+                ? saveState.error
+                : saveState.saving
+                  ? t.savingDraft
+                  : saveState.savedAt
+                    ? fill(t.draftSaved, {
+                        time: formatDateTime(saveState.savedAt, t.dateLocale).split(", ")[1] ?? "",
+                      })
+                    : ""}
+            </p>
+
             <button
               type="submit"
-              disabled={isPending}
+              disabled={isPending || !canPublish}
               className="rounded-xl bg-coral px-4 py-2.5 font-medium text-white transition hover:opacity-90 disabled:opacity-50"
             >
               {isPending ? t.saving : `${t.uploadAndNotify} (${marks.length})`}
             </button>
 
-            {state && "error" in state && (
-              <p className="text-sm text-coral">{state.error}</p>
-            )}
+            {state && "error" in state && <p className="text-sm text-coral">{state.error}</p>}
 
             {state && "warning" in state && (
               <div className="rounded-xl border border-coral p-3 text-sm">
