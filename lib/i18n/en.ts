@@ -136,4 +136,6 @@ export const en: Dictionary = {
   backToChanges: "Back to changes",
   moduleColumn: "Methodology",
   changeNotFound: "This change could not be found.",
+  publishBlocked:
+    "The database refused the write. Check that every migration from supabase/migrations has been run in Supabase.",
 };

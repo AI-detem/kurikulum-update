@@ -138,4 +138,6 @@ export const hu: Dictionary = {
   backToChanges: "Vissza a változásokhoz",
   moduleColumn: "Módszertan",
   changeNotFound: "Ez a változás nem található.",
+  publishBlocked:
+    "Az adatbázis elutasította az írást. Ellenőrizd, hogy a supabase/migrations mappa összes migrációja lefutott-e a Supabase-ben.",
 };

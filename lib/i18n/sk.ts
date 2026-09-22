@@ -136,4 +136,6 @@ export const sk: Dictionary = {
   backToChanges: "Späť na zmeny",
   moduleColumn: "Metodika",
   changeNotFound: "Túto zmenu sa nepodarilo nájsť.",
+  publishBlocked:
+    "Databáza zápis odmietla. Skontroluj, či sú v Supabase spustené všetky migrácie z priečinka supabase/migrations.",
 };

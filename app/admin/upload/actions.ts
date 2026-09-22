@@ -48,12 +48,16 @@ export async function ensureDraftVersion(
     .maybeSingle();
 
   if (existing) {
-    const { error } = await supabase
+    const { data: updated, error } = await supabase
       .from("document_versions")
       .update({ module_id: moduleId, country_id: countryId, file_url: fileUrl })
-      .eq("id", existing.id);
+      .eq("id", existing.id)
+      .select("id")
+      .maybeSingle();
 
     if (error) return { error: `${t.saveFailedDetail} ${error.message}` };
+    // Nula řádků bez chyby znamená, že zápis zastavila pravidla v databázi.
+    if (!updated) return { error: t.publishBlocked };
     return { draftId: existing.id, savedAt: new Date().toISOString() };
   }
 
@@ -209,6 +213,9 @@ export async function publishVersion(
 
     previous = latest ?? null;
 
+    // maybeSingle, ne single: když pravidla v databázi zápis nepustí,
+    // vrátí se nula řádků. single() by z toho udělal nesrozumitelné
+    // "Cannot coerce the result to a single JSON object".
     const { data, error } = await supabase
       .from("document_versions")
       .update({
@@ -217,13 +224,14 @@ export async function publishVersion(
         published_at: new Date().toISOString(),
       })
       .eq("id", draftId)
+      .eq("status", "draft")
       .select("version_number, uploaded_at")
-      .single();
+      .maybeSingle();
 
     if (data) {
       published = data;
     } else {
-      lastError = error?.message ?? "";
+      lastError = error?.message ?? t.publishBlocked;
       if (error?.code !== "23505") break;
     }
   }

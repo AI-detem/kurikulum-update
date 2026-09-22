@@ -147,6 +147,8 @@ export const cs = {
   backToChanges: "Zpět na změny",
   moduleColumn: "Metodika",
   changeNotFound: "Tuhle změnu se nepodařilo najít.",
+  publishBlocked:
+    "Databáze zápis odmítla. Zkontroluj, jestli jsou v Supabase spuštěné všechny migrace ze složky supabase/migrations.",
 };
 
 export type Dictionary = typeof cs;
