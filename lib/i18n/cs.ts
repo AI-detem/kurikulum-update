@@ -127,6 +127,26 @@ export const cs = {
   // stavy bez země
   noCountryAssigned: "Zatím ti není přiřazená žádná země. Ozvi se administrátorovi appky.",
   noCountriesYet: "Zatím není založená žádná země. Přidej ji v Administraci.",
+
+  // změny od ostatních zemí a semafor rozpracovanosti
+  changesFromOthers: "Změny od ostatních zemí",
+  changesFromOthersEmpty: "Zatím nic, na co byste museli reagovat.",
+  showInDocument: "Zobrazit v dokumentu",
+  notRelevant: "Netýká se nás",
+  dismissedToast: "Označeno jako „netýká se nás“",
+  undoShort: "Zpět",
+  fromCountryVersion: "{country}, verze {version}",
+  pendingTitle: "Nevyřešené změny z ostatních zemí: {count}",
+  readiness: "Semafor rozpracovanosti",
+  readinessHint:
+    "Barva se řídí nejstarší nevyřešenou změnou: do 14 dnů žlutá, od 14 dnů červená.",
+  lightOk: "v pořádku",
+  lightWaiting: "čeká se",
+  lightAct: "potřeba reagovat",
+  allModules: "Všechny metodiky",
+  backToChanges: "Zpět na změny",
+  moduleColumn: "Metodika",
+  changeNotFound: "Tuhle změnu se nepodařilo najít.",
 };
 
 export type Dictionary = typeof cs;

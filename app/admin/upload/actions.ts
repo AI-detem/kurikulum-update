@@ -243,6 +243,32 @@ export async function publishVersion(
     }))
   ).map((mark) => mark.note);
 
+  // Ostatní země dostanou ke každé vyznačené změně svůj řádek – ten drží,
+  // jestli už na ni zareagovaly. Země se berou z tabulky, ne z pevného
+  // seznamu, takže nově přidaná země se zapojí sama.
+  const { data: otherCountries } = await supabase
+    .from("countries")
+    .select("id")
+    .neq("id", countryId);
+
+  const statusRows = (otherCountries ?? []).flatMap((country) =>
+    (marks ?? []).map((mark) => ({ annotation_id: mark.id, country_id: country.id }))
+  );
+
+  // Obyčejný insert, ne upsert: rozpracovanou verzi jde zveřejnit jen jednou
+  // (podruhé se už nenajde mezi draft verzemi), takže se řádky nemají jak
+  // zdvojit. Navíc "on conflict" by editor stejně neprošel – na cizí řádky
+  // kvůli RLS nevidí, a Postgres v tu chvíli zápis odmítne.
+  if (statusRows.length > 0) {
+    const { error: statusError } = await supabase
+      .from("annotation_country_status")
+      .insert(statusRows);
+
+    if (statusError) {
+      return { error: `${t.saveFailedDetail} ${statusError.message}`.trim() };
+    }
+  }
+
   const { data: change, error: changeError } = await supabase
     .from("changes")
     .insert({
@@ -285,6 +311,7 @@ export async function publishVersion(
   }
 
   revalidatePath("/");
+  revalidatePath("/changes");
   revalidatePath(`/modules/${moduleId}`);
 
   // Když mezitím přibyla cizí verze, nepřesměrováváme – uživatel se to má

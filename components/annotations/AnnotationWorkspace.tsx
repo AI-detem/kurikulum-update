@@ -28,6 +28,7 @@ export function AnnotationWorkspace({
   panelFooter,
   formColumn,
   documentHeader,
+  focusMarkId,
 }: {
   /** Null, dokud uživatel nevloží platný odkaz na Drive. */
   fileId: string | null;
@@ -42,9 +43,11 @@ export function AnnotationWorkspace({
   formColumn?: ReactNode;
   /** Obsah nad dokumentem, např. seznam verzí. */
   documentHeader?: ReactNode;
+  /** Značka, na kterou se má hned po otevření odrolovat a zvýraznit ji. */
+  focusMarkId?: string;
 }) {
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [hoveredId, setHoveredId] = useState<string | null>(focusMarkId ?? null);
   const [hidden, setHidden] = useState(false);
   const [toast, setToast] = useState<{ text: string; undo?: Mark } | null>(null);
   // Značky, které ještě nemají popis – když se editace zruší, zahodí se.
@@ -65,6 +68,25 @@ export function AnnotationWorkspace({
     },
     [setMarks]
   );
+
+  // Otevření na konkrétní značce (příchod ze seznamu změn od ostatních zemí).
+  // Čeká se na vykreslení stránky PDF, dřív není kam rolovat.
+  const focused = useRef(false);
+  useEffect(() => {
+    if (!focusMarkId || focused.current) return;
+    const mark = marks.find((item) => item.id === focusMarkId);
+    if (!mark) return;
+
+    const timer = window.setInterval(() => {
+      const page = document.getElementById(`pdf-page-${mark.page}`);
+      if (!page) return;
+      window.clearInterval(timer);
+      focused.current = true;
+      page.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 200);
+
+    return () => window.clearInterval(timer);
+  }, [focusMarkId, marks]);
 
   // Ctrl+Z / Cmd+Z vrátí smazanou značku.
   useEffect(() => {

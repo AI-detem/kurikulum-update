@@ -1,10 +1,20 @@
 import Link from "next/link";
-import { LayoutGrid, UploadCloud, Settings, LogOut } from "lucide-react";
+import { LayoutGrid, UploadCloud, Settings, LogOut, Inbox } from "lucide-react";
+import { fill } from "@/lib/format";
 import { Logo } from "@/components/Logo";
 import type { AppUser } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
-export function Sidebar({ user, t }: { user: AppUser; t: Dictionary }) {
+export function Sidebar({
+  user,
+  pendingCount,
+  t,
+}: {
+  user: AppUser;
+  /** Kolik změn od ostatních zemí čeká na reakci. */
+  pendingCount: number;
+  t: Dictionary;
+}) {
   const canManage = user.role === "admin" || user.role === "editor";
 
   return (
@@ -15,6 +25,13 @@ export function Sidebar({ user, t }: { user: AppUser; t: Dictionary }) {
 
       <nav className="flex flex-1 flex-col gap-1">
         <SidebarLink href="/" icon={<LayoutGrid size={18} />} label={t.overview} />
+        <SidebarLink
+          href="/changes"
+          icon={<Inbox size={18} />}
+          label={t.changesFromOthers}
+          badge={pendingCount}
+          badgeTitle={fill(t.pendingTitle, { count: pendingCount })}
+        />
         {canManage && (
           <SidebarLink
             href="/admin/upload"
@@ -47,10 +64,15 @@ function SidebarLink({
   href,
   icon,
   label,
+  badge,
+  badgeTitle,
 }: {
   href: string;
   icon: React.ReactNode;
   label: string;
+  /** Počet v korálovém kolečku vpravo. Nula se nezobrazuje. */
+  badge?: number;
+  badgeTitle?: string;
 }) {
   return (
     <Link
@@ -58,7 +80,15 @@ function SidebarLink({
       className="flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-ink hover:bg-haze"
     >
       {icon}
-      {label}
+      <span className="flex-1">{label}</span>
+      {badge ? (
+        <span
+          title={badgeTitle}
+          className="flex h-5 min-w-5 items-center justify-center rounded-full bg-coral px-1.5 text-[11px] font-semibold text-white"
+        >
+          {badge}
+        </span>
+      ) : null}
     </Link>
   );
 }

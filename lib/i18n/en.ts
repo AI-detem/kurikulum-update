@@ -117,4 +117,23 @@ export const en: Dictionary = {
   noCountryAssigned:
     "You don't have a country assigned yet. Please contact the app administrator.",
   noCountriesYet: "No country has been created yet. Add one in Admin.",
+
+  changesFromOthers: "Changes from other countries",
+  changesFromOthersEmpty: "Nothing to respond to right now.",
+  showInDocument: "Show in document",
+  notRelevant: "Not relevant to us",
+  dismissedToast: "Marked as not relevant",
+  undoShort: "Undo",
+  fromCountryVersion: "{country}, version {version}",
+  pendingTitle: "Unresolved changes from other countries: {count}",
+  readiness: "Readiness traffic light",
+  readinessHint:
+    "The colour follows the oldest unresolved change: yellow under 14 days, red from 14 days.",
+  lightOk: "all clear",
+  lightWaiting: "waiting",
+  lightAct: "needs a response",
+  allModules: "All methodologies",
+  backToChanges: "Back to changes",
+  moduleColumn: "Methodology",
+  changeNotFound: "This change could not be found.",
 };

@@ -1,8 +1,11 @@
+import Link from "next/link";
 import { requireAdmin } from "@/lib/current-user";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { createClient } from "@/lib/supabase/server";
+import { getLightMatrix, lightLabel } from "@/lib/country-status";
+import { StatusDot } from "@/components/StatusDot";
 import { addCountry, inviteUser, updateUserRoleAndCountry } from "./actions";
-import type { Country, AppUser } from "@/lib/types";
+import type { Country, AppUser, CountryLight, Module } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
 export default async function AdminPage({
@@ -17,10 +20,23 @@ export default async function AdminPage({
   const supabase = await createClient();
   const { data: countries } = await supabase.from("countries").select("*").order("name");
   const { data: users } = await supabase.from("users").select("*").order("email");
+  const { data: modules } = await supabase.from("modules").select("*").order("name");
+  const lights = await getLightMatrix();
 
   return (
     <div className="flex max-w-3xl flex-col gap-10">
       <h1 className="font-heading text-3xl font-bold text-ink">{t.admin}</h1>
+
+      <section>
+        <h2 className="mb-1 font-heading text-xl font-bold text-ink">{t.readiness}</h2>
+        <p className="mb-3 text-xs text-ink/50">{t.readinessHint}</p>
+        <ReadinessMatrix
+          modules={modules ?? []}
+          countries={countries ?? []}
+          lights={lights}
+          t={t}
+        />
+      </section>
 
       <section>
         <h2 className="mb-3 font-heading text-xl font-bold text-ink">{t.countries}</h2>
@@ -63,8 +79,9 @@ export default async function AdminPage({
               </option>
             ))}
           </select>
-          <select name="role" required defaultValue="viewer" className="input">
-            <option value="viewer">{t.roleViewer}</option>
+          {/* Role "čtenář" se nově nezvou – editor má práva jen ve své zemi.
+              Existující čtenáři zůstávají, jak jsou. */}
+          <select name="role" required defaultValue="editor" className="input">
             <option value="editor">{t.roleEditor}</option>
             <option value="admin">{t.roleAdmin}</option>
           </select>
@@ -113,7 +130,7 @@ function UsersTable({
                   ))}
                 </select>
                 <select name="role" defaultValue={u.role} className="input py-1">
-                  <option value="viewer">{t.roleViewer}</option>
+                  {u.role === "viewer" && <option value="viewer">{t.roleViewer}</option>}
                   <option value="editor">{t.roleEditor}</option>
                   <option value="admin">{t.roleAdmin}</option>
                 </select>
@@ -126,5 +143,60 @@ function UsersTable({
         ))}
       </tbody>
     </table>
+  );
+}
+
+// Matice metodika × země. Klik na tečku otevře seznam změn té země
+// omezený na tu metodiku.
+function ReadinessMatrix({
+  modules,
+  countries,
+  lights,
+  t,
+}: {
+  modules: Module[];
+  countries: Country[];
+  lights: Record<string, CountryLight>;
+  t: Dictionary;
+}) {
+  if (modules.length === 0 || countries.length === 0) {
+    return <p className="text-sm text-ink/50">{t.noModules}</p>;
+  }
+
+  return (
+    <div className="overflow-x-auto">
+      <table className="w-full text-left text-sm">
+        <thead>
+          <tr className="dashed-divider text-ink/50">
+            <th className="py-2 font-medium">{t.moduleColumn}</th>
+            {countries.map((country) => (
+              <th key={country.id} className="px-3 py-2 text-center font-medium">
+                {country.name}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {modules.map((module) => (
+            <tr key={module.id} className="dashed-divider">
+              <td className="py-2 pr-3">{module.name}</td>
+              {countries.map((country) => {
+                const light = lights[`${module.id}:${country.id}`] ?? "green";
+                return (
+                  <td key={country.id} className="px-3 py-2 text-center">
+                    <Link
+                      href={`/changes?country=${country.id}&module=${module.id}`}
+                      className="inline-flex rounded-full p-1 hover:bg-haze"
+                    >
+                      <StatusDot light={light} label={lightLabel(light, t)} size={12} />
+                    </Link>
+                  </td>
+                );
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }

@@ -119,4 +119,23 @@ export const hu: Dictionary = {
   noCountryAssigned:
     "Még nincs hozzád rendelve ország. Fordulj az alkalmazás adminisztrátorához.",
   noCountriesYet: "Még nincs létrehozott ország. Add hozzá az Adminisztrációban.",
+
+  changesFromOthers: "Változások a többi országtól",
+  changesFromOthersEmpty: "Egyelőre nincs mire reagálni.",
+  showInDocument: "Megjelenítés a dokumentumban",
+  notRelevant: "Minket nem érint",
+  dismissedToast: "Megjelölve: minket nem érint",
+  undoShort: "Vissza",
+  fromCountryVersion: "{country}, {version}. verzió",
+  pendingTitle: "Megoldatlan változások más országoktól: {count}",
+  readiness: "Készültségi jelzőlámpa",
+  readinessHint:
+    "A színt a legrégebbi megoldatlan változás adja: 14 napon belül sárga, 14 naptól piros.",
+  lightOk: "rendben",
+  lightWaiting: "várakozik",
+  lightAct: "reagálni kell",
+  allModules: "Összes módszertan",
+  backToChanges: "Vissza a változásokhoz",
+  moduleColumn: "Módszertan",
+  changeNotFound: "Ez a változás nem található.",
 };

@@ -1,6 +1,7 @@
 import { requireUser } from "@/lib/current-user";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { getModulesForCountry } from "@/lib/modules-data";
+import { getLightsForCountry, lightLabel } from "@/lib/country-status";
 import { ModuleCard } from "@/components/ModuleCard";
 import { CountrySwitcher } from "@/components/CountrySwitcher";
 
@@ -21,7 +22,10 @@ export default async function DashboardPage({
     );
   }
 
-  const modules = await getModulesForCountry(activeCountryId);
+  const [modules, lights] = await Promise.all([
+    getModulesForCountry(activeCountryId),
+    getLightsForCountry(activeCountryId),
+  ]);
 
   return (
     <div>
@@ -38,14 +42,19 @@ export default async function DashboardPage({
         <p className="text-sm text-ink/50">{t.noModules}</p>
       ) : (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {modules.map((module) => (
-            <ModuleCard
-              key={module.id}
-              module={module}
-              countryId={activeCountryId}
-              t={t}
-            />
-          ))}
+          {modules.map((module) => {
+            const light = lights[module.id] ?? "green";
+            return (
+              <ModuleCard
+                key={module.id}
+                module={module}
+                countryId={activeCountryId}
+                light={light}
+                lightTitle={lightLabel(light, t)}
+                t={t}
+              />
+            );
+          })}
         </div>
       )}
     </div>

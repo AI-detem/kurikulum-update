@@ -83,3 +83,22 @@ export type Mark = {
   note: string;
   category: string | null;
 };
+
+// Semafor rozpracovanosti: zelená = není co řešit, žlutá = čeká se
+// méně než 14 dní, červená = 14 dní a víc.
+export type CountryLight = "green" | "yellow" | "red";
+
+// Jedna vyznačená změna z jiné země, na kterou naše země ještě nereagovala.
+export type PendingChange = {
+  /** id řádku v annotation_country_status – s ním se změna odbavuje. */
+  id: string;
+  annotationId: string;
+  createdAt: string;
+  moduleId: string;
+  moduleName: string;
+  fromCountryName: string;
+  versionNumber: number | null;
+  page: number;
+  note: string;
+  category: string | null;
+};

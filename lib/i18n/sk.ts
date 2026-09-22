@@ -117,4 +117,23 @@ export const sk: Dictionary = {
   noCountryAssigned:
     "Zatiaľ ti nie je priradená žiadna krajina. Ozvi sa administrátorovi aplikácie.",
   noCountriesYet: "Zatiaľ nie je založená žiadna krajina. Pridaj ju v Administrácii.",
+
+  changesFromOthers: "Zmeny od ostatných krajín",
+  changesFromOthersEmpty: "Zatiaľ nič, na čo by ste museli reagovať.",
+  showInDocument: "Zobraziť v dokumente",
+  notRelevant: "Netýka sa nás",
+  dismissedToast: "Označené ako „netýka sa nás“",
+  undoShort: "Späť",
+  fromCountryVersion: "{country}, verzia {version}",
+  pendingTitle: "Nevyriešené zmeny z ostatných krajín: {count}",
+  readiness: "Semafor rozpracovanosti",
+  readinessHint:
+    "Farba sa riadi najstaršou nevyriešenou zmenou: do 14 dní žltá, od 14 dní červená.",
+  lightOk: "v poriadku",
+  lightWaiting: "čaká sa",
+  lightAct: "treba reagovať",
+  allModules: "Všetky metodiky",
+  backToChanges: "Späť na zmeny",
+  moduleColumn: "Metodika",
+  changeNotFound: "Túto zmenu sa nepodarilo nájsť.",
 };

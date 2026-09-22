@@ -1,16 +1,22 @@
 import Link from "next/link";
 import { FileText } from "lucide-react";
-import type { ModuleWithLatestVersion } from "@/lib/types";
+import type { CountryLight, ModuleWithLatestVersion } from "@/lib/types";
+import { StatusDot } from "@/components/StatusDot";
 import type { Dictionary } from "@/lib/i18n";
 import { LocalDateTime } from "@/components/LocalDateTime";
 
 export function ModuleCard({
   module,
   countryId,
+  light,
+  lightTitle,
   t,
 }: {
   module: ModuleWithLatestVersion;
   countryId: string;
+  /** Semafor rozpracovanosti pro tuhle metodiku a zobrazenou zemi. */
+  light: CountryLight;
+  lightTitle: string;
   t: Dictionary;
 }) {
   const latest = module.latest_version;
@@ -25,7 +31,12 @@ export function ModuleCard({
         <FileText size={18} className="text-ink/40" />
       </div>
 
-      <h3 className="font-heading text-lg font-bold text-ink">{module.name}</h3>
+      <div className="flex items-start gap-2">
+        <StatusDot light={light} label={lightTitle} size={10} />
+        <h3 className="font-heading text-lg font-bold leading-tight text-ink">
+          {module.name}
+        </h3>
+      </div>
 
       {latest ? (
         <div className="mt-auto text-sm text-ink/60">
