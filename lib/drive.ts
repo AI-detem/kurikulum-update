@@ -40,3 +40,21 @@ export function isDrivePreviewUrl(url: string): boolean {
 export function driveViewUrl(previewUrl: string): string {
   return previewUrl.replace(/\/preview$/, "/view");
 }
+
+// Content-Disposition má dva tvary: filename="..." a filename*=UTF-8''...
+// Ten druhý unese diakritiku, proto má přednost.
+export function fileNameFromDisposition(value: string | null): string | null {
+  if (!value) return null;
+
+  const utf8 = value.match(/filename\*=UTF-8''([^;]+)/i);
+  if (utf8) {
+    try {
+      return decodeURIComponent(utf8[1]).trim() || null;
+    } catch {
+      // Vadné kódování není důvod rozpoznávání shodit, zkusíme prostý tvar.
+    }
+  }
+
+  const prosty = value.match(/filename="([^"]+)"/i) ?? value.match(/filename=([^;]+)/i);
+  return prosty ? prosty[1].trim() || null : null;
+}

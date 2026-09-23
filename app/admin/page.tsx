@@ -4,7 +4,16 @@ import { resolveActiveCountry } from "@/lib/active-country";
 import { createClient } from "@/lib/supabase/server";
 import { getLightMatrix, lightLabel } from "@/lib/country-status";
 import { StatusDot } from "@/components/StatusDot";
-import { addCountry, inviteUser, updateUserRoleAndCountry } from "./actions";
+import { CatalogImport } from "@/components/CatalogImport";
+import {
+  addCountry,
+  addModule,
+  deleteModule,
+  inviteUser,
+  setModuleArchived,
+  updateModule,
+  updateUserRoleAndCountry,
+} from "./actions";
 import type { Country, AppUser, CountryLight, Module } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -20,8 +29,23 @@ export default async function AdminPage({
   const supabase = await createClient();
   const { data: countries } = await supabase.from("countries").select("*").order("name");
   const { data: users } = await supabase.from("users").select("*").order("email");
-  const { data: modules } = await supabase.from("modules").select("*").order("name");
+  const { data: vsechnyModuly } = await supabase
+    .from("modules")
+    .select("*")
+    .order("category")
+    .order("order_index")
+    .order("name");
   const lights = await getLightMatrix();
+
+  // Kolik verzí má která metodika – podle toho se rozhoduje, jestli jde smazat.
+  const { data: verze } = await supabase.from("document_versions").select("module_id");
+  const pocetVerzi = new Map<string, number>();
+  for (const v of verze ?? []) {
+    pocetVerzi.set(v.module_id, (pocetVerzi.get(v.module_id) ?? 0) + 1);
+  }
+
+  const moduly = (vsechnyModuly ?? []) as Module[];
+  const modules = moduly.filter((m) => !m.archived_at);
 
   return (
     <div className="flex max-w-3xl flex-col gap-10">
@@ -36,6 +60,27 @@ export default async function AdminPage({
           lights={lights}
           t={t}
         />
+      </section>
+
+      <section>
+        <h2 className="mb-3 font-heading text-xl font-bold text-ink">{t.catalogTitle}</h2>
+        <CatalogImport t={t} />
+
+        <h3 className="mb-2 mt-6 text-sm font-semibold text-ink/70">{t.methodologies}</h3>
+        <ModulesTable modules={moduly} pocetVerzi={pocetVerzi} t={t} />
+
+        <h3 className="mb-2 mt-6 text-sm font-semibold text-ink/70">{t.addModule}</h3>
+        <form action={addModule} className="flex flex-wrap gap-2">
+          <input name="name" placeholder={t.moduleName} required className="input flex-1" />
+          <input name="category" placeholder={t.moduleSection} className="input w-56" />
+          <input name="nameEn" placeholder={t.moduleNameEn} className="input w-56" />
+          <button
+            type="submit"
+            className="rounded-xl bg-coral px-4 py-2.5 font-medium text-white hover:opacity-90"
+          >
+            {t.addModule}
+          </button>
+        </form>
       </section>
 
       <section>
@@ -197,6 +242,86 @@ function ReadinessMatrix({
           ))}
         </tbody>
       </table>
+    </div>
+  );
+}
+
+// Seznam metodik. Přejmenovat a zařadit jde i ručně, hlavní cesta je ale
+// import z webu. Mazat jde jen metodika bez jediné verze – jinak archivace.
+function ModulesTable({
+  modules,
+  pocetVerzi,
+  t,
+}: {
+  modules: Module[];
+  pocetVerzi: Map<string, number>;
+  t: Dictionary;
+}) {
+  if (modules.length === 0) {
+    return <p className="text-sm text-ink/50">{t.noModules}</p>;
+  }
+
+  return (
+    <div className="flex flex-col gap-1.5">
+      {modules.map((module) => {
+        const maVerze = (pocetVerzi.get(module.id) ?? 0) > 0;
+        const archivovana = Boolean(module.archived_at);
+
+        return (
+          <div
+            key={module.id}
+            className={`flex flex-wrap items-center gap-2 rounded-xl border border-haze p-2 ${
+              archivovana ? "opacity-50" : ""
+            }`}
+          >
+            <form action={updateModule} className="flex flex-1 flex-wrap items-center gap-2">
+              <input type="hidden" name="moduleId" value={module.id} />
+              <input
+                name="name"
+                defaultValue={module.name}
+                required
+                className="input min-w-48 flex-1 py-1"
+              />
+              <input
+                name="category"
+                defaultValue={module.category ?? ""}
+                placeholder={t.moduleSection}
+                className="input w-48 py-1"
+              />
+              <input
+                name="nameEn"
+                defaultValue={module.name_en ?? ""}
+                placeholder={t.moduleNameEn}
+                className="input w-48 py-1"
+              />
+              <button type="submit" className="text-sm text-coral hover:underline">
+                {t.save}
+              </button>
+            </form>
+
+            {archivovana && <span className="badge-pill">{t.archivedLabel}</span>}
+
+            <form action={setModuleArchived}>
+              <input type="hidden" name="moduleId" value={module.id} />
+              <input type="hidden" name="archived" value={archivovana ? "0" : "1"} />
+              <button type="submit" className="text-sm text-ink/50 hover:text-ink">
+                {archivovana ? t.unarchiveModule : t.archiveModule}
+              </button>
+            </form>
+
+            {maVerze ? (
+              <span className="text-xs text-ink/40">{t.cannotDeleteModule}</span>
+            ) : (
+              <form action={deleteModule}>
+                <input type="hidden" name="moduleId" value={module.id} />
+                <button type="submit" className="text-sm text-ink/50 hover:text-coral">
+                  {t.delete}
+                </button>
+              </form>
+            )}
+          </div>
+        );
+      })}
     </div>
   );
 }

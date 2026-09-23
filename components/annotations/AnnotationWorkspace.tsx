@@ -29,6 +29,7 @@ export function AnnotationWorkspace({
   formColumn,
   documentHeader,
   focusMarkId,
+  onFirstPageText,
 }: {
   /** Null, dokud uživatel nevloží platný odkaz na Drive. */
   fileId: string | null;
@@ -45,6 +46,8 @@ export function AnnotationWorkspace({
   documentHeader?: ReactNode;
   /** Značka, na kterou se má hned po otevření odrolovat a zvýraznit ji. */
   focusMarkId?: string;
+  /** Text první strany – podle něj appka pozná, o kterou metodiku jde. */
+  onFirstPageText?: (text: string) => void;
 }) {
   const [editingId, setEditingId] = useState<string | null>(null);
   const [hoveredId, setHoveredId] = useState<string | null>(focusMarkId ?? null);
@@ -191,6 +194,7 @@ export function AnnotationWorkspace({
           src={`/api/pdf/${fileId}`}
           driveUrl={driveUrl}
           t={t}
+          onFirstPageText={onFirstPageText}
           renderPageOverlay={(pageIndex) => (
             <MarkLayer
               marks={marks.filter((mark) => mark.page === pageIndex)}

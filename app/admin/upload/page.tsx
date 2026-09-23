@@ -20,7 +20,13 @@ export default async function UploadPage({
   const { activeCountryId, t } = await resolveActiveCountry(user, country);
 
   const supabase = await createClient();
-  const { data: modules } = await supabase.from("modules").select("*").order("name");
+  const { data: modules } = await supabase
+    .from("modules")
+    .select("*")
+    .is("archived_at", null)
+    .order("category")
+    .order("order_index")
+    .order("name");
   const { data: countries } = await supabase.from("countries").select("*").order("name");
 
   // Poslední zveřejněná verze pro každou dvojici modul + země, ať je vidět,

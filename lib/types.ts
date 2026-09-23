@@ -21,7 +21,15 @@ export type AppUser = {
 export type Module = {
   id: string;
   name: string;
+  /** Sekce z webu kurikulum.aidetem.cz. */
   category: string | null;
+  /** Část adresy /knowledgebase/<slug>/. U ručně přidaných je prázdný. */
+  slug: string | null;
+  source_url: string | null;
+  name_en: string | null;
+  order_index: number;
+  /** Metodika, která z webu zmizela. Nemaže se, jen se schová. */
+  archived_at: string | null;
   created_at: string;
 };
 

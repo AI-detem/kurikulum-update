@@ -154,6 +154,39 @@ export const cs = {
   restoreToCurrent: "Vrátit mezi aktuální",
   noHiddenChanges: "Zatím jste nic neskryli.",
   hiddenAt: "Skryto",
+
+  // rozpoznání metodiky a výběr při nahrávání
+  recognizedAs: "Rozpoznáno: {name}",
+  change: "změnit",
+  maybeOneOf: "Vypadá to na jednu z těchto:",
+  searchModule: "Hledat metodiku",
+  nothingFound: "Nic nenalezeno",
+  ungrouped: "Bez zařazení",
+
+  // katalog metodik v administraci
+  catalogTitle: "Katalog metodik",
+  catalogHint:
+    "Zdrojem pravdy je web kurikulum.aidetem.cz. Import nikdy nic nemaže — metodika, která z webu zmizí, se jen archivuje. Ručně přidaných metodik se import nedotkne.",
+  catalogLoad: "Načíst katalog z kurikulum.aidetem.cz",
+  catalogLoading: "Načítám katalog…",
+  catalogPreviewTitle: "Co import udělá",
+  catalogWillAdd: "Přibude ({count})",
+  catalogWillRename: "Přejmenuje se ({count})",
+  catalogWillLink: "Spáruje se s webem ({count})",
+  catalogWillArchive: "Archivuje se ({count})",
+  catalogUnchanged: "Beze změny: {count} z {total}",
+  catalogConfirm: "Provést import",
+  catalogCancel: "Zrušit",
+  catalogNothingToDo: "Katalog je aktuální, není co měnit.",
+  catalogDone: "Hotovo — přibylo {added}, přejmenováno {renamed}, spárováno {linked}, archivováno {archived}.",
+  addModule: "Přidat metodiku",
+  moduleName: "Název metodiky",
+  moduleSection: "Sekce",
+  moduleNameEn: "Anglický název",
+  archiveModule: "Archivovat",
+  unarchiveModule: "Vrátit z archivu",
+  archivedLabel: "archivováno",
+  cannotDeleteModule: "Nejde smazat, existují verze",
 };
 
 export type Dictionary = typeof cs;

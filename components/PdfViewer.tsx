@@ -19,6 +19,7 @@ export function PdfViewer({
   driveUrl,
   t,
   renderPageOverlay,
+  onFirstPageText,
 }: {
   src: string;
   /** Odkaz na soubor v Drive pro případ, že se vykreslení nepovede. */
@@ -26,6 +27,8 @@ export function PdfViewer({
   t: Dictionary;
   /** Vrstva kreslená přes stránku – používá se pro značkování změn. */
   renderPageOverlay?: (pageIndex: number) => ReactNode;
+  /** Text první strany. Podle něj se pozná, o kterou metodiku jde. */
+  onFirstPageText?: (text: string) => void;
 }) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [width, setWidth] = useState(0);
@@ -47,7 +50,24 @@ export function PdfViewer({
     <div ref={containerRef} className="w-full">
       <Document
         file={src}
-        onLoadSuccess={({ numPages }) => setPageCount(numPages)}
+        onLoadSuccess={async (pdf) => {
+          setPageCount(pdf.numPages);
+          if (!onFirstPageText || pdf.numPages === 0) return;
+
+          // Rozpoznávání metodiky je jen pomůcka, kvůli němu nemá smysl
+          // hlásit chybu – když se text vytáhnout nedá, prostě se nepoužije.
+          try {
+            const page = await pdf.getPage(1);
+            const content = await page.getTextContent();
+            onFirstPageText(
+              content.items
+                .map((item) => ("str" in item ? item.str : ""))
+                .join(" ")
+            );
+          } catch {
+            onFirstPageText("");
+          }
+        }}
         loading={<PdfSkeleton text={t.loadingPdf} />}
         error={<PdfError t={t} driveUrl={driveUrl} />}
         noData={<PdfSkeleton text={t.loadingPdf} />}

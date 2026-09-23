@@ -10,6 +10,8 @@ import {
   type PublishState,
 } from "@/app/admin/upload/actions";
 import { AnnotationWorkspace } from "@/components/annotations/AnnotationWorkspace";
+import { ModulePicker } from "@/components/ModulePicker";
+import { matchModule, type MatchResult } from "@/lib/match-module";
 import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
 import { fill, formatDateTime } from "@/lib/format";
 import { LocalDateTime } from "@/components/LocalDateTime";
@@ -60,13 +62,20 @@ export function UploadWorkspace({
   const [draftChoice, setDraftChoice] = useState<"ask" | "continue" | "fresh">(
     existingDraft ? "ask" : "fresh"
   );
-  const [moduleId, setModuleId] = useState(modules[0]?.id ?? "");
+  // Záměrně prázdné: metodiku buď rozpozná appka, nebo ji vybere uživatel.
+  const [moduleId, setModuleId] = useState("");
   const [countryId, setCountryId] = useState(defaultCountryId ?? "");
   const [driveLink, setDriveLink] = useState("");
   const [linkForPreview, setLinkForPreview] = useState("");
   const [marks, setMarks] = useState<Mark[]>([]);
   const [summary, setSummary] = useState("");
   const [draftId, setDraftId] = useState<string | null>(null);
+  // Podklady pro rozpoznání metodiky z nahrávaného dokumentu.
+  const [firstPageText, setFirstPageText] = useState("");
+  const [fileName, setFileName] = useState("");
+  const [recognition, setRecognition] = useState<MatchResult | null>(null);
+  // Jakmile si uživatel metodiku vybere sám, rozpoznávání ji už nepřepisuje.
+  const moduleTouched = useRef(false);
   const [saveState, setSaveState] = useState<{ saving: boolean; savedAt: string | null; error?: string }>(
     { saving: false, savedAt: null }
   );
@@ -75,6 +84,7 @@ export function UploadWorkspace({
   // hodnotách stavu – ty se podruhé nespustí a odkaz na dokument by
   // zůstal prázdný.
   function continueDraft(draft: ExistingDraft) {
+    moduleTouched.current = true;
     setModuleId(draft.module_id);
     setCountryId(draft.country_id);
     setDriveLink(draft.file_url);
@@ -96,6 +106,40 @@ export function UploadWorkspace({
   }, [driveLink]);
 
   const fileId = extractDriveFileId(linkForPreview);
+
+  // Název souboru na Drive bývá pro rozpoznání výmluvnější než text uvnitř.
+  useEffect(() => {
+    if (!fileId) {
+      setFileName("");
+      setFirstPageText("");
+      setRecognition(null);
+      return;
+    }
+
+    let cancelled = false;
+    fetch(`/api/pdf/${fileId}/name`)
+      .then((response) => (response.ok ? response.json() : { name: null }))
+      .then((data: { name: string | null }) => {
+        if (!cancelled) setFileName(data.name ?? "");
+      })
+      .catch(() => {
+        // Rozpoznávání je jen pomůcka, bez názvu souboru se obejde.
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [fileId]);
+
+  useEffect(() => {
+    if (!firstPageText && !fileName) return;
+
+    const result = matchModule(modules, firstPageText, fileName);
+    setRecognition(result);
+    if (result.kind === "match" && !moduleTouched.current) {
+      setModuleId(result.best.moduleId);
+    }
+  }, [modules, firstPageText, fileName]);
 
   // Jakmile je vyplněný modul, země a platný odkaz, založí se na pozadí
   // rozpracovaná verze, ke které se pak průběžně ukládají značky.
@@ -191,23 +235,21 @@ export function UploadWorkspace({
         marks={marks}
         setMarks={setMarks}
         editable
+        onFirstPageText={setFirstPageText}
         t={t}
         formColumn={
           <div className="flex flex-col gap-4">
             <Field label={t.module}>
-              <select
-                name="moduleId"
-                required
+              <ModulePicker
+                modules={modules}
                 value={moduleId}
-                onChange={(event) => setModuleId(event.target.value)}
-                className="input"
-              >
-                {modules.map((module) => (
-                  <option key={module.id} value={module.id}>
-                    {module.name}
-                  </option>
-                ))}
-              </select>
+                onChange={(id) => {
+                  moduleTouched.current = true;
+                  setModuleId(id);
+                }}
+                recognition={recognition}
+                t={t}
+              />
             </Field>
 
             <Field label={t.country}>

@@ -11,6 +11,9 @@ export async function getModulesForCountry(
   const { data: modules, error } = await supabase
     .from("modules")
     .select("*")
+    .is("archived_at", null)
+    .order("category")
+    .order("order_index")
     .order("name");
 
   if (error || !modules) return [];

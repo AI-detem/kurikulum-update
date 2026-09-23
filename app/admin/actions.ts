@@ -72,3 +72,94 @@ export async function updateUserRoleAndCountry(formData: FormData) {
 
   revalidatePath("/admin");
 }
+
+// ---------------------------------------------------------------------
+// Metodiky
+// ---------------------------------------------------------------------
+// Hlavní cesta je import z kurikulum.aidetem.cz (viz catalog-actions.ts).
+// Tohle je ruční záchrana pro případ, kdy web zdrojem být nemůže.
+
+export async function addModule(formData: FormData) {
+  await requireAdmin();
+
+  const name = String(formData.get("name") ?? "").trim();
+  const category = String(formData.get("category") ?? "").trim();
+  const nameEn = String(formData.get("nameEn") ?? "").trim();
+  if (!name) throw new Error("Vyplň prosím název metodiky.");
+
+  const supabase = await createClient();
+  const { error } = await supabase.from("modules").insert({
+    name,
+    category: category || null,
+    name_en: nameEn || null,
+  });
+  if (error) throw new Error(`Přidání metodiky selhalo: ${error.message}`);
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+}
+
+export async function updateModule(formData: FormData) {
+  await requireAdmin();
+
+  const id = String(formData.get("moduleId") ?? "");
+  const name = String(formData.get("name") ?? "").trim();
+  const category = String(formData.get("category") ?? "").trim();
+  const nameEn = String(formData.get("nameEn") ?? "").trim();
+  if (!id || !name) throw new Error("Vyplň prosím název metodiky.");
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("modules")
+    .update({ name, category: category || null, name_en: nameEn || null })
+    .eq("id", id);
+  if (error) throw new Error(`Úprava metodiky selhala: ${error.message}`);
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+}
+
+// Archivovaná metodika se nikde nenabízí, ale nic se jí nestane –
+// verze i vyznačené změny zůstávají.
+export async function setModuleArchived(formData: FormData) {
+  await requireAdmin();
+
+  const id = String(formData.get("moduleId") ?? "");
+  const archived = formData.get("archived") === "1";
+  if (!id) return;
+
+  const supabase = await createClient();
+  const { error } = await supabase
+    .from("modules")
+    .update({ archived_at: archived ? new Date().toISOString() : null })
+    .eq("id", id);
+  if (error) throw new Error(`Změna se nepodařila: ${error.message}`);
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+}
+
+// Smazat jde jen metodika, ke které ještě není žádná verze. Jinak by se
+// s ní ztratila i historie – od toho je archivace.
+export async function deleteModule(formData: FormData) {
+  await requireAdmin();
+
+  const id = String(formData.get("moduleId") ?? "");
+  if (!id) return;
+
+  const supabase = await createClient();
+  const { count } = await supabase
+    .from("document_versions")
+    .select("id", { count: "exact", head: true })
+    .eq("module_id", id);
+
+  if ((count ?? 0) > 0) {
+    throw new Error("Metodika má nahrané verze, smazat nejde. Použij archivaci.");
+  }
+
+  const { error } = await supabase.from("modules").delete().eq("id", id);
+  if (error) throw new Error(`Smazání metodiky selhalo: ${error.message}`);
+
+  revalidatePath("/admin");
+  revalidatePath("/");
+}
