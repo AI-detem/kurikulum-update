@@ -26,8 +26,11 @@ export default function LoginPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-white px-4">
       <div className="w-full max-w-sm">
-        <div className="mb-8 flex justify-center">
-          <Logo />
+        <div className="mb-8 flex flex-col items-center gap-3">
+          <Logo size={64} showName={false} />
+          <span className="font-heading text-2xl font-bold tracking-tight text-ink">
+            AI kurikulum
+          </span>
         </div>
 
         {status === "sent" ? (

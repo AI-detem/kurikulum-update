@@ -1,14 +1,30 @@
-import { Bot } from "lucide-react";
+import Image from "next/image";
 
-export function Logo() {
+// Logo AI dětem. Samotná značka je korálové kolečko, takže patří vždy
+// na bílý podklad – na barevné ploše by ztratila kontrast.
+export function Logo({
+  size = 32,
+  showName = true,
+}: {
+  /** Výška i šířka loga v pixelech. Obrázek je čtvercový. */
+  size?: number;
+  showName?: boolean;
+}) {
   return (
     <div className="flex items-center gap-2">
-      <span className="flex h-9 w-9 items-center justify-center rounded-full bg-coral text-white">
-        <Bot size={20} strokeWidth={2} />
-      </span>
-      <span className="font-heading text-xl font-bold tracking-tight text-ink">
-        AI kurikulum
-      </span>
+      <Image
+        src="/logo-aidetem.png"
+        alt="AI dětem"
+        width={size}
+        height={size}
+        priority
+        className="shrink-0"
+      />
+      {showName && (
+        <span className="font-heading text-xl font-bold tracking-tight text-ink">
+          AI kurikulum
+        </span>
+      )}
     </div>
   );
 }
