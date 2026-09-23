@@ -53,7 +53,7 @@ export async function notifyCountryAboutChange(params: {
       .single();
 
     try {
-      await sendChangeNotificationEmail({
+      const odeslani = await sendChangeNotificationEmail({
         to: recipient.email,
         moduleName,
         versionNumber,
@@ -63,7 +63,14 @@ export async function notifyCountryAboutChange(params: {
         countryName,
       });
 
-      if (notification) {
+      // Čas odeslání se zapíše, jen když e-mail opravdu odešel. Když
+      // chybí klíč k Resendu, notifikace v appce zůstává, e-mail ne.
+      if (!odeslani.sent) {
+        console.warn(
+          `E-mail na ${recipient.email} neodešel:`,
+          "notConfigured" in odeslani ? "RESEND_API_KEY není nastavený" : odeslani.error
+        );
+      } else if (notification) {
         await supabase
           .from("notifications")
           .update({ email_sent_at: new Date().toISOString() })
@@ -108,12 +115,15 @@ export async function notifyPreviousAuthor(params: {
   }
 
   try {
-    await sendNewerVersionEmail({
+    const odeslani = await sendNewerVersionEmail({
       to: author.email,
       moduleName,
       theirVersion,
       newVersion,
     });
+    if (!odeslani.sent) {
+      console.warn(`Autora ${author.email} se nepodařilo upozornit e-mailem.`);
+    }
   } catch (emailError) {
     console.error(`Nepodařilo se upozornit autora ${author.email}:`, emailError);
   }

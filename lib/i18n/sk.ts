@@ -182,13 +182,13 @@ export const sk: Dictionary = {
   noUpdatesTitle: "Žiadne nové aktualizácie metodík.",
   noUpdatesHint: "Keď niektorá krajina niečo zmení, uvidíte to tu.",
   publishedAt: "zverejnené",
-  machineTranslatedFrom: "Automatický preklad z {language} — zobraziť originál",
+  machineTranslatedFrom: "Automatický preklad {language} — zobraziť originál",
   showTranslation: "Zobraziť preklad",
   translationFailed: "Preklad sa nepodaril, nižšie je pôvodné znenie.",
-  langCs: "češtiny",
-  langSk: "slovenčiny",
-  langEn: "angličtiny",
-  langHu: "maďarčiny",
+  langCs: "z češtiny",
+  langSk: "zo slovenčiny",
+  langEn: "z angličtiny",
+  langHu: "z maďarčiny",
 
   adminEditMode: "Opraviť túto verziu",
   adminEditHint:
@@ -197,4 +197,12 @@ export const sk: Dictionary = {
   adminDeleteVersion: "Zmazať verziu",
   adminDeleteConfirm: "Naozaj zmazať celú verziu aj so značkami?",
   adminBackToReading: "Späť na čítanie",
+
+  mailNotConfigured:
+    "Odosielanie e-mailov nie je nastavené — vo Verceli chýba premenná RESEND_API_KEY. Aplikácia beží ďalej, len notifikácie neodchádzajú.",
+  schemaOutdated: "Databáza nie je aktuálna, chýbajú migrácie {files}. Spusti ich v Supabase (SQL Editor).",
+  allModules: "Všetky metodiky",
+  hideAllModules: "Skryť ostatné metodiky",
+  uiLanguage: "Jazyk rozhrania",
+  byCountry: "podľa krajiny",
 };

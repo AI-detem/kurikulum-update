@@ -17,6 +17,8 @@ export type AppUser = {
   country_id: string | null;
   /** Země, které uživatel spravuje. Může jich být víc. */
   country_ids: string[];
+  /** Jazyk rozhraní. Prázdné = podle první přiřazené země. */
+  locale: string | null;
   role: UserRole;
   created_at: string;
 };

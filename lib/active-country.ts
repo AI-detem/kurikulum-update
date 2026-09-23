@@ -34,7 +34,12 @@ export async function resolveActiveCountry(
     : vsechny.filter((country) => user.country_ids.includes(country.id));
 
   if (countries.length === 0) {
-    return { activeCountryId: null, countries: [], t: getDictionary("cs"), locale: "cs" };
+    return {
+      activeCountryId: null,
+      countries: [],
+      t: getDictionary(user.locale ? toLocale(user.locale) : "cs"),
+      locale: "cs",
+    };
   }
 
   // Layout parametry z adresy nedostává, proto se zemí drží i v cookie.
@@ -53,7 +58,17 @@ export async function resolveActiveCountry(
     activeCountryId: active.id,
     // Přepínač se vykreslí, jen když je z čeho vybírat.
     countries: countries.length > 1 ? countries : [],
-    t: getDictionary(locale),
+    // Rozhraní mluví jazykem uživatele, ne prohlížené země. Kdo spravuje
+    // Česko i Slovensko, nechce si přepínat jazyk tím, kam se zrovna dívá.
+    t: getDictionary(uiLocale(user, countries)),
     locale,
   };
+}
+
+// Jazyk rozhraní: vlastní nastavení uživatele, jinak podle jeho první země.
+function uiLocale(user: AppUser, countries: Country[]): Locale {
+  if (user.locale) return toLocale(user.locale);
+
+  const vlastni = countries.find((country) => user.country_ids.includes(country.id));
+  return toLocale(vlastni?.locale);
 }

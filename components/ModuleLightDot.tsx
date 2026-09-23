@@ -17,9 +17,8 @@ export function ModuleLightDot({
   light: CountryLight;
   label: string;
 }) {
-  if (light === "green") {
-    return <StatusDot light={light} label={label} size={10} />;
-  }
+  // Zelená nic neříká, jen zabírá místo – kreslí se jen to, co hoří.
+  if (light === "green") return null;
 
   function scrollToChange() {
     const card = document.querySelector<HTMLElement>(`[data-zmena-modul="${moduleId}"]`);

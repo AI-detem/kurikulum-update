@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { dismissChange, restoreChange } from "@/app/changes/actions";
 import { categoryLabel } from "@/lib/annotations";
 import { fill } from "@/lib/format";
@@ -36,8 +35,6 @@ export function ChangesFromOthers({
   locale: Locale;
   t: Dictionary;
 }) {
-  const router = useRouter();
-
   // Co uživatel v téhle relaci přehodil. Server o tom ví taky (zapisuje se
   // rovnou), tohle je jen proto, aby se seznam překreslil bez čekání.
   const [zmeny, setZmeny] = useState<Record<string, Stav>>({});
@@ -45,7 +42,9 @@ export function ChangesFromOthers({
   const [hiddenOpen, setHiddenOpen] = useState(false);
   const [confirmingId, setConfirmingId] = useState<string | null>(null);
   const [leavingId, setLeavingId] = useState<string | null>(null);
-  const [toast, setToast] = useState<PendingChange | null>(null);
+  // Lišta si drží jen id. Položku dohledáme až při kliknutí, ať se
+  // nepracuje s obrázkem, který mezitím zestaral.
+  const [toastId, setToastId] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const vse = [...pending, ...dismissed];
@@ -104,17 +103,18 @@ export function ChangesFromOthers({
       setZmeny((prev) => ({ ...prev, [item.id]: "dismissed" }));
     }, FADE_MS);
 
-    setToast(item);
+    setToastId(item.id);
     if (toastTimer.current) window.clearTimeout(toastTimer.current);
-    toastTimer.current = window.setTimeout(() => setToast(null), UNDO_MS);
+    toastTimer.current = window.setTimeout(() => setToastId(null), UNDO_MS);
 
-    // Semafor i počty na Přehledu se počítají na serveru, musí se přepočítat.
-    router.refresh();
+    // Překreslení si vyžádá sama serverová akce přes revalidatePath.
+    // Druhý router.refresh() by běžel souběžně s ním a přepisoval stav,
+    // který si tady držíme.
   }
 
-  async function vratit(item: PendingChange) {
+  async function vratit(statusId: string) {
     setError(null);
-    const result = await restoreChange(item.id).catch((chyba: Error) => ({
+    const result = await restoreChange(statusId).catch((chyba: Error) => ({
       error: chyba.message,
     }));
     if (result.error) {
@@ -122,9 +122,8 @@ export function ChangesFromOthers({
       return;
     }
 
-    setZmeny((prev) => ({ ...prev, [item.id]: "pending" }));
-    setToast((current) => (current?.id === item.id ? null : current));
-    router.refresh();
+    setZmeny((prev) => ({ ...prev, [statusId]: "pending" }));
+    setToastId((current) => (current === statusId ? null : current));
   }
 
   if (current.length === 0 && hidden.length === 0) return null;
@@ -184,19 +183,21 @@ export function ChangesFromOthers({
                 onAskDismiss={() => setConfirmingId(item.id)}
                 onCancelDismiss={closeConfirm}
                 onDismiss={() => skryt(item)}
-                onRestore={() => vratit(item)}
+                onRestore={() => vratit(item.id)}
               />
             ))
           )}
         </ul>
       )}
 
-      {toast && (
+      {toastId && (
         <div className="fixed bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-xl bg-ink px-4 py-2.5 text-sm text-white shadow-lg">
           {t.dismissedToast}
+          {/* Záměrně onMouseDown, ne onClick: kliknutí těsně před vypršením
+              lišty se tak stihne uplatnit ještě při stisku. */}
           <button
             type="button"
-            onClick={() => vratit(toast)}
+            onMouseDown={() => vratit(toastId)}
             className="font-medium text-mist hover:underline"
           >
             {t.undo}

@@ -11,6 +11,17 @@ function siteUrl(): string {
   return process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 }
 
+// Bez klíče k Resendu se e-maily neposílají. Není to důvod cokoli shodit –
+// zveřejnění verze musí projít i tak, jen se o ní nikdo nedozví e-mailem.
+export function mailConfigured(): boolean {
+  return Boolean(process.env.RESEND_API_KEY);
+}
+
+export type SendResult =
+  | { sent: true }
+  | { sent: false; notConfigured: true }
+  | { sent: false; error: string };
+
 export async function sendChangeNotificationEmail(params: {
   to: string;
   moduleName: string;
@@ -19,15 +30,17 @@ export async function sendChangeNotificationEmail(params: {
   summary: string;
   notes: string[];
   countryName: string;
-}) {
+}): Promise<SendResult> {
   const { to, moduleName, versionNumber, uploadedAt, summary, notes, countryName } = params;
   const url = siteUrl();
+
+  if (!mailConfigured()) return { sent: false, notConfigured: true };
 
   // Klient se vytváří až tady (ne při načtení souboru), aby appka šla
   // sestavit, i než je RESEND_API_KEY nastavený (např. při prvním nasazení).
   const resend = new Resend(process.env.RESEND_API_KEY);
 
-  return resend.emails.send({
+  const result = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL ?? "AI kurikulum <onboarding@resend.dev>",
     to,
     subject: `Nová verze metodiky: ${moduleName} (${countryName})`,
@@ -56,6 +69,8 @@ export async function sendChangeNotificationEmail(params: {
           : "")
     ),
   });
+
+  return odpoved(result);
 }
 
 // Autorovi předchozí verze dáme vědět, že na ni někdo navázal.
@@ -64,12 +79,15 @@ export async function sendNewerVersionEmail(params: {
   moduleName: string;
   theirVersion: number;
   newVersion: number;
-}) {
+}): Promise<SendResult> {
   const { to, moduleName, theirVersion, newVersion } = params;
   const url = siteUrl();
+
+  if (!mailConfigured()) return { sent: false, notConfigured: true };
+
   const resend = new Resend(process.env.RESEND_API_KEY);
 
-  return resend.emails.send({
+  const result = await resend.emails.send({
     from: process.env.RESEND_FROM_EMAIL ?? "AI kurikulum <onboarding@resend.dev>",
     to,
     subject: `K tvé verzi metodiky přibyla novější: ${moduleName}`,
@@ -82,6 +100,14 @@ export async function sendNewerVersionEmail(params: {
         `přibyla novější verze v${newVersion}.</p>`
     ),
   });
+
+  return odpoved(result);
+}
+
+// Resend chybu nevyhazuje, vrací ji vedle dat.
+function odpoved(result: { error: { name: string; message: string } | null }): SendResult {
+  if (result.error) return { sent: false, error: `${result.error.name}: ${result.error.message}` };
+  return { sent: true };
 }
 
 // Společný rám e-mailu: logo nahoře, obsah, tlačítko do appky.

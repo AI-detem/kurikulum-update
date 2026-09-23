@@ -74,8 +74,13 @@ export async function updateUserRoleAndCountries(formData: FormData) {
   const role = formData.get("role") as UserRole;
   if (!userId) return;
 
+  const locale = String(formData.get("locale") ?? "").trim();
+
   const supabase = await createClient();
-  const { error } = await supabase.from("users").update({ role }).eq("id", userId);
+  const { error } = await supabase
+    .from("users")
+    .update({ role, locale: locale || null })
+    .eq("id", userId);
   if (error) throw new Error(`Úprava uživatele selhala: ${error.message}`);
 
   const { error: deleteError } = await supabase
@@ -96,7 +101,9 @@ export async function updateUserRoleAndCountries(formData: FormData) {
 }
 
 // Zkušební notifikace na vlastní adresu, stejnou šablonou jako naostro.
-export async function sendTestEmail(): Promise<{ ok: true } | { error: string }> {
+export async function sendTestEmail(): Promise<
+  { ok: true } | { notConfigured: true } | { error: string }
+> {
   const admin = await requireAdmin();
 
   try {
@@ -110,9 +117,9 @@ export async function sendTestEmail(): Promise<{ ok: true } | { error: string }>
       countryName: "Zkouška",
     });
 
-    // Resend chybu nevyhazuje, vrací ji v odpovědi.
-    if (result.error) return { error: `${result.error.name}: ${result.error.message}` };
-    return { ok: true };
+    if (result.sent) return { ok: true };
+    if ("notConfigured" in result) return { notConfigured: true };
+    return { error: result.error };
   } catch (chyba) {
     return { error: chyba instanceof Error ? chyba.message : String(chyba) };
   }

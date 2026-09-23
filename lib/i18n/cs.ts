@@ -196,13 +196,13 @@ export const cs = {
   noUpdatesTitle: "Žádné nové aktualizace metodik.",
   noUpdatesHint: "Až některá země něco změní, uvidíte to tady.",
   publishedAt: "zveřejněno",
-  machineTranslatedFrom: "Automatický překlad z {language} — zobrazit originál",
+  machineTranslatedFrom: "Automatický překlad {language} — zobrazit originál",
   showTranslation: "Zobrazit překlad",
   translationFailed: "Překlad se nepovedl, níže je původní znění.",
-  langCs: "češtiny",
-  langSk: "slovenštiny",
-  langEn: "angličtiny",
-  langHu: "maďarštiny",
+  langCs: "z češtiny",
+  langSk: "ze slovenštiny",
+  langEn: "z angličtiny",
+  langHu: "z maďarštiny",
 
   // tiché opravy adminem
   adminEditMode: "Opravit tuhle verzi",
@@ -212,6 +212,14 @@ export const cs = {
   adminDeleteVersion: "Smazat verzi",
   adminDeleteConfirm: "Opravdu smazat celou verzi i se značkami?",
   adminBackToReading: "Zpět na čtení",
+
+  mailNotConfigured:
+    "Odesílání e-mailů není nastavené — ve Vercelu chybí proměnná RESEND_API_KEY. Appka běží dál, jen notifikace neodcházejí.",
+  schemaOutdated: "Databáze není aktuální, chybí migrace {files}. Spusť je v Supabase (SQL Editor).",
+  allModules: "Všechny metodiky",
+  hideAllModules: "Skrýt ostatní metodiky",
+  uiLanguage: "Jazyk rozhraní",
+  byCountry: "podle země",
 };
 
 export type Dictionary = typeof cs;

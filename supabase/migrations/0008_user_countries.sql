@@ -136,4 +136,12 @@ create policy "stav zmeny meni jen jeji zeme nebo admin" on annotation_country_s
   using (public.is_my_country(country_id) or public.is_admin())
   with check (public.is_my_country(country_id) or public.is_admin());
 
-drop function if exists public.current_country_id();
+-- Funkci se pokusíme zrušit, ale nevadí, když to hned nevyjde: v produkci
+-- na ní visela stará pravidla u úložiště souborů. Uklízí je migrace 0010.
+do $$
+begin
+  drop function if exists public.current_country_id();
+exception
+  when dependent_objects_still_exist then
+    raise notice 'current_country_id() zatím zůstává, visí na ní jiné objekty. Uklidí to migrace 0010.';
+end $$;

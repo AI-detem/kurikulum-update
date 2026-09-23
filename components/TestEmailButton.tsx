@@ -16,9 +16,10 @@ export function TestEmailButton({ t }: { t: Dictionary }) {
 
     const result = await sendTestEmail().catch((chyba: Error) => ({ error: chyba.message }));
     setStav("idle");
-    setVysledek(
-      "error" in result ? { ok: false, text: result.error } : { ok: true, text: t.testEmailSent }
-    );
+
+    if ("ok" in result) setVysledek({ ok: true, text: t.testEmailSent });
+    else if ("notConfigured" in result) setVysledek({ ok: false, text: t.mailNotConfigured });
+    else setVysledek({ ok: false, text: `${t.testEmailFailed} ${result.error}` });
   }
 
   return (
@@ -36,7 +37,7 @@ export function TestEmailButton({ t }: { t: Dictionary }) {
       </div>
       {vysledek && (
         <p className={`text-sm ${vysledek.ok ? "text-ink" : "text-coral"}`}>
-          {vysledek.ok ? vysledek.text : `${t.testEmailFailed} ${vysledek.text}`}
+          {vysledek.text}
         </p>
       )}
     </div>

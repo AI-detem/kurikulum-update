@@ -199,4 +199,12 @@ export const hu: Dictionary = {
   adminDeleteVersion: "Verzió törlése",
   adminDeleteConfirm: "Biztosan törlöd az egész verziót a jelölésekkel együtt?",
   adminBackToReading: "Vissza az olvasáshoz",
+
+  mailNotConfigured:
+    "Az e-mail-küldés nincs beállítva — a RESEND_API_KEY hiányzik a Vercelben. Az alkalmazás működik tovább, csak az értesítések nem mennek ki.",
+  schemaOutdated: "Az adatbázis nem naprakész, hiányoznak a következő migrációk: {files}. Futtasd őket a Supabase SQL Editorban.",
+  allModules: "Összes módszertan",
+  hideAllModules: "A többi módszertan elrejtése",
+  uiLanguage: "A felület nyelve",
+  byCountry: "ország szerint",
 };

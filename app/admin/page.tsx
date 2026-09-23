@@ -1,5 +1,8 @@
 import Link from "next/link";
 import { requireAdmin } from "@/lib/current-user";
+import { missingMigrations } from "@/lib/schema-check";
+import { mailConfigured } from "@/lib/resend";
+import { AdminNotices } from "@/components/AdminNotices";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { createClient } from "@/lib/supabase/server";
 import { getLightMatrix, lightLabel } from "@/lib/country-status";
@@ -58,6 +61,12 @@ export default async function AdminPage({
   return (
     <div className="flex max-w-3xl flex-col gap-10">
       <h1 className="font-heading text-3xl font-bold text-ink">{t.admin}</h1>
+
+      <AdminNotices
+        missing={await missingMigrations()}
+        mailConfigured={mailConfigured()}
+        t={t}
+      />
 
       <section>
         <h2 className="mb-1 font-heading text-xl font-bold text-ink">{t.readiness}</h2>
@@ -169,7 +178,7 @@ function UsersTable({
       <thead>
         <tr className="dashed-divider text-ink/50">
           <th className="py-2 font-medium">{t.email}</th>
-          <th className="py-2 font-medium">{t.countryAndRole}</th>
+          <th className="py-2 font-medium">{t.countryAndRole} / {t.uiLanguage}</th>
         </tr>
       </thead>
       <tbody>
@@ -180,6 +189,13 @@ function UsersTable({
               <form action={updateUserRoleAndCountries} className="flex flex-wrap items-center gap-2">
                 <input type="hidden" name="userId" value={u.id} />
                 <CountryChecks countries={countries} selected={countryIds.get(u.id) ?? []} />
+                <select name="locale" defaultValue={u.locale ?? ""} className="input py-1">
+                  <option value="">{t.byCountry}</option>
+                  <option value="cs">cs</option>
+                  <option value="sk">sk</option>
+                  <option value="en">en</option>
+                  <option value="hu">hu</option>
+                </select>
                 <select name="role" defaultValue={u.role} className="input py-1">
                   {u.role === "viewer" && <option value="viewer">{t.roleViewer}</option>}
                   <option value="editor">{t.roleEditor}</option>
