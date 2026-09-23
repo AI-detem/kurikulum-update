@@ -133,7 +133,6 @@ export const cs = {
   showInDocument: "Zobrazit v dokumentu",
   notRelevant: "Netýká se nás",
   dismissedToast: "Označeno jako netýkající se nás.",
-  undoShort: "Zpět",
   fromCountryVersion: "{country}, verze {version}",
   readiness: "Semafor rozpracovanosti",
   readinessHint:
@@ -149,7 +148,6 @@ export const cs = {
   changesFromOthersCount: "Změny od ostatních zemí ({count})",
   tabCurrent: "Aktuální",
   tabHidden: "Skryté",
-  confirmDismissQuestion: "Opravdu? Změna se přestane zobrazovat.",
   confirmDismissYes: "Ano, netýká se nás",
   restoreToCurrent: "Vrátit mezi aktuální",
   noHiddenChanges: "Zatím jste nic neskryli.",
@@ -210,7 +208,6 @@ export const cs = {
     "Oprava nikomu nic nepošle: nevzniká nová verze, e-maily neodcházejí a ostatním zemím zůstává stav, jaký mají.",
   adminSaveEdit: "Uložit opravu",
   adminDeleteVersion: "Smazat verzi",
-  adminDeleteConfirm: "Opravdu smazat celou verzi i se značkami?",
   adminBackToReading: "Zpět na čtení",
 
   mailNotConfigured:
@@ -220,6 +217,27 @@ export const cs = {
   hideAllModules: "Skrýt ostatní metodiky",
   uiLanguage: "Jazyk rozhraní",
   byCountry: "podle země",
+
+  // potvrzovací okna
+  close: "Zavřít",
+  confirmHideTitle: "Opravdu skrýt tuto změnu?",
+  confirmHideExplain:
+    "Změna se přestane zobrazovat mezi aktuálními. Najdete ji v záložce Skryté a můžete ji kdykoli vrátit zpátky.",
+  confirmArchiveTitle: "Opravdu archivovat metodiku?",
+  confirmArchiveExplain:
+    "Metodika se přestane nabízet při nahrávání a zmizí z Přehledu. Nahrané verze i vyznačené změny zůstávají a archivaci jde kdykoli vrátit.",
+  confirmArchiveYes: "Ano, archivovat",
+  confirmDeleteModuleTitle: "Opravdu smazat metodiku?",
+  confirmDeleteModuleExplain:
+    "Metodika nemá žádnou nahranou verzi, takže se smaže úplně. Vrátit to nejde.",
+  confirmDeleteYes: "Ano, smazat",
+  confirmDiscardDraftTitle: "Opravdu zahodit rozpracovanou verzi?",
+  confirmDiscardDraftExplain:
+    "Značky, které jste zatím vyznačili, se smažou a začnete znovu od prázdného dokumentu. Vrátit to nejde.",
+  confirmDiscardYes: "Ano, zahodit",
+  confirmDeleteVersionTitle: "Opravdu smazat celou verzi?",
+  confirmDeleteVersionExplain:
+    "Verze zmizí i se všemi vyznačenými změnami a ostatní země ji přestanou mít ve schránce. Vrátit to nejde.",
 };
 
 export type Dictionary = typeof cs;

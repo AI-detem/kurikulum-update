@@ -119,6 +119,9 @@ export type PendingChange = {
   moduleId: string;
   moduleName: string;
   fromCountryName: string;
+  /** Kdo verzi nahrál. U cizí země bývá prázdný – pravidla v databázi
+   *  cizí e-maily neukazují. */
+  uploadedByEmail: string | null;
   versionNumber: number | null;
   page: number;
   note: string;

@@ -122,7 +122,6 @@ export const sk: Dictionary = {
   showInDocument: "Zobraziť v dokumente",
   notRelevant: "Netýka sa nás",
   dismissedToast: "Označené ako netýkajúce sa nás.",
-  undoShort: "Späť",
   fromCountryVersion: "{country}, verzia {version}",
   readiness: "Semafor rozpracovanosti",
   readinessHint:
@@ -138,7 +137,6 @@ export const sk: Dictionary = {
   changesFromOthersCount: "Zmeny od ostatných krajín ({count})",
   tabCurrent: "Aktuálne",
   tabHidden: "Skryté",
-  confirmDismissQuestion: "Naozaj? Zmena sa prestane zobrazovať.",
   confirmDismissYes: "Áno, netýka sa nás",
   restoreToCurrent: "Vrátiť medzi aktuálne",
   noHiddenChanges: "Zatiaľ ste nič neskryli.",
@@ -195,7 +193,6 @@ export const sk: Dictionary = {
     "Oprava nikomu nič nepošle: nevzniká nová verzia, e-maily neodchádzajú a ostatným krajinám zostáva stav, aký majú.",
   adminSaveEdit: "Uložiť opravu",
   adminDeleteVersion: "Zmazať verziu",
-  adminDeleteConfirm: "Naozaj zmazať celú verziu aj so značkami?",
   adminBackToReading: "Späť na čítanie",
 
   mailNotConfigured:
@@ -205,4 +202,24 @@ export const sk: Dictionary = {
   hideAllModules: "Skryť ostatné metodiky",
   uiLanguage: "Jazyk rozhrania",
   byCountry: "podľa krajiny",
+
+  close: "Zavrieť",
+  confirmHideTitle: "Naozaj skryť túto zmenu?",
+  confirmHideExplain:
+    "Zmena sa prestane zobrazovať medzi aktuálnymi. Nájdete ju v záložke Skryté a môžete ju kedykoľvek vrátiť späť.",
+  confirmArchiveTitle: "Naozaj archivovať metodiku?",
+  confirmArchiveExplain:
+    "Metodika sa prestane ponúkať pri nahrávaní a zmizne z Prehľadu. Nahrané verzie aj vyznačené zmeny zostávajú a archiváciu možno kedykoľvek vrátiť.",
+  confirmArchiveYes: "Áno, archivovať",
+  confirmDeleteModuleTitle: "Naozaj zmazať metodiku?",
+  confirmDeleteModuleExplain:
+    "Metodika nemá žiadnu nahranú verziu, takže sa zmaže úplne. Vrátiť to nejde.",
+  confirmDeleteYes: "Áno, zmazať",
+  confirmDiscardDraftTitle: "Naozaj zahodiť rozpracovanú verziu?",
+  confirmDiscardDraftExplain:
+    "Značky, ktoré ste zatiaľ vyznačili, sa zmažú a začnete znova od prázdneho dokumentu. Vrátiť to nejde.",
+  confirmDiscardYes: "Áno, zahodiť",
+  confirmDeleteVersionTitle: "Naozaj zmazať celú verziu?",
+  confirmDeleteVersionExplain:
+    "Verzia zmizne aj so všetkými vyznačenými zmenami a ostatné krajiny ju prestanú mať v schránke. Vrátiť to nejde.",
 };

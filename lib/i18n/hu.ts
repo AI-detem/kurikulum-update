@@ -124,7 +124,6 @@ export const hu: Dictionary = {
   showInDocument: "Megjelenítés a dokumentumban",
   notRelevant: "Minket nem érint",
   dismissedToast: "Megjelölve: minket nem érint.",
-  undoShort: "Vissza",
   fromCountryVersion: "{country}, {version}. verzió",
   readiness: "Készültségi jelzőlámpa",
   readinessHint:
@@ -140,7 +139,6 @@ export const hu: Dictionary = {
   changesFromOthersCount: "Változások a többi országtól ({count})",
   tabCurrent: "Aktuális",
   tabHidden: "Rejtett",
-  confirmDismissQuestion: "Biztos? A változás többé nem jelenik meg.",
   confirmDismissYes: "Igen, minket nem érint",
   restoreToCurrent: "Vissza az aktuálisak közé",
   noHiddenChanges: "Még semmit nem rejtettél el.",
@@ -197,7 +195,6 @@ export const hu: Dictionary = {
     "A javítás senkinek nem küld semmit: nem jön létre új verzió, nem megy e-mail, és a többi ország állapota változatlan marad.",
   adminSaveEdit: "Javítás mentése",
   adminDeleteVersion: "Verzió törlése",
-  adminDeleteConfirm: "Biztosan törlöd az egész verziót a jelölésekkel együtt?",
   adminBackToReading: "Vissza az olvasáshoz",
 
   mailNotConfigured:
@@ -207,4 +204,24 @@ export const hu: Dictionary = {
   hideAllModules: "A többi módszertan elrejtése",
   uiLanguage: "A felület nyelve",
   byCountry: "ország szerint",
+
+  close: "Bezárás",
+  confirmHideTitle: "Biztosan elrejted ezt a változást?",
+  confirmHideExplain:
+    "A változás többé nem jelenik meg az aktuálisak között. A Rejtett fülön megtalálod, és bármikor visszahozhatod.",
+  confirmArchiveTitle: "Biztosan archiválod a módszertant?",
+  confirmArchiveExplain:
+    "A módszertan többé nem jelenik meg feltöltéskor és eltűnik az Áttekintésből. A feltöltött verziók és a megjelölt változások megmaradnak, az archiválás bármikor visszavonható.",
+  confirmArchiveYes: "Igen, archiválom",
+  confirmDeleteModuleTitle: "Biztosan törlöd a módszertant?",
+  confirmDeleteModuleExplain:
+    "A módszertanhoz nincs feltöltött verzió, ezért teljesen törlődik. Ezt nem lehet visszavonni.",
+  confirmDeleteYes: "Igen, törlöm",
+  confirmDiscardDraftTitle: "Biztosan elveted a piszkozatot?",
+  confirmDiscardDraftExplain:
+    "Az eddigi jelölések törlődnek, és üres dokumentumról kezded újra. Ezt nem lehet visszavonni.",
+  confirmDiscardYes: "Igen, elvetem",
+  confirmDeleteVersionTitle: "Biztosan törlöd az egész verziót?",
+  confirmDeleteVersionExplain:
+    "A verzió az összes megjelölt változással együtt eltűnik, és a többi ország postaládájából is kikerül. Ezt nem lehet visszavonni.",
 };

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { AnnotationWorkspace } from "@/components/annotations/AnnotationWorkspace";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import { adminDeleteVersion, adminSaveVersionEdits } from "@/app/modules/[moduleId]/admin-actions";
 import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
 import type { Mark } from "@/lib/types";
@@ -101,33 +102,27 @@ export function AdminVersionEditor({
           {chyba && <p className="text-sm text-coral">{chyba}</p>}
 
           <div className="dashed-divider pt-3">
-            {mazani ? (
-              <div className="flex flex-wrap items-center gap-2">
-                <span className="text-sm text-ink">{t.adminDeleteConfirm}</span>
-                <button
-                  type="button"
-                  onClick={smazat}
-                  className="rounded-xl bg-coral px-3 py-1.5 text-sm font-medium text-white"
-                >
-                  {t.delete}
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setMazani(false)}
-                  className="rounded-xl px-3 py-1.5 text-sm text-ink/60 hover:bg-haze"
-                >
-                  {t.undoShort}
-                </button>
-              </div>
-            ) : (
-              <button
-                type="button"
-                onClick={() => setMazani(true)}
-                className="text-sm text-ink/50 hover:text-coral"
-              >
-                {t.adminDeleteVersion}
-              </button>
-            )}
+            <button
+              type="button"
+              onClick={() => setMazani(true)}
+              className="text-sm text-ink/50 hover:text-coral"
+            >
+              {t.adminDeleteVersion}
+            </button>
+
+            <ConfirmDialog
+              open={mazani}
+              title={t.confirmDeleteVersionTitle}
+              explanation={t.confirmDeleteVersionExplain}
+              confirmLabel={t.confirmDeleteYes}
+              cancelLabel={t.cancel}
+              closeLabel={t.close}
+              onCancel={() => setMazani(false)}
+              onConfirm={() => {
+                setMazani(false);
+                void smazat();
+              }}
+            />
           </div>
         </div>
       }

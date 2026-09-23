@@ -9,6 +9,7 @@ import { getLightMatrix, lightLabel } from "@/lib/country-status";
 import { StatusDot } from "@/components/StatusDot";
 import { CatalogImport } from "@/components/CatalogImport";
 import { TestEmailButton } from "@/components/TestEmailButton";
+import { ConfirmSubmit } from "@/components/ConfirmSubmit";
 import {
   addCountry,
   addModule,
@@ -326,9 +327,22 @@ function ModulesTable({
             <form action={setModuleArchived}>
               <input type="hidden" name="moduleId" value={module.id} />
               <input type="hidden" name="archived" value={archivovana ? "0" : "1"} />
-              <button type="submit" className="text-sm text-ink/50 hover:text-ink">
-                {archivovana ? t.unarchiveModule : t.archiveModule}
-              </button>
+              {/* Vracet z archivu je neškodné, potvrzuje se jen archivace. */}
+              {archivovana ? (
+                <button type="submit" className="text-sm text-ink/50 hover:text-ink">
+                  {t.unarchiveModule}
+                </button>
+              ) : (
+                <ConfirmSubmit
+                  label={t.archiveModule}
+                  title={t.confirmArchiveTitle}
+                  explanation={t.confirmArchiveExplain}
+                  confirmLabel={t.confirmArchiveYes}
+                  detail={module.name}
+                  className="text-sm text-ink/50 hover:text-ink"
+                  t={t}
+                />
+              )}
             </form>
 
             {maVerze ? (
@@ -336,9 +350,14 @@ function ModulesTable({
             ) : (
               <form action={deleteModule}>
                 <input type="hidden" name="moduleId" value={module.id} />
-                <button type="submit" className="text-sm text-ink/50 hover:text-coral">
-                  {t.delete}
-                </button>
+                <ConfirmSubmit
+                  label={t.delete}
+                  title={t.confirmDeleteModuleTitle}
+                  explanation={t.confirmDeleteModuleExplain}
+                  confirmLabel={t.confirmDeleteYes}
+                  detail={module.name}
+                  t={t}
+                />
               </form>
             )}
           </div>

@@ -122,7 +122,6 @@ export const en: Dictionary = {
   showInDocument: "Show in document",
   notRelevant: "Not relevant to us",
   dismissedToast: "Marked as not relevant to us.",
-  undoShort: "Undo",
   fromCountryVersion: "{country}, version {version}",
   readiness: "Readiness traffic light",
   readinessHint:
@@ -138,7 +137,6 @@ export const en: Dictionary = {
   changesFromOthersCount: "Changes from other countries ({count})",
   tabCurrent: "Current",
   tabHidden: "Hidden",
-  confirmDismissQuestion: "Are you sure? The change will stop showing up.",
   confirmDismissYes: "Yes, not relevant to us",
   restoreToCurrent: "Move back to current",
   noHiddenChanges: "You haven\u2019t hidden anything yet.",
@@ -195,7 +193,6 @@ export const en: Dictionary = {
     "A fix sends nothing to anyone: no new version is created, no emails go out, and the other countries keep the status they already have.",
   adminSaveEdit: "Save the fix",
   adminDeleteVersion: "Delete the version",
-  adminDeleteConfirm: "Really delete the whole version along with its marks?",
   adminBackToReading: "Back to reading",
 
   mailNotConfigured:
@@ -205,4 +202,24 @@ export const en: Dictionary = {
   hideAllModules: "Hide the other methodologies",
   uiLanguage: "Interface language",
   byCountry: "by country",
+
+  close: "Close",
+  confirmHideTitle: "Hide this change?",
+  confirmHideExplain:
+    "The change will stop showing among the current ones. You will find it under the Hidden tab and can bring it back at any time.",
+  confirmArchiveTitle: "Archive this methodology?",
+  confirmArchiveExplain:
+    "The methodology will no longer be offered when uploading and will disappear from the Overview. Uploaded versions and marked changes stay, and archiving can be undone at any time.",
+  confirmArchiveYes: "Yes, archive it",
+  confirmDeleteModuleTitle: "Delete this methodology?",
+  confirmDeleteModuleExplain:
+    "The methodology has no uploaded version, so it will be deleted completely. This cannot be undone.",
+  confirmDeleteYes: "Yes, delete it",
+  confirmDiscardDraftTitle: "Discard the draft version?",
+  confirmDiscardDraftExplain:
+    "The marks you have made so far will be deleted and you will start again from an empty document. This cannot be undone.",
+  confirmDiscardYes: "Yes, discard it",
+  confirmDeleteVersionTitle: "Delete the whole version?",
+  confirmDeleteVersionExplain:
+    "The version disappears along with every marked change, and the other countries will no longer have it in their inbox. This cannot be undone.",
 };

@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import { dismissChange, restoreChange } from "@/app/changes/actions";
 import { categoryLabel } from "@/lib/annotations";
 import { fill } from "@/lib/format";
 import { LocalDateTime } from "@/components/LocalDateTime";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import type { PendingChange } from "@/lib/types";
 import type { Dictionary, Locale } from "@/lib/i18n";
 
@@ -59,26 +60,6 @@ export function ChangesFromOthers({
     .sort((a, b) => (b.dismissedAt ?? "").localeCompare(a.dismissedAt ?? ""));
 
   const closeConfirm = useCallback(() => setConfirmingId(null), []);
-
-  // Esc a klik mimo kartu potvrzení zavřou.
-  useEffect(() => {
-    if (!confirmingId) return;
-
-    function onKeyDown(event: KeyboardEvent) {
-      if (event.key === "Escape") closeConfirm();
-    }
-    function onPointerDown(event: MouseEvent) {
-      const target = event.target as HTMLElement | null;
-      if (!target?.closest(`[data-zmena-karta="${confirmingId}"]`)) closeConfirm();
-    }
-
-    document.addEventListener("keydown", onKeyDown);
-    document.addEventListener("mousedown", onPointerDown);
-    return () => {
-      document.removeEventListener("keydown", onKeyDown);
-      document.removeEventListener("mousedown", onPointerDown);
-    };
-  }, [confirmingId, closeConfirm]);
 
   const toastTimer = useRef<number | null>(null);
 
@@ -259,13 +240,6 @@ function ChangeCard({
   onRestore: () => void;
 }) {
   const label = categoryLabel(item.category, t);
-  const confirmRef = useRef<HTMLButtonElement>(null);
-
-  // Po otevření potvrzení patří fokus na hlavní tlačítko, ať se dá
-  // odpovědět klávesnicí.
-  useEffect(() => {
-    if (confirming) confirmRef.current?.focus();
-  }, [confirming]);
 
   return (
     <li
@@ -312,25 +286,6 @@ function ChangeCard({
             {t.restoreToCurrent}
           </button>
         </div>
-      ) : confirming ? (
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <span className="text-sm text-ink">{t.confirmDismissQuestion}</span>
-          <button
-            ref={confirmRef}
-            type="button"
-            onClick={onDismiss}
-            className="rounded-xl bg-coral px-3 py-1.5 text-sm font-medium text-white hover:opacity-90"
-          >
-            {t.confirmDismissYes}
-          </button>
-          <button
-            type="button"
-            onClick={onCancelDismiss}
-            className="rounded-xl px-3 py-1.5 text-sm text-ink/60 hover:bg-haze"
-          >
-            {t.undoShort}
-          </button>
-        </div>
       ) : (
         <div className="mt-3 flex flex-wrap gap-2">
           <Link
@@ -349,6 +304,27 @@ function ChangeCard({
           </button>
         </div>
       )}
+
+      <ConfirmDialog
+        open={confirming}
+        title={t.confirmHideTitle}
+        explanation={t.confirmHideExplain}
+        confirmLabel={t.confirmDismissYes}
+        cancelLabel={t.cancel}
+        closeLabel={t.close}
+        onConfirm={onDismiss}
+        onCancel={onCancelDismiss}
+      >
+        <p className="font-heading text-base font-bold text-ink">{item.moduleName}</p>
+        <p className="mt-0.5 text-xs text-ink/50">
+          {fill(t.fromCountryVersion, {
+            country: item.fromCountryName,
+            version: item.versionNumber ?? "?",
+          })}
+          {item.uploadedByEmail && ` · ${fill(t.uploadedByWho, { who: item.uploadedByEmail })}`}
+        </p>
+        <p className="mt-2 rounded-xl bg-haze/40 px-3 py-2 text-sm text-ink">{item.note}</p>
+      </ConfirmDialog>
     </li>
   );
 }

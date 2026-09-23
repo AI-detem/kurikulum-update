@@ -15,6 +15,7 @@ import { matchModule, type MatchResult } from "@/lib/match-module";
 import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
 import { fill, formatDateTime } from "@/lib/format";
 import { LocalDateTime } from "@/components/LocalDateTime";
+import { ConfirmDialog } from "@/components/ConfirmDialog";
 import type { Country, Mark, Module } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -62,6 +63,7 @@ export function UploadWorkspace({
   const [draftChoice, setDraftChoice] = useState<"ask" | "continue" | "fresh">(
     existingDraft ? "ask" : "fresh"
   );
+  const [zahoditOtevreno, setZahoditOtevreno] = useState(false);
   // Záměrně prázdné: metodiku buď rozpozná appka, nebo ji vybere uživatel.
   const [moduleId, setModuleId] = useState("");
   const [countryId, setCountryId] = useState(defaultCountryId ?? "");
@@ -211,15 +213,31 @@ export function UploadWorkspace({
           </button>
           <button
             type="button"
-            onClick={async () => {
-              await discardDraft(existingDraft.id);
-              setDraftChoice("fresh");
-            }}
+            onClick={() => setZahoditOtevreno(true)}
             className="rounded-xl px-4 py-2 text-sm text-ink/60 hover:bg-haze"
           >
             {t.startOver}
           </button>
         </div>
+
+        <ConfirmDialog
+          open={zahoditOtevreno}
+          title={t.confirmDiscardDraftTitle}
+          explanation={t.confirmDiscardDraftExplain}
+          confirmLabel={t.confirmDiscardYes}
+          cancelLabel={t.cancel}
+          closeLabel={t.close}
+          onCancel={() => setZahoditOtevreno(false)}
+          onConfirm={async () => {
+            setZahoditOtevreno(false);
+            await discardDraft(existingDraft.id);
+            setDraftChoice("fresh");
+          }}
+        >
+          <p className="text-sm font-medium text-ink">
+            {draftModule} / {draftCountry}
+          </p>
+        </ConfirmDialog>
       </div>
     );
   }
