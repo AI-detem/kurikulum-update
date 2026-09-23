@@ -8,7 +8,7 @@ import { categoryLabel } from "@/lib/annotations";
 import { fill } from "@/lib/format";
 import { LocalDateTime } from "@/components/LocalDateTime";
 import type { PendingChange } from "@/lib/types";
-import type { Dictionary } from "@/lib/i18n";
+import type { Dictionary, Locale } from "@/lib/i18n";
 
 // Jak dlouho je vidět lišta s vrácením zpět.
 const UNDO_MS = 8000;
@@ -25,12 +25,15 @@ export function ChangesFromOthers({
   pending,
   dismissed,
   focusModuleId,
+  locale,
   t,
 }: {
   pending: PendingChange[];
   dismissed: PendingChange[];
   /** Metodika, na jejíž změnu se má hned po otevření odrolovat. */
   focusModuleId?: string;
+  /** Jazyk zobrazené země – v něm se ukazují přeložené poznámky. */
+  locale: Locale;
   t: Dictionary;
 }) {
   const router = useRouter();
@@ -176,6 +179,7 @@ export function ChangesFromOthers({
                 leaving={leavingId === item.id}
                 confirming={confirmingId === item.id}
                 focus={focusModuleId === item.moduleId}
+                locale={locale}
                 t={t}
                 onAskDismiss={() => setConfirmingId(item.id)}
                 onCancelDismiss={closeConfirm}
@@ -233,6 +237,7 @@ function ChangeCard({
   leaving,
   confirming,
   focus,
+  locale,
   t,
   onAskDismiss,
   onCancelDismiss,
@@ -245,6 +250,7 @@ function ChangeCard({
   confirming: boolean;
   /** Na tuhle změnu se odrolovalo ze semaforu. */
   focus: boolean;
+  locale: Locale;
   t: Dictionary;
   onAskDismiss: () => void;
   onCancelDismiss: () => void;
@@ -276,15 +282,16 @@ function ChangeCard({
         </span>
       </div>
 
-      <p className="mt-2 text-sm text-ink">{item.note}</p>
+      <Note item={item} locale={locale} t={t} />
 
       <p className="mt-1 text-xs text-ink/50">
         {fill(t.fromCountryVersion, {
           country: item.fromCountryName,
           version: item.versionNumber ?? "?",
         })}{" "}
-        · <LocalDateTime value={item.createdAt} locale={t.dateLocale} /> · {t.pageLabel}{" "}
-        {item.page + 1}
+        · {t.publishedAt}{" "}
+        <LocalDateTime value={item.publishedAt ?? item.createdAt} locale={t.dateLocale} /> ·{" "}
+        {t.pageLabel} {item.page + 1}
         {hidden && item.dismissedAt && (
           <>
             {" "}
@@ -343,4 +350,57 @@ function ChangeCard({
       )}
     </li>
   );
+}
+
+// Poznámka v jazyce zobrazené země. Originál je vždy po ruce – překlad
+// dělá stroj a u odborného textu se může minout.
+function Note({
+  item,
+  locale,
+  t,
+}: {
+  item: PendingChange;
+  locale: Locale;
+  t: Dictionary;
+}) {
+  const [originalOpen, setOriginalOpen] = useState(false);
+
+  const preklad = item.translations[locale];
+  const jazykOriginalu = jazykNazev(item.sourceLocale, t);
+  const jeVlastni = !item.sourceLocale || item.sourceLocale === locale;
+
+  if (jeVlastni || (!preklad && !item.translationFailed)) {
+    return <p className="mt-2 text-sm text-ink">{item.note}</p>;
+  }
+
+  if (!preklad) {
+    return (
+      <div className="mt-2">
+        <p className="text-sm text-ink">{item.note}</p>
+        <p className="mt-0.5 text-xs text-coral">{t.translationFailed}</p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mt-2">
+      <p className="text-sm text-ink">{originalOpen ? item.note : preklad}</p>
+      <button
+        type="button"
+        onClick={() => setOriginalOpen((open) => !open)}
+        className="mt-0.5 text-xs text-ink/40 hover:text-coral"
+      >
+        {originalOpen
+          ? t.showTranslation
+          : fill(t.machineTranslatedFrom, { language: jazykOriginalu })}
+      </button>
+    </div>
+  );
+}
+
+function jazykNazev(locale: string | null, t: Dictionary): string {
+  if (locale === "sk") return t.langSk;
+  if (locale === "en") return t.langEn;
+  if (locale === "hu") return t.langHu;
+  return t.langCs;
 }

@@ -176,4 +176,27 @@ export const hu: Dictionary = {
   unarchiveModule: "Visszaállítás az archívumból",
   archivedLabel: "archiválva",
   cannotDeleteModule: "Nem törölhető, vannak verziói",
+
+  testEmail: "Teszt e-mail küldése",
+  testEmailHint: "Mintaértesítőt küld a saját címedre, ugyanazzal a sablonnal, mint élesben.",
+  testEmailSent: "A teszt e-mail elment. Nézd meg a postafiókot és a spam mappát is.",
+  testEmailFailed: "A küldés nem sikerült:",
+  noUpdatesTitle: "Nincs új módszertani frissítés.",
+  noUpdatesHint: "Ha valamelyik ország módosít valamit, itt fog megjelenni.",
+  publishedAt: "közzétéve",
+  machineTranslatedFrom: "Gépi fordítás erről: {language} — eredeti megjelenítése",
+  showTranslation: "Fordítás megjelenítése",
+  translationFailed: "A fordítás nem sikerült, alább az eredeti szöveg.",
+  langCs: "cseh",
+  langSk: "szlovák",
+  langEn: "angol",
+  langHu: "magyar",
+
+  adminEditMode: "Verzió javítása",
+  adminEditHint:
+    "A javítás senkinek nem küld semmit: nem jön létre új verzió, nem megy e-mail, és a többi ország állapota változatlan marad.",
+  adminSaveEdit: "Javítás mentése",
+  adminDeleteVersion: "Verzió törlése",
+  adminDeleteConfirm: "Biztosan törlöd az egész verziót a jelölésekkel együtt?",
+  adminBackToReading: "Vissza az olvasáshoz",
 };

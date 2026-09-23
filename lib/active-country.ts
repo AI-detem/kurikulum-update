@@ -1,22 +1,23 @@
 // Která země se má uživateli právě zobrazit a v jakém jazyce.
 //
-// Admin nemá povinně přiřazenou zemi (spravuje všechny), takže si může mezi
-// zeměmi přepínat přes parametr ?country=... v adrese. Zůstává přitom
-// přihlášený sám za sebe, jen si prohlíží obsah a rozhraní dané země.
-// Viewer a editor vidí vždy jen svou vlastní zemi – parametr z adresy se u nich
-// záměrně ignoruje, aby si nešlo zobrazit cizí zemi ručním přepsáním adresy.
+// Admin spravuje všechny země, ostatní jen ty, které mají přiřazené –
+// a těch může být víc (Česko i anglická verze pod jedním účtem).
+// Mezi svými zeměmi se přepíná parametrem ?country=... v adrese. Cizí zemi
+// si ručním přepsáním adresy zobrazit nejde: hledá se jen mezi povolenými.
 import { cookies } from "next/headers";
 import { createClient } from "@/lib/supabase/server";
-import { getDictionary, toLocale, type Dictionary } from "@/lib/i18n";
+import { getDictionary, toLocale, type Dictionary, type Locale } from "@/lib/i18n";
 import { VIEW_COUNTRY_COOKIE } from "@/lib/view-country";
 import type { AppUser, Country } from "@/lib/types";
 
 export type ActiveCountry = {
   activeCountryId: string | null;
-  /** Seznam zemí pro přepínač – naplněný jen adminům. */
+  /** Země pro přepínač. Prázdné, když je co vybírat jen jedna. */
   countries: Country[];
   /** Texty rozhraní v jazyce prohlížené země. */
   t: Dictionary;
+  /** Jazyk prohlížené země – v něm se ukazují přeložené poznámky. */
+  locale: Locale;
 };
 
 export async function resolveActiveCountry(
@@ -24,43 +25,35 @@ export async function resolveActiveCountry(
   requestedCountryId?: string
 ): Promise<ActiveCountry> {
   const supabase = await createClient();
-
-  if (user.role !== "admin") {
-    if (!user.country_id) {
-      return { activeCountryId: null, countries: [], t: getDictionary("cs") };
-    }
-
-    const { data: country } = await supabase
-      .from("countries")
-      .select("*")
-      .eq("id", user.country_id)
-      .single();
-
-    return {
-      activeCountryId: user.country_id,
-      countries: [],
-      t: getDictionary(toLocale(country?.locale)),
-    };
-  }
-
   const { data } = await supabase.from("countries").select("*").order("name");
-  const countries = data ?? [];
+  const vsechny = data ?? [];
+
+  // Admin vidí všechny země, ostatní jen ty svoje.
+  const countries = user.role === "admin"
+    ? vsechny
+    : vsechny.filter((country) => user.country_ids.includes(country.id));
+
+  if (countries.length === 0) {
+    return { activeCountryId: null, countries: [], t: getDictionary("cs"), locale: "cs" };
+  }
 
   // Layout parametry z adresy nedostává, proto se zemí drží i v cookie.
   const countryFromCookie = (await cookies()).get(VIEW_COUNTRY_COOKIE)?.value;
 
-  // Pořadí: země z adresy, pak z cookie, pak vlastní země admina,
-  // nakonec první země v seznamu.
+  // Pořadí: země z adresy, pak z cookie, pak první ze seznamu. Do obou
+  // se kouká jen mezi země, na které uživatel má právo.
   const active =
     countries.find((country) => country.id === requestedCountryId) ??
     countries.find((country) => country.id === countryFromCookie) ??
-    countries.find((country) => country.id === user.country_id) ??
-    countries[0] ??
-    null;
+    countries[0];
+
+  const locale = toLocale(active.locale);
 
   return {
-    activeCountryId: active?.id ?? null,
-    countries,
-    t: getDictionary(toLocale(active?.locale)),
+    activeCountryId: active.id,
+    // Přepínač se vykreslí, jen když je z čeho vybírat.
+    countries: countries.length > 1 ? countries : [],
+    t: getDictionary(locale),
+    locale,
   };
 }

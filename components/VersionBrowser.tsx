@@ -9,6 +9,7 @@ import { numberMarks, sortMarks } from "@/lib/annotations";
 import { driveViewUrl, extractDriveFileId } from "@/lib/drive";
 import { fill, pluralCount } from "@/lib/format";
 import { LocalDateTime } from "@/components/LocalDateTime";
+import { AdminVersionEditor } from "@/components/AdminVersionEditor";
 import type { Change, DocumentVersion, Mark } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -28,15 +29,19 @@ export type BrowsableVersion = DocumentVersion & {
 export function VersionBrowser({
   versions,
   marksByVersion,
+  canEdit = false,
   t,
 }: {
   /** Seřazené od nejnovější. */
   versions: BrowsableVersion[];
   marksByVersion: Record<string, Mark[]>;
+  /** Admin smí cizí nahrávku potichu opravit. */
+  canEdit?: boolean;
   t: Dictionary;
 }) {
   const [selectedId, setSelectedId] = useState(versions[0]?.id ?? "");
   const [hoveredId, setHoveredId] = useState<string | null>(null);
+  const [editing, setEditing] = useState(false);
 
   if (versions.length === 0) {
     return <p className="text-sm text-ink/50">{t.noVersions}</p>;
@@ -96,16 +101,42 @@ export function VersionBrowser({
           {pluralCount(marks.length, t.markedChangesForms, t.dateLocale)}
         </p>
 
-        <a
-          href={driveViewUrl(selected.file_url)}
-          target="_blank"
-          rel="noreferrer"
-          className="flex items-center gap-1.5 font-medium text-coral hover:underline"
-        >
-          <Download size={16} />
-          {t.downloadPdf}
-        </a>
+        <div className="flex items-center gap-4">
+          {canEdit && (
+            <button
+              type="button"
+              onClick={() => setEditing((value) => !value)}
+              className="font-medium text-coral hover:underline"
+            >
+              {editing ? t.adminBackToReading : t.adminEditMode}
+            </button>
+          )}
+          <a
+            href={driveViewUrl(selected.file_url)}
+            target="_blank"
+            rel="noreferrer"
+            className="flex items-center gap-1.5 font-medium text-coral hover:underline"
+          >
+            <Download size={16} />
+            {t.downloadPdf}
+          </a>
+        </div>
       </div>
+
+      {canEdit && editing && (
+        <div className="mt-5">
+          <AdminVersionEditor
+            // Přepnutí verze nebo režimu musí editor založit nanovo,
+            // jinak by si nechal značky z té předchozí.
+            key={selected.id}
+            versionId={selected.id}
+            fileUrl={selected.file_url}
+            initialMarks={marks}
+            initialSummary={summary}
+            t={t}
+          />
+        </div>
+      )}
 
       {summary && (
         <p className="mt-2 whitespace-pre-line text-sm text-ink">
@@ -113,6 +144,7 @@ export function VersionBrowser({
         </p>
       )}
 
+      {!(canEdit && editing) && (
       <div className="mt-5 grid grid-cols-1 gap-6 doc:grid-cols-[minmax(0,1fr)_340px]">
         <div>
           {fileId ? (
@@ -200,6 +232,7 @@ export function VersionBrowser({
           </aside>
         </div>
       </div>
+      )}
     </div>
   );
 }

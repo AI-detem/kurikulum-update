@@ -174,4 +174,27 @@ export const en: Dictionary = {
   unarchiveModule: "Restore from archive",
   archivedLabel: "archived",
   cannotDeleteModule: "Cannot delete, versions exist",
+
+  testEmail: "Send a test email",
+  testEmailHint: "Sends a sample notification to your address, using the same template as the real one.",
+  testEmailSent: "The test email was sent. Check your inbox and spam folder.",
+  testEmailFailed: "Sending failed:",
+  noUpdatesTitle: "No new methodology updates.",
+  noUpdatesHint: "When a country changes something, you will see it here.",
+  publishedAt: "published",
+  machineTranslatedFrom: "Machine translation from {language} — show the original",
+  showTranslation: "Show the translation",
+  translationFailed: "The translation failed, the original wording is below.",
+  langCs: "Czech",
+  langSk: "Slovak",
+  langEn: "English",
+  langHu: "Hungarian",
+
+  adminEditMode: "Fix this version",
+  adminEditHint:
+    "A fix sends nothing to anyone: no new version is created, no emails go out, and the other countries keep the status they already have.",
+  adminSaveEdit: "Save the fix",
+  adminDeleteVersion: "Delete the version",
+  adminDeleteConfirm: "Really delete the whole version along with its marks?",
+  adminBackToReading: "Back to reading",
 };

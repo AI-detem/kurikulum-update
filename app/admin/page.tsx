@@ -5,6 +5,7 @@ import { createClient } from "@/lib/supabase/server";
 import { getLightMatrix, lightLabel } from "@/lib/country-status";
 import { StatusDot } from "@/components/StatusDot";
 import { CatalogImport } from "@/components/CatalogImport";
+import { TestEmailButton } from "@/components/TestEmailButton";
 import {
   addCountry,
   addModule,
@@ -12,7 +13,7 @@ import {
   inviteUser,
   setModuleArchived,
   updateModule,
-  updateUserRoleAndCountry,
+  updateUserRoleAndCountries,
 } from "./actions";
 import type { Country, AppUser, CountryLight, Module } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
@@ -29,6 +30,13 @@ export default async function AdminPage({
   const supabase = await createClient();
   const { data: countries } = await supabase.from("countries").select("*").order("name");
   const { data: users } = await supabase.from("users").select("*").order("email");
+
+  // Přiřazení zemí k uživatelům (jeden uživatel jich může mít víc).
+  const { data: vazby } = await supabase.from("user_countries").select("user_id, country_id");
+  const countryIds = new Map<string, string[]>();
+  for (const vazba of vazby ?? []) {
+    countryIds.set(vazba.user_id, [...(countryIds.get(vazba.user_id) ?? []), vazba.country_id]);
+  }
   const { data: vsechnyModuly } = await supabase
     .from("modules")
     .select("*")
@@ -106,7 +114,12 @@ export default async function AdminPage({
 
       <section>
         <h2 className="mb-3 font-heading text-xl font-bold text-ink">{t.users}</h2>
-        <UsersTable users={users ?? []} countries={countries ?? []} t={t} />
+        <UsersTable
+          users={users ?? []}
+          countries={countries ?? []}
+          countryIds={countryIds}
+          t={t}
+        />
 
         <h3 className="mb-2 mt-6 text-sm font-semibold text-ink/70">{t.inviteUser}</h3>
         <form action={inviteUser} className="flex flex-wrap gap-2">
@@ -117,13 +130,7 @@ export default async function AdminPage({
             required
             className="input flex-1"
           />
-          <select name="countryId" required className="input">
-            {countries?.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.name}
-              </option>
-            ))}
-          </select>
+          <CountryChecks countries={countries ?? []} selected={[]} />
           {/* Role "čtenář" se nově nezvou – editor má práva jen ve své zemi.
               Existující čtenáři zůstávají, jak jsou. */}
           <select name="role" required defaultValue="editor" className="input">
@@ -137,6 +144,9 @@ export default async function AdminPage({
             {t.invite}
           </button>
         </form>
+
+        <h3 className="mb-2 mt-6 text-sm font-semibold text-ink/70">{t.testEmail}</h3>
+        <TestEmailButton t={t} />
       </section>
     </div>
   );
@@ -145,10 +155,13 @@ export default async function AdminPage({
 function UsersTable({
   users,
   countries,
+  countryIds,
   t,
 }: {
   users: AppUser[];
   countries: Country[];
+  /** Země podle uživatele. */
+  countryIds: Map<string, string[]>;
   t: Dictionary;
 }) {
   return (
@@ -164,16 +177,9 @@ function UsersTable({
           <tr key={u.id} className="dashed-divider">
             <td className="py-2">{u.email}</td>
             <td className="py-2">
-              <form action={updateUserRoleAndCountry} className="flex gap-2">
+              <form action={updateUserRoleAndCountries} className="flex flex-wrap items-center gap-2">
                 <input type="hidden" name="userId" value={u.id} />
-                <select name="countryId" defaultValue={u.country_id ?? ""} className="input py-1">
-                  <option value="">–</option>
-                  {countries.map((c) => (
-                    <option key={c.id} value={c.id}>
-                      {c.name}
-                    </option>
-                  ))}
-                </select>
+                <CountryChecks countries={countries} selected={countryIds.get(u.id) ?? []} />
                 <select name="role" defaultValue={u.role} className="input py-1">
                   {u.role === "viewer" && <option value="viewer">{t.roleViewer}</option>}
                   <option value="editor">{t.roleEditor}</option>
@@ -322,6 +328,33 @@ function ModulesTable({
           </div>
         );
       })}
+    </div>
+  );
+}
+
+// Země se u uživatele vybírají zaškrtávátky – jeden účet může spravovat
+// víc zemí (například Česko i anglickou verzi).
+function CountryChecks({
+  countries,
+  selected,
+}: {
+  countries: Country[];
+  selected: string[];
+}) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
+      {countries.map((country) => (
+        <label key={country.id} className="flex items-center gap-1.5 text-sm text-ink">
+          <input
+            type="checkbox"
+            name="countryIds"
+            value={country.id}
+            defaultChecked={selected.includes(country.id)}
+            className="accent-coral"
+          />
+          {country.name}
+        </label>
+      ))}
     </div>
   );
 }

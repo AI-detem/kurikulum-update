@@ -187,6 +187,31 @@ export const cs = {
   unarchiveModule: "Vrátit z archivu",
   archivedLabel: "archivováno",
   cannotDeleteModule: "Nejde smazat, existují verze",
+
+  // zkušební e-mail, prázdný stav a překlady poznámek
+  testEmail: "Poslat zkušební e-mail",
+  testEmailHint: "Pošle ukázkovou notifikaci na tvou adresu, stejnou šablonou jako naostro.",
+  testEmailSent: "Zkušební e-mail odešel. Zkontroluj schránku i spam.",
+  testEmailFailed: "Odeslání se nepovedlo:",
+  noUpdatesTitle: "Žádné nové aktualizace metodik.",
+  noUpdatesHint: "Až některá země něco změní, uvidíte to tady.",
+  publishedAt: "zveřejněno",
+  machineTranslatedFrom: "Automatický překlad z {language} — zobrazit originál",
+  showTranslation: "Zobrazit překlad",
+  translationFailed: "Překlad se nepovedl, níže je původní znění.",
+  langCs: "češtiny",
+  langSk: "slovenštiny",
+  langEn: "angličtiny",
+  langHu: "maďarštiny",
+
+  // tiché opravy adminem
+  adminEditMode: "Opravit tuhle verzi",
+  adminEditHint:
+    "Oprava nikomu nic nepošle: nevzniká nová verze, e-maily neodcházejí a ostatním zemím zůstává stav, jaký mají.",
+  adminSaveEdit: "Uložit opravu",
+  adminDeleteVersion: "Smazat verzi",
+  adminDeleteConfirm: "Opravdu smazat celou verzi i se značkami?",
+  adminBackToReading: "Zpět na čtení",
 };
 
 export type Dictionary = typeof cs;

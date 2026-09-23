@@ -15,9 +15,13 @@ type StatusRow = {
     page: number;
     note: string;
     category: string | null;
+    source_locale: string | null;
+    translations: Record<string, string> | null;
+    translation_failed: boolean | null;
     document_versions: {
       module_id: string;
       version_number: number | null;
+      published_at: string | null;
       modules: { name: string } | { name: string }[] | null;
       countries: { name: string } | { name: string }[] | null;
     } | null;
@@ -43,9 +47,9 @@ export async function getChanges(
     .select(
       `id, created_at, dismissed_at,
        annotations (
-         id, page, note, category,
+         id, page, note, category, source_locale, translations, translation_failed,
          document_versions (
-           module_id, version_number,
+           module_id, version_number, published_at,
            modules (name),
            countries (name)
          )
@@ -70,6 +74,10 @@ export async function getChanges(
         annotationId: annotation.id,
         createdAt: row.created_at,
         dismissedAt: row.dismissed_at,
+        publishedAt: version.published_at,
+        sourceLocale: annotation.source_locale,
+        translations: annotation.translations ?? {},
+        translationFailed: annotation.translation_failed ?? false,
         moduleId: version.module_id,
         moduleName: one(version.modules)?.name ?? "",
         fromCountryName: one(version.countries)?.name ?? "",

@@ -27,7 +27,12 @@ export default async function UploadPage({
     .order("category")
     .order("order_index")
     .order("name");
-  const { data: countries } = await supabase.from("countries").select("*").order("name");
+  const { data: vsechnyZeme } = await supabase.from("countries").select("*").order("name");
+  // Nahrávat jde jen pod zemi, kterou uživatel spravuje. Admin pod kteroukoli.
+  const countries =
+    user.role === "admin"
+      ? vsechnyZeme ?? []
+      : (vsechnyZeme ?? []).filter((country) => user.country_ids.includes(country.id));
 
   // Poslední zveřejněná verze pro každou dvojici modul + země, ať je vidět,
   // na co se navazuje a jaké číslo nová verze dostane.
@@ -95,9 +100,9 @@ export default async function UploadPage({
 
       <UploadWorkspace
         modules={modules ?? []}
-        countries={countries ?? []}
+        countries={countries}
         defaultCountryId={user.role === "admin" ? activeCountryId : user.country_id}
-        canChooseCountry={user.role === "admin"}
+        canChooseCountry={countries.length > 1}
         latestVersions={latestVersions}
         existingDraft={existingDraft}
         t={t}

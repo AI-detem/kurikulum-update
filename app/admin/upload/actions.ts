@@ -8,6 +8,8 @@ import { resolveActiveCountry } from "@/lib/active-country";
 import { extractDriveFileId, drivePreviewUrl } from "@/lib/drive";
 import { sortMarks } from "@/lib/annotations";
 import { notifyCountryAboutChange, notifyPreviousAuthor } from "@/lib/notify";
+import { translateNotes } from "@/lib/translate";
+import { toLocale } from "@/lib/i18n";
 import type { Mark } from "@/lib/types";
 
 // Kolikrát zkusíme zveřejnění znovu, když nám někdo souběžně vezme číslo verze.
@@ -254,12 +256,15 @@ export async function publishVersion(
   // Ostatní země dostanou ke každé vyznačené změně svůj řádek – ten drží,
   // jestli už na ni zareagovaly. Země se berou z tabulky, ne z pevného
   // seznamu, takže nově přidaná země se zapojí sama.
-  const { data: otherCountries } = await supabase
-    .from("countries")
-    .select("id")
-    .neq("id", countryId);
+  //
+  // Vlastní změna se nevrací do žádné ze zemí, které nahrávající spravuje:
+  // kdo má Česko i angličtinu, nemá co odbavovat sám po sobě.
+  const { data: allCountries } = await supabase.from("countries").select("id, locale");
 
-  const statusRows = (otherCountries ?? []).flatMap((country) =>
+  const vlastni = new Set([countryId, ...user.country_ids]);
+  const prijemci = (allCountries ?? []).filter((country) => !vlastni.has(country.id));
+
+  const statusRows = prijemci.flatMap((country) =>
     (marks ?? []).map((mark) => ({ annotation_id: mark.id, country_id: country.id }))
   );
 
@@ -291,6 +296,23 @@ export async function publishVersion(
     return { error: `${t.saveFailedDetail} ${changeError?.message ?? ""}`.trim() };
   }
 
+  // Poznámky a shrnutí se přeloží do jazyků zemí, kterým se posílají,
+  // a vždy do angličtiny. Originál zůstává, jak byl napsaný.
+  await translatePublished({
+    supabase,
+    marks: marks ?? [],
+    changeId: change.id,
+    summary: summary || null,
+    sourceLocale: toLocale(
+      (await supabase.from("countries").select("locale").eq("id", countryId).maybeSingle())
+        .data?.locale
+    ),
+    targetLocales: [
+      "en" as const,
+      ...prijemci.map((country) => toLocale(country.locale)),
+    ],
+  });
+
   const [{ data: moduleData }, { data: countryData }] = await Promise.all([
     supabase.from("modules").select("name").eq("id", moduleId).single(),
     supabase.from("countries").select("name").eq("id", countryId).single(),
@@ -299,7 +321,8 @@ export async function publishVersion(
   // Notifikace odcházejí jednou, až je verze opravdu zveřejněná.
   await notifyCountryAboutChange({
     changeId: change.id,
-    countryId,
+    recipientCountryIds: prijemci.map((country) => country.id),
+    uploaderId: user.id,
     countryName: countryData?.name ?? "",
     moduleName: moduleData?.name ?? "",
     versionNumber: published.version_number,
@@ -344,4 +367,47 @@ export async function publishVersion(
   }
 
   redirect(`/modules/${moduleId}?country=${countryId}`);
+}
+
+// Překlad poznámek. Zveřejnění kvůli němu nikdy nespadne – když se
+// nepovede, uloží se jen příznak a v appce se ukáže originál.
+async function translatePublished(params: {
+  supabase: Awaited<ReturnType<typeof createClient>>;
+  marks: { id: string; note: string }[];
+  changeId: string;
+  summary: string | null;
+  sourceLocale: ReturnType<typeof toLocale>;
+  targetLocales: ReturnType<typeof toLocale>[];
+}) {
+  const { supabase, marks, changeId, summary, sourceLocale, targetLocales } = params;
+
+  const texts = [...marks.map((mark) => mark.note), ...(summary ? [summary] : [])];
+  if (texts.length === 0) return;
+
+  const prelozene = await translateNotes(texts, sourceLocale, [...new Set(targetLocales)]);
+
+  for (const [index, mark] of marks.entries()) {
+    const vysledek = prelozene[index];
+    if (!vysledek) continue;
+    await supabase
+      .from("annotations")
+      .update({
+        source_locale: vysledek.sourceLocale,
+        translations: vysledek.translations,
+        translation_failed: vysledek.failed,
+      })
+      .eq("id", mark.id);
+  }
+
+  const proShrnuti = summary ? prelozene[marks.length] : null;
+  if (proShrnuti) {
+    await supabase
+      .from("changes")
+      .update({
+        source_locale: proShrnuti.sourceLocale,
+        translations: proShrnuti.translations,
+        translation_failed: proShrnuti.failed,
+      })
+      .eq("id", changeId);
+  }
 }

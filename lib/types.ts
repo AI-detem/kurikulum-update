@@ -13,7 +13,10 @@ export type Country = {
 export type AppUser = {
   id: string; // stejné jako auth.users.id
   email: string;
+  /** Zastaralé: jedna země. Appka pracuje s country_ids (viz 0008). */
   country_id: string | null;
+  /** Země, které uživatel spravuje. Může jich být víc. */
+  country_ids: string[];
   role: UserRole;
   created_at: string;
 };
@@ -104,6 +107,13 @@ export type PendingChange = {
   createdAt: string;
   /** Kdy ji země skryla. Null u nevyřízených. */
   dismissedAt: string | null;
+  /** Kdy byla verze zveřejněná – to je čas, který dává smysl vedle jejího čísla. */
+  publishedAt: string | null;
+  /** Jazyk, ve kterém byla poznámka napsaná. */
+  sourceLocale: string | null;
+  /** Poznámka přeložená do jazyků ostatních zemí. */
+  translations: Record<string, string>;
+  translationFailed: boolean;
   moduleId: string;
   moduleName: string;
   fromCountryName: string;

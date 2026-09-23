@@ -174,4 +174,27 @@ export const sk: Dictionary = {
   unarchiveModule: "Vrátiť z archívu",
   archivedLabel: "archivované",
   cannotDeleteModule: "Nedá sa zmazať, existujú verzie",
+
+  testEmail: "Poslať skúšobný e-mail",
+  testEmailHint: "Pošle ukážkovú notifikáciu na tvoju adresu, rovnakou šablónou ako naostro.",
+  testEmailSent: "Skúšobný e-mail odišiel. Skontroluj schránku aj spam.",
+  testEmailFailed: "Odoslanie sa nepodarilo:",
+  noUpdatesTitle: "Žiadne nové aktualizácie metodík.",
+  noUpdatesHint: "Keď niektorá krajina niečo zmení, uvidíte to tu.",
+  publishedAt: "zverejnené",
+  machineTranslatedFrom: "Automatický preklad z {language} — zobraziť originál",
+  showTranslation: "Zobraziť preklad",
+  translationFailed: "Preklad sa nepodaril, nižšie je pôvodné znenie.",
+  langCs: "češtiny",
+  langSk: "slovenčiny",
+  langEn: "angličtiny",
+  langHu: "maďarčiny",
+
+  adminEditMode: "Opraviť túto verziu",
+  adminEditHint:
+    "Oprava nikomu nič nepošle: nevzniká nová verzia, e-maily neodchádzajú a ostatným krajinám zostáva stav, aký majú.",
+  adminSaveEdit: "Uložiť opravu",
+  adminDeleteVersion: "Zmazať verziu",
+  adminDeleteConfirm: "Naozaj zmazať celú verziu aj so značkami?",
+  adminBackToReading: "Späť na čítanie",
 };

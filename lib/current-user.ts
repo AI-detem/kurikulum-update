@@ -18,7 +18,18 @@ export async function getCurrentUser(): Promise<AppUser | null> {
     .eq("id", authUser.id)
     .single();
 
-  return appUser as AppUser | null;
+  if (!appUser) return null;
+
+  // Uživatel může spravovat víc zemí (viz migrace 0008).
+  const { data: countries } = await supabase
+    .from("user_countries")
+    .select("country_id")
+    .eq("user_id", authUser.id);
+
+  return {
+    ...appUser,
+    country_ids: (countries ?? []).map((row) => row.country_id),
+  } as AppUser;
 }
 
 // Použij na stránkách, které vyžadují přihlášení. Pokud uživatel není

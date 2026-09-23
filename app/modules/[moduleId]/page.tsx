@@ -44,7 +44,8 @@ export default async function ModuleDetailPage({
       <p className="badge-pill mb-3">{module.category ?? t.noCategory}</p>
       <h1 className="mb-6 font-heading text-3xl font-bold text-ink">{module.name}</h1>
 
-      <VersionBrowser versions={versions} marksByVersion={marksByVersion} t={t} />
+      <VersionBrowser
+        canEdit={user.role === "admin"} versions={versions} marksByVersion={marksByVersion} t={t} />
     </div>
   );
 }

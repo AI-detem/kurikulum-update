@@ -6,7 +6,10 @@ import { sendChangeNotificationEmail, sendNewerVersionEmail } from "@/lib/resend
 
 export async function notifyCountryAboutChange(params: {
   changeId: string;
-  countryId: string;
+  /** Země, kterým se má dát vědět – tedy všechny kromě té, která nahrála. */
+  recipientCountryIds: string[];
+  /** Kdo změnu nahrál. Sám sobě upozornění neposílá. */
+  uploaderId: string;
   countryName: string;
   moduleName: string;
   versionNumber: number;
@@ -16,19 +19,31 @@ export async function notifyCountryAboutChange(params: {
   /** Popisy jednotlivých označených míst v pořadí čtení. */
   notes: string[];
 }) {
-  const { changeId, countryId, countryName, moduleName, versionNumber, uploadedAt, summary, notes } = params;
+  const { changeId, recipientCountryIds, uploaderId, countryName, moduleName, versionNumber, uploadedAt, summary, notes } = params;
   const supabase = createAdminClient();
 
-  // Všichni uživatelé (viewer i editor/admin) z dané země dostanou notifikaci.
-  const { data: recipients, error } = await supabase
-    .from("users")
-    .select("id, email")
-    .eq("country_id", countryId);
+  if (recipientCountryIds.length === 0) return;
 
-  if (error || !recipients) {
+  // Kdo spravuje aspoň jednu ze zemí, kterým se dává vědět. Kdo jich má
+  // víc, dostane e-mail stejně jen jednou.
+  const { data: vazby, error } = await supabase
+    .from("user_countries")
+    .select("user_id, users (id, email)")
+    .in("country_id", recipientCountryIds);
+
+  if (error || !vazby) {
     console.error("Nepodařilo se načíst příjemce notifikace:", error);
     return;
   }
+
+  const podleId = new Map<string, { id: string; email: string }>();
+  for (const vazba of vazby) {
+    const uzivatel = Array.isArray(vazba.users) ? vazba.users[0] : vazba.users;
+    if (!uzivatel?.email) continue;
+    if (uzivatel.id === uploaderId) continue;
+    podleId.set(uzivatel.id, uzivatel);
+  }
+  const recipients = [...podleId.values()];
 
   for (const recipient of recipients) {
     const { data: notification } = await supabase

@@ -13,7 +13,7 @@ export default async function DashboardPage({
 }) {
   const user = await requireUser();
   const { country, module: focusModuleId } = await searchParams;
-  const { activeCountryId, countries, t } = await resolveActiveCountry(user, country);
+  const { activeCountryId, countries, t, locale } = await resolveActiveCountry(user, country);
 
   if (!activeCountryId) {
     return (
@@ -47,8 +47,18 @@ export default async function DashboardPage({
         pending={pending}
         dismissed={dismissed}
         focusModuleId={focusModuleId}
+        locale={locale}
         t={t}
       />
+
+      {/* Appka bude většinu času prázdná a to je v pořádku – ať to
+          nevypadá jako nedodělek. */}
+      {pending.length === 0 && (
+        <div className="mb-8 rounded-2xl bg-haze/40 px-5 py-4">
+          <p className="text-sm font-medium text-ink">{t.noUpdatesTitle}</p>
+          <p className="mt-0.5 text-sm text-ink/60">{t.noUpdatesHint}</p>
+        </div>
+      )}
 
       {modules.length === 0 ? (
         <p className="text-sm text-ink/50">{t.noModules}</p>
