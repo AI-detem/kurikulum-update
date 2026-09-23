@@ -1,17 +1,18 @@
 import { requireUser } from "@/lib/current-user";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { getModulesForCountry } from "@/lib/modules-data";
-import { getLightsForCountry, lightLabel } from "@/lib/country-status";
+import { getChanges, getLightsForCountry, lightLabel } from "@/lib/country-status";
+import { ChangesFromOthers } from "@/components/ChangesFromOthers";
 import { ModuleCard } from "@/components/ModuleCard";
 import { CountrySwitcher } from "@/components/CountrySwitcher";
 
 export default async function DashboardPage({
   searchParams,
 }: {
-  searchParams: Promise<{ country?: string }>;
+  searchParams: Promise<{ country?: string; module?: string }>;
 }) {
   const user = await requireUser();
-  const { country } = await searchParams;
+  const { country, module: focusModuleId } = await searchParams;
   const { activeCountryId, countries, t } = await resolveActiveCountry(user, country);
 
   if (!activeCountryId) {
@@ -22,9 +23,11 @@ export default async function DashboardPage({
     );
   }
 
-  const [modules, lights] = await Promise.all([
+  const [modules, lights, pending, dismissed] = await Promise.all([
     getModulesForCountry(activeCountryId),
     getLightsForCountry(activeCountryId),
+    getChanges(activeCountryId, "pending"),
+    getChanges(activeCountryId, "dismissed"),
   ]);
 
   return (
@@ -37,6 +40,15 @@ export default async function DashboardPage({
           basePath="/"
         />
       </div>
+
+      {/* Změny od ostatních zemí. Když není co řešit ani co skrytého,
+          blok se nevykreslí vůbec. */}
+      <ChangesFromOthers
+        pending={pending}
+        dismissed={dismissed}
+        focusModuleId={focusModuleId}
+        t={t}
+      />
 
       {modules.length === 0 ? (
         <p className="text-sm text-ink/50">{t.noModules}</p>

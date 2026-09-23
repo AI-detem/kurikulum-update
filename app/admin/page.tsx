@@ -185,7 +185,7 @@ function ReadinessMatrix({
                 return (
                   <td key={country.id} className="px-3 py-2 text-center">
                     <Link
-                      href={`/changes?country=${country.id}&module=${module.id}`}
+                      href={`/?country=${country.id}&module=${module.id}`}
                       className="inline-flex rounded-full p-1 hover:bg-haze"
                     >
                       <StatusDot light={light} label={lightLabel(light, t)} size={12} />

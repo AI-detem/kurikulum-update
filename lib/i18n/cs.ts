@@ -130,25 +130,30 @@ export const cs = {
 
   // změny od ostatních zemí a semafor rozpracovanosti
   changesFromOthers: "Změny od ostatních zemí",
-  changesFromOthersEmpty: "Zatím nic, na co byste museli reagovat.",
   showInDocument: "Zobrazit v dokumentu",
   notRelevant: "Netýká se nás",
-  dismissedToast: "Označeno jako „netýká se nás“",
+  dismissedToast: "Označeno jako netýkající se nás.",
   undoShort: "Zpět",
   fromCountryVersion: "{country}, verze {version}",
-  pendingTitle: "Nevyřešené změny z ostatních zemí: {count}",
   readiness: "Semafor rozpracovanosti",
   readinessHint:
     "Barva se řídí nejstarší nevyřešenou změnou: do 14 dnů žlutá, od 14 dnů červená.",
   lightOk: "v pořádku",
   lightWaiting: "čeká se",
   lightAct: "potřeba reagovat",
-  allModules: "Všechny metodiky",
-  backToChanges: "Zpět na změny",
   moduleColumn: "Metodika",
   changeNotFound: "Tuhle změnu se nepodařilo najít.",
   publishBlocked:
     "Databáze zápis odmítla. Zkontroluj, jestli jsou v Supabase spuštěné všechny migrace ze složky supabase/migrations.",
+
+  changesFromOthersCount: "Změny od ostatních zemí ({count})",
+  tabCurrent: "Aktuální",
+  tabHidden: "Skryté",
+  confirmDismissQuestion: "Opravdu? Změna se přestane zobrazovat.",
+  confirmDismissYes: "Ano, netýká se nás",
+  restoreToCurrent: "Vrátit mezi aktuální",
+  noHiddenChanges: "Zatím jste nic neskryli.",
+  hiddenAt: "Skryto",
 };
 
 export type Dictionary = typeof cs;

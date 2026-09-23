@@ -4,10 +4,9 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireUser } from "@/lib/current-user";
 
-// "Netýká se nás". Odbavuje se až po uplynutí lhůty na vrácení zpět,
-// takže sem přijde jen změna, kterou uživatel opravdu chtěl odbavit.
-// Podmínka na status='pending' zároveň zaručí, že opakované zavolání
-// (například z odchodu ze stránky i z časovače) nic nepokazí.
+// "Netýká se nás". Zápis je vratný – vrácení zpět řeší restoreChange,
+// buď hned z lišty, nebo kdykoli později ze záložky Skryté.
+// Podmínka na status zaručí, že opakované zavolání nic nepokazí.
 export async function dismissChange(statusId: string): Promise<{ error?: string }> {
   const user = await requireUser();
   const supabase = await createClient();
@@ -24,7 +23,24 @@ export async function dismissChange(statusId: string): Promise<{ error?: string 
 
   if (error) return { error: error.message };
 
-  revalidatePath("/changes");
+  revalidatePath("/");
+  return {};
+}
+
+// Vrácení mezi aktuální. Stopy po skrytí se mažou, ať je řádek ve stejném
+// stavu, v jakém přišel – jinak by se ze semaforu nedalo poznat, co je nové.
+export async function restoreChange(statusId: string): Promise<{ error?: string }> {
+  await requireUser();
+  const supabase = await createClient();
+
+  const { error } = await supabase
+    .from("annotation_country_status")
+    .update({ status: "pending", dismissed_at: null, dismissed_by: null })
+    .eq("id", statusId)
+    .eq("status", "dismissed");
+
+  if (error) return { error: error.message };
+
   revalidatePath("/");
   return {};
 }

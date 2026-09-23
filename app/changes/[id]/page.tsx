@@ -88,11 +88,11 @@ export default async function ChangeDetailPage({
   return (
     <div>
       <Link
-        href="/changes"
+        href="/"
         className="mb-4 inline-flex items-center gap-1.5 text-sm text-ink/60 hover:text-coral"
       >
         <ArrowLeft size={16} />
-        {t.backToChanges}
+        {t.overview}
       </Link>
 
       <h1 className="font-heading text-3xl font-bold text-ink">

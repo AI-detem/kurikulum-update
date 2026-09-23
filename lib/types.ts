@@ -94,6 +94,8 @@ export type PendingChange = {
   id: string;
   annotationId: string;
   createdAt: string;
+  /** Kdy ji země skryla. Null u nevyřízených. */
+  dismissedAt: string | null;
   moduleId: string;
   moduleName: string;
   fromCountryName: string;

@@ -9,6 +9,7 @@ import type { CountryLight, PendingChange } from "@/lib/types";
 type StatusRow = {
   id: string;
   created_at: string;
+  dismissed_at: string | null;
   annotations: {
     id: string;
     page: number;
@@ -28,19 +29,19 @@ function one<T>(value: T | T[] | null): T | null {
   return value;
 }
 
-// Nevyřešené změny pro danou zemi, od nejstarší (ty nejvíc hoří jsou nahoře).
-export async function getPendingChanges(
+// Změny z ostatních zemí pro danou zemi.
+// "pending" = nevyřízené, od nejstarší (ty nejvíc hoří jsou nahoře).
+// "dismissed" = skryté, od naposledy skryté.
+export async function getChanges(
   countryId: string,
-  moduleId?: string
+  status: "pending" | "dismissed" = "pending"
 ): Promise<PendingChange[]> {
   const supabase = await createClient();
 
-  // Filtr podle modulu se dělá až tady v kódu – modul visí na vnořené
-  // tabulce a dotaz by kvůli němu byl výrazně hůř čitelný.
   const { data, error } = await supabase
     .from("annotation_country_status")
     .select(
-      `id, created_at,
+      `id, created_at, dismissed_at,
        annotations (
          id, page, note, category,
          document_versions (
@@ -51,8 +52,10 @@ export async function getPendingChanges(
        )`
     )
     .eq("country_id", countryId)
-    .eq("status", "pending")
-    .order("created_at");
+    .eq("status", status)
+    .order(status === "pending" ? "created_at" : "dismissed_at", {
+      ascending: status === "pending",
+    });
 
   if (error || !data) return [];
 
@@ -60,13 +63,13 @@ export async function getPendingChanges(
     const annotation = one(row.annotations);
     const version = one(annotation?.document_versions ?? null);
     if (!annotation || !version) return [];
-    if (moduleId && version.module_id !== moduleId) return [];
 
     return [
       {
         id: row.id,
         annotationId: annotation.id,
         createdAt: row.created_at,
+        dismissedAt: row.dismissed_at,
         moduleId: version.module_id,
         moduleName: one(version.modules)?.name ?? "",
         fromCountryName: one(version.countries)?.name ?? "",
@@ -77,18 +80,6 @@ export async function getPendingChanges(
       },
     ];
   });
-}
-
-export async function countPendingChanges(countryId: string): Promise<number> {
-  const supabase = await createClient();
-
-  const { count } = await supabase
-    .from("annotation_country_status")
-    .select("id", { count: "exact", head: true })
-    .eq("country_id", countryId)
-    .eq("status", "pending");
-
-  return count ?? 0;
 }
 
 type LightRow = { module_id: string; country_id: string; light: string };
