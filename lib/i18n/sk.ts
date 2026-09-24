@@ -222,4 +222,7 @@ export const sk: Dictionary = {
   confirmDeleteVersionTitle: "Naozaj zmazať celú verziu?",
   confirmDeleteVersionExplain:
     "Verzia zmizne aj so všetkými vyznačenými zmenami a ostatné krajiny ju prestanú mať v schránke. Vrátiť to nejde.",
+
+  lightNone: "zatiaľ bez verzie",
+  legendTitle: "Vysvetlivky",
 };

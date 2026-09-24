@@ -238,6 +238,9 @@ export const cs = {
   confirmDeleteVersionTitle: "Opravdu smazat celou verzi?",
   confirmDeleteVersionExplain:
     "Verze zmizí i se všemi vyznačenými změnami a ostatní země ji přestanou mít ve schránce. Vrátit to nejde.",
+
+  lightNone: "zatím bez verze",
+  legendTitle: "Vysvětlivky",
 };
 
 export type Dictionary = typeof cs;

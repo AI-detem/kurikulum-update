@@ -1,6 +1,7 @@
 import type { CountryLight } from "@/lib/types";
 
 const COLORS: Record<CountryLight, string> = {
+  none: "bg-ink/20",
   green: "bg-emerald-500",
   yellow: "bg-amber-400",
   red: "bg-coral",

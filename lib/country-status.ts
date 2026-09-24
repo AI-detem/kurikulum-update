@@ -134,9 +134,10 @@ function toLight(value: string): CountryLight {
 
 export function lightLabel(
   light: CountryLight,
-  t: { lightOk: string; lightWaiting: string; lightAct: string }
+  t: { lightNone: string; lightOk: string; lightWaiting: string; lightAct: string }
 ): string {
   if (light === "red") return t.lightAct;
   if (light === "yellow") return t.lightWaiting;
+  if (light === "none") return t.lightNone;
   return t.lightOk;
 }

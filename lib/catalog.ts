@@ -20,6 +20,19 @@ export const SECTIONS = [
   "Karty pro rozvoj digitální kompetence",
 ] as const;
 
+// Pořadí, ve kterém se sekce ukazují v appce. Liší se od pořadí na
+// výpisové stránce, proto je vedle SECTIONS zvlášť.
+export const SECTION_ORDER = [
+  "AI v informatice na 1. stupni",
+  "AI v informatice na 2. stupni a SŠ",
+  "Mediální výchova",
+  "Wellbeing",
+  "Humanitní předměty",
+  "Přírodovědné předměty a matematika",
+  "Projektové metodiky a pracovní listy",
+  "Karty pro rozvoj digitální kompetence",
+] as const;
+
 export type CatalogItem = {
   slug: string;
   name: string;

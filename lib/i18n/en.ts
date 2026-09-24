@@ -222,4 +222,7 @@ export const en: Dictionary = {
   confirmDeleteVersionTitle: "Delete the whole version?",
   confirmDeleteVersionExplain:
     "The version disappears along with every marked change, and the other countries will no longer have it in their inbox. This cannot be undone.",
+
+  lightNone: "no version yet",
+  legendTitle: "Legend",
 };

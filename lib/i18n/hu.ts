@@ -224,4 +224,7 @@ export const hu: Dictionary = {
   confirmDeleteVersionTitle: "Biztosan törlöd az egész verziót?",
   confirmDeleteVersionExplain:
     "A verzió az összes megjelölt változással együtt eltűnik, és a többi ország postaládájából is kikerül. Ezt nem lehet visszavonni.",
+
+  lightNone: "még nincs verzió",
+  legendTitle: "Jelmagyarázat",
 };

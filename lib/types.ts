@@ -97,9 +97,10 @@ export type Mark = {
   category: string | null;
 };
 
-// Semafor rozpracovanosti: zelená = není co řešit, žlutá = čeká se
-// méně než 14 dní, červená = 14 dní a víc.
-export type CountryLight = "green" | "yellow" | "red";
+// Stav metodiky pro jednu zemi: šedá = země k ní zatím nemá verzi,
+// zelená = má verzi a nic nevyřízeného, žlutá = čeká se méně než 14 dní,
+// červená = 14 dní a víc.
+export type CountryLight = "none" | "green" | "yellow" | "red";
 
 // Jedna vyznačená změna z jiné země, na kterou naše země ještě nereagovala.
 export type PendingChange = {

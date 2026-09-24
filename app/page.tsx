@@ -9,6 +9,7 @@ import { ChangesFromOthers } from "@/components/ChangesFromOthers";
 import { ModuleCard } from "@/components/ModuleCard";
 import { OtherModules } from "@/components/OtherModules";
 import { CountrySwitcher } from "@/components/CountrySwitcher";
+import type { CountryLight } from "@/lib/types";
 
 export default async function DashboardPage({
   searchParams,
@@ -40,7 +41,15 @@ export default async function DashboardPage({
   const aktivni = modules.filter(
     (module) => module.latest_version !== null || sZmenou.has(module.id)
   );
-  const ostatni = modules.filter((module) => !aktivni.includes(module));
+
+  // Stav metodiky pro zobrazenou zemi. Semafor v databázi zná jen to, co
+  // čeká na vyřízení; zbytek se pozná podle toho, jestli země vůbec má
+  // nahranou verzi.
+  const stavy: Record<string, CountryLight> = {};
+  for (const module of modules) {
+    stavy[module.id] =
+      lights[module.id] ?? (module.latest_version ? "green" : "none");
+  }
 
   return (
     <div>
@@ -81,7 +90,7 @@ export default async function DashboardPage({
       {aktivni.length > 0 && (
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {aktivni.map((module) => {
-            const light = lights[module.id] ?? "green";
+            const light = stavy[module.id] ?? "green";
             return (
               <ModuleCard
                 key={module.id}
@@ -96,7 +105,14 @@ export default async function DashboardPage({
         </div>
       )}
 
-      <OtherModules modules={ostatni} countryId={activeCountryId} t={t} />
+      {/* Celý katalog: rozdělený po sekcích, se stavovou tečkou
+          u každé metodiky. */}
+      <OtherModules
+        modules={modules}
+        lights={stavy}
+        countryId={activeCountryId}
+        t={t}
+      />
     </div>
   );
 }
