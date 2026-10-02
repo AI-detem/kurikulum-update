@@ -3,7 +3,7 @@ import type { Dictionary } from "./cs";
 export const hu: Dictionary = {
   dateLocale: "hu-HU",
 
-  overview: "Áttekintés",
+  overview: "Változások",
   upload: "Feltöltés",
   admin: "Adminisztráció",
   logout: "Kijelentkezés",

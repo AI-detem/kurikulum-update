@@ -3,7 +3,7 @@ import type { Dictionary } from "./cs";
 export const en: Dictionary = {
   dateLocale: "en-GB",
 
-  overview: "Overview",
+  overview: "Changes",
   upload: "Upload",
   admin: "Admin",
   logout: "Log out",

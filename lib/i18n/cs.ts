@@ -8,7 +8,9 @@ export const cs = {
   dateLocale: "cs-CZ",
 
   // navigace
-  overview: "Přehled",
+  // Klíč se jmenuje "overview" historicky, stránka ale od přesunu
+  // katalogu na /modules ukazuje jen změny od ostatních zemí.
+  overview: "Změny",
   upload: "Nahrát",
   admin: "Administrace",
   logout: "Odhlásit se",

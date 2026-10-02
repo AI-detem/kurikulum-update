@@ -3,7 +3,7 @@ import type { Dictionary } from "./cs";
 export const sk: Dictionary = {
   dateLocale: "sk-SK",
 
-  overview: "Prehľad",
+  overview: "Zmeny",
   upload: "Nahrať",
   admin: "Administrácia",
   logout: "Odhlásiť sa",
