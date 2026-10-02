@@ -52,9 +52,11 @@ export function ChangesFromOthers({
   const stav = (item: PendingChange): Stav =>
     zmeny[item.id] ?? (item.dismissedAt ? "dismissed" : "pending");
 
+  // Nejnovější napřed – v mřížce plynou karty zleva doprava, takže
+  // nejčerstvější změna je vlevo nahoře.
   const current = vse
     .filter((item) => stav(item) === "pending")
-    .sort((a, b) => a.createdAt.localeCompare(b.createdAt));
+    .sort((a, b) => b.createdAt.localeCompare(a.createdAt));
   const hidden = vse
     .filter((item) => stav(item) === "dismissed")
     .sort((a, b) => (b.dismissedAt ?? "").localeCompare(a.dismissedAt ?? ""));
@@ -126,10 +128,8 @@ export function ChangesFromOthers({
         </button>
       ) : (
         <>
-          <h2 className="font-heading text-xl font-bold text-ink">
-            {fill(t.changesFromOthersCount, { count: current.length })}
-          </h2>
-          <div role="tablist" className="mt-2 flex gap-1">
+          {/* Nadpis bloku nese stránka – tady by se jen zdvojil. */}
+          <div role="tablist" className="flex gap-1">
             <Tab
               label={`${t.tabCurrent} (${current.length})`}
               selected={tab === "current"}
@@ -147,7 +147,7 @@ export function ChangesFromOthers({
       {error && <p className="mt-3 text-sm text-coral">{error}</p>}
 
       {zobrazit && (
-        <ul className="mt-4 flex max-w-3xl flex-col gap-3">
+        <ul className="mt-4 grid grid-cols-1 gap-4 nav:grid-cols-2 min-[1400px]:grid-cols-3">
           {zobrazit.length === 0 ? (
             <p className="text-sm text-ink/50">{t.noHiddenChanges}</p>
           ) : (
@@ -172,7 +172,7 @@ export function ChangesFromOthers({
       )}
 
       {toastId && (
-        <div className="fixed bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-xl bg-ink px-4 py-2.5 text-sm text-white shadow-lg">
+        <div className="fixed bottom-6 left-1/2 z-20 flex max-w-[calc(100vw-2rem)] -translate-x-1/2 items-center gap-3 rounded-xl bg-ink px-4 py-2.5 text-sm text-white shadow-lg">
           {t.dismissedToast}
           {/* Záměrně onMouseDown, ne onClick: kliknutí těsně před vypršením
               lišty se tak stihne uplatnit ještě při stisku. */}
@@ -246,12 +246,14 @@ function ChangeCard({
       id={`zmena-${item.id}`}
       data-zmena-karta={item.id}
       data-zmena-modul={hidden ? undefined : item.moduleId}
-      className={`rounded-2xl border bg-white p-4 transition-all duration-200 ${
+      // flex-col + mt-auto u akcí: karty v řádku mají stejnou výšku
+      // a tlačítka jim sedí na stejné lince, ať se text liší, jak chce.
+      className={`flex flex-col rounded-2xl border bg-white p-4 transition-all duration-200 ${
         leaving ? "translate-x-3 opacity-0" : "translate-x-0 opacity-100"
       } ${focus ? "border-coral ring-2 ring-coral/30" : "border-haze"}`}
     >
       <div className="flex flex-wrap items-center gap-2">
-        <h3 className="font-heading text-base font-bold text-ink">{item.moduleName}</h3>
+        <h3 className="min-w-0 break-words font-heading text-base font-bold text-ink">{item.moduleName}</h3>
         <span className={`badge-pill ${label ? "" : "text-ink/40"}`}>
           {label ?? t.noCategory2}
         </span>
@@ -277,7 +279,7 @@ function ChangeCard({
       </p>
 
       {hidden ? (
-        <div className="mt-3">
+        <div className="mt-auto pt-3">
           <button
             type="button"
             onClick={onRestore}
@@ -287,7 +289,7 @@ function ChangeCard({
           </button>
         </div>
       ) : (
-        <div className="mt-3 flex flex-wrap gap-2">
+        <div className="mt-auto flex flex-wrap gap-2 pt-3">
           <Link
             href={`/changes/${item.id}`}
             className="rounded-xl bg-coral px-3 py-1.5 text-sm font-medium text-white hover:opacity-90"

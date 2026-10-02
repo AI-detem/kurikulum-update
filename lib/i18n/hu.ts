@@ -205,6 +205,7 @@ export const hu: Dictionary = {
   uiLanguage: "A felület nyelve",
   byCountry: "ország szerint",
 
+  menu: "Menü",
   close: "Bezárás",
   confirmHideTitle: "Biztosan elrejted ezt a változást?",
   confirmHideExplain:

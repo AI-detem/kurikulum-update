@@ -219,6 +219,7 @@ export const cs = {
   byCountry: "podle země",
 
   // potvrzovací okna
+  menu: "Menu",
   close: "Zavřít",
   confirmHideTitle: "Opravdu skrýt tuto změnu?",
   confirmHideExplain:

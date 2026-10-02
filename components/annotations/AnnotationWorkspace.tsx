@@ -160,13 +160,21 @@ export function AnnotationWorkspace({
   // Ukázka gesta se přehraje jen tehdy, když ještě nic označeného není.
   const showDemo = editable && !hidden && marks.length === 0;
 
+  // Tři stupně: pod sebe, pak dokument + panel vedle sebe s formulářem
+  // nahoře, a od `wide` všechno vedle sebe. Formulář by jinak na
+  // patnáctipalcovém notebooku ukrojil z dokumentu nečitelný proužek.
+  //
+  // min-w-0 na buňkách: položka mřížky se jinak nesmrští pod šířku
+  // svého obsahu (PDF, dlouhý název) a stránka se roluje do strany.
   const gridClass = formColumn
-    ? "grid grid-cols-1 gap-6 wide:grid-cols-[320px_minmax(0,1fr)_340px]"
-    : "grid grid-cols-1 gap-6 doc:grid-cols-[minmax(0,1fr)_340px]";
+    ? "grid grid-cols-1 gap-6 [&>*]:min-w-0 doc:grid-cols-[minmax(0,1fr)_340px] wide:grid-cols-[320px_minmax(0,1fr)_340px]"
+    : "grid grid-cols-1 gap-6 [&>*]:min-w-0 doc:grid-cols-[minmax(0,1fr)_340px]";
 
   return (
     <div className={gridClass}>
-      {formColumn}
+      {formColumn && (
+        <div className="doc:col-span-2 wide:col-span-1">{formColumn}</div>
+      )}
 
       <div>
         {documentHeader}
@@ -258,7 +266,7 @@ export function AnnotationWorkspace({
       </div>
 
       {toast && (
-        <div className="fixed bottom-6 left-1/2 z-20 flex -translate-x-1/2 items-center gap-3 rounded-xl bg-ink px-4 py-2.5 text-sm text-white shadow-lg">
+        <div className="fixed bottom-6 left-1/2 z-20 flex max-w-[calc(100vw-2rem)] -translate-x-1/2 items-center gap-3 rounded-xl bg-ink px-4 py-2.5 text-sm text-white shadow-lg">
           {toast.text}
           {toast.undo && (
             <button

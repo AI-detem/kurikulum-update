@@ -203,6 +203,7 @@ export const en: Dictionary = {
   uiLanguage: "Interface language",
   byCountry: "by country",
 
+  menu: "Menu",
   close: "Close",
   confirmHideTitle: "Hide this change?",
   confirmHideExplain:

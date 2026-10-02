@@ -9,16 +9,19 @@ import type { ActionState } from "@/app/admin/actions";
 export function ActionForm({
   action,
   className,
+  wrapperClassName,
   children,
 }: {
   action: (state: ActionState, formData: FormData) => Promise<ActionState>;
   className?: string;
+  /** Třídy pro obal kolem formuláře – ten je položkou okolního rozvržení. */
+  wrapperClassName?: string;
   children: ReactNode;
 }) {
   const [state, formAction] = useActionState(action, null);
 
   return (
-    <div>
+    <div className={wrapperClassName}>
       <form action={formAction} className={className}>
         {children}
       </form>

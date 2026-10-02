@@ -203,6 +203,7 @@ export const sk: Dictionary = {
   uiLanguage: "Jazyk rozhrania",
   byCountry: "podľa krajiny",
 
+  menu: "Menu",
   close: "Zavrieť",
   confirmHideTitle: "Naozaj skryť túto zmenu?",
   confirmHideExplain:

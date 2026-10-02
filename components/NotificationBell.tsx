@@ -45,7 +45,7 @@ export function NotificationBell({
       </button>
 
       {open && (
-        <div className="absolute right-0 z-10 mt-2 w-80 rounded-xl border border-haze bg-white p-2 shadow-lg">
+        <div className="absolute right-0 z-10 mt-2 w-80 max-w-[calc(100vw-2rem)] rounded-xl border border-haze bg-white p-2 shadow-lg">
           <p className="px-2 py-1 text-xs font-semibold text-ink/60">{t.notifications}</p>
           {notifications.length === 0 && (
             <p className="px-2 py-4 text-sm text-ink/50">{t.noNotifications}</p>

@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 import { PreviewBanner } from "@/components/PreviewBanner";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { getNotificationsForCurrentUser } from "@/lib/notifications-data";
-import { Sidebar } from "@/components/Sidebar";
+import { AppShell } from "@/components/AppShell";
 import { NotificationBell } from "@/components/NotificationBell";
 
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
@@ -73,16 +73,16 @@ export default async function RootLayout({
   return (
     <html lang="cs">
       <body className="font-sans antialiased">
-        {previewCountryName && <PreviewBanner countryName={previewCountryName} t={t} />}
-        <div className="flex">
-          <Sidebar user={user} t={t} />
-          <div className="flex-1">
-            <header className="flex justify-end border-b border-haze px-8 py-4">
-              <NotificationBell initialNotifications={notifications} t={t} />
-            </header>
-            <main className="px-8 py-8">{children}</main>
-          </div>
-        </div>
+        <AppShell
+          user={user}
+          t={t}
+          bell={<NotificationBell initialNotifications={notifications} t={t} />}
+          banner={
+            previewCountryName && <PreviewBanner countryName={previewCountryName} t={t} />
+          }
+        >
+          {children}
+        </AppShell>
       </body>
     </html>
   );

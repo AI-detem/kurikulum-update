@@ -3,14 +3,13 @@ import { missingMigrations } from "@/lib/schema-check";
 import { mailConfigured } from "@/lib/resend";
 import { AdminNotices } from "@/components/AdminNotices";
 import { resolveActiveCountry } from "@/lib/active-country";
-import { getModulesForCountry } from "@/lib/modules-data";
-import { getChanges, getLightsForCountry, lightLabel } from "@/lib/country-status";
+import { getChanges } from "@/lib/country-status";
 import { ChangesFromOthers } from "@/components/ChangesFromOthers";
-import { ModuleCard } from "@/components/ModuleCard";
-import { OtherModules } from "@/components/OtherModules";
 import { CountrySwitcher } from "@/components/CountrySwitcher";
-import type { CountryLight } from "@/lib/types";
 
+// Přehled je jen o změnách od ostatních zemí. Katalog metodik má vlastní
+// stránku /modules – appka slouží k oznamování aktualizací, ne k
+// procházení metodik.
 export default async function DashboardPage({
   searchParams,
 }: {
@@ -28,28 +27,10 @@ export default async function DashboardPage({
     );
   }
 
-  const [modules, lights, pending, dismissed] = await Promise.all([
-    getModulesForCountry(activeCountryId),
-    getLightsForCountry(activeCountryId),
+  const [pending, dismissed] = await Promise.all([
     getChanges(activeCountryId, "pending"),
     getChanges(activeCountryId, "dismissed"),
   ]);
-
-  // Appka oznamuje aktualizace, ne katalog. Na Přehled proto patří jen
-  // metodiky, u kterých se něco děje – zbytek je schovaný.
-  const sZmenou = new Set(pending.map((change) => change.moduleId));
-  const aktivni = modules.filter(
-    (module) => module.latest_version !== null || sZmenou.has(module.id)
-  );
-
-  // Stav metodiky pro zobrazenou zemi. Semafor v databázi zná jen to, co
-  // čeká na vyřízení; zbytek se pozná podle toho, jestli země vůbec má
-  // nahranou verzi.
-  const stavy: Record<string, CountryLight> = {};
-  for (const module of modules) {
-    stavy[module.id] =
-      lights[module.id] ?? (module.latest_version ? "green" : "none");
-  }
 
   return (
     <div>
@@ -63,8 +44,8 @@ export default async function DashboardPage({
         />
       )}
 
-      <div className="mb-6 flex items-center justify-between gap-4">
-        <h1 className="font-heading text-3xl font-bold text-ink">{t.methodologies}</h1>
+      <div className="mb-6 flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+        <h1 className="font-heading text-3xl font-bold text-ink">{t.changesFromOthers}</h1>
         <CountrySwitcher
           countries={countries}
           activeCountryId={activeCountryId}
@@ -72,8 +53,6 @@ export default async function DashboardPage({
         />
       </div>
 
-      {/* Změny od ostatních zemí. Když není co řešit ani co skrytého,
-          blok se nevykreslí vůbec. */}
       <ChangesFromOthers
         pending={pending}
         dismissed={dismissed}
@@ -85,38 +64,11 @@ export default async function DashboardPage({
       {/* Appka bude většinu času prázdná a to je v pořádku – ať to
           nevypadá jako nedodělek. */}
       {pending.length === 0 && (
-        <div className="mb-8 rounded-2xl bg-haze/40 px-5 py-4">
+        <div className="rounded-2xl bg-haze/40 px-5 py-4">
           <p className="text-sm font-medium text-ink">{t.noUpdatesTitle}</p>
           <p className="mt-0.5 text-sm text-ink/60">{t.noUpdatesHint}</p>
         </div>
       )}
-
-      {aktivni.length > 0 && (
-        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {aktivni.map((module) => {
-            const light = stavy[module.id] ?? "green";
-            return (
-              <ModuleCard
-                key={module.id}
-                module={module}
-                countryId={activeCountryId}
-                light={light}
-                lightTitle={lightLabel(light, t)}
-                t={t}
-              />
-            );
-          })}
-        </div>
-      )}
-
-      {/* Celý katalog: rozdělený po sekcích, se stavovou tečkou
-          u každé metodiky. */}
-      <OtherModules
-        modules={modules}
-        lights={stavy}
-        countryId={activeCountryId}
-        t={t}
-      />
     </div>
   );
 }

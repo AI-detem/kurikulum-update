@@ -145,7 +145,7 @@ export function VersionBrowser({
       )}
 
       {!(canEdit && editing) && (
-      <div className="mt-5 grid grid-cols-1 gap-6 doc:grid-cols-[minmax(0,1fr)_340px]">
+      <div className="mt-5 grid grid-cols-1 gap-6 [&>*]:min-w-0 doc:grid-cols-[minmax(0,1fr)_340px]">
         <div>
           {fileId ? (
             <PdfViewer
