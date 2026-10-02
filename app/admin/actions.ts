@@ -1,33 +1,46 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { cookies } from "next/headers";
 import { createClient, createAdminClient } from "@/lib/supabase/server";
-import { requireAdmin } from "@/lib/current-user";
+import { requireAdmin, getRealUser } from "@/lib/current-user";
 import { sendChangeNotificationEmail } from "@/lib/resend";
+import { isRateLimit } from "@/lib/auth-errors";
+import { PREVIEW_COOKIE } from "@/lib/preview";
+import { setUserCountries, type UserCountriesClient } from "@/lib/user-countries";
 import type { UserRole } from "@/lib/types";
 
-export async function addCountry(formData: FormData) {
+// Akce v Administraci nikdy nevyhazují výjimku. Výjimka ze serverové akce
+// skončí bílou stránkou "Application error", na které se uživatel nedozví
+// nic. Místo toho vracejí stav, který formulář vypíše jako hlášku.
+export type ActionState = { error: string } | { ok: string } | null;
+
+const RATE_LIMIT =
+  "Vyčerpaný hodinový limit odesílání e-mailů (vestavěná pošta Supabase pustí jen pár zpráv za hodinu). Zkus to prosím za hodinu znovu.";
+
+export async function addCountry(_prev: ActionState, formData: FormData): Promise<ActionState> {
   await requireAdmin();
 
-  const name = formData.get("name") as string;
-  const locale = formData.get("locale") as string;
-  if (!name || !locale) throw new Error("Vyplň prosím název země i jazykový kód.");
+  const name = String(formData.get("name") ?? "").trim();
+  const locale = String(formData.get("locale") ?? "").trim();
+  if (!name || !locale) return { error: "Vyplň prosím název země i jazykový kód." };
 
   const supabase = await createClient();
   const { error } = await supabase.from("countries").insert({ name, locale });
-  if (error) throw new Error(`Přidání země selhalo: ${error.message}`);
+  if (error) return { error: `Přidání země selhalo: ${error.message}` };
 
   revalidatePath("/admin");
+  return { ok: "Uloženo." };
 }
 
-export async function inviteUser(formData: FormData) {
+export async function inviteUser(_prev: ActionState, formData: FormData): Promise<ActionState> {
   await requireAdmin();
 
-  const email = formData.get("email") as string;
+  const email = String(formData.get("email") ?? "").trim();
   const countryIds = formData.getAll("countryIds").map(String).filter(Boolean);
   const role = formData.get("role") as UserRole;
   if (!email || countryIds.length === 0 || !role) {
-    throw new Error("Vyplň prosím e-mail, aspoň jednu zemi i roli.");
+    return { error: "Vyplň prosím e-mail, aspoň jednu zemi i roli." };
   }
 
   // Service role klíč je potřeba pro pozvání nového uživatele (vytvoří se
@@ -38,8 +51,9 @@ export async function inviteUser(formData: FormData) {
     redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/auth/callback`,
   });
 
+  if (isRateLimit(error)) return { error: RATE_LIMIT };
   if (error || !data.user) {
-    throw new Error(`Pozvání uživatele selhalo: ${error?.message}`);
+    return { error: `Pozvání uživatele selhalo: ${error?.message ?? "neznámá chyba"}` };
   }
 
   // Databázový trigger (viz supabase/migrations/0001_init.sql) při pozvání
@@ -49,55 +63,53 @@ export async function inviteUser(formData: FormData) {
     .update({ role })
     .eq("id", data.user.id);
 
-  if (updateError) {
-    throw new Error(`Nastavení role selhalo: ${updateError.message}`);
-  }
+  if (updateError) return { error: `Nastavení role selhalo: ${updateError.message}` };
 
-  const { error: countryError } = await adminClient
-    .from("user_countries")
-    .insert(countryIds.map((countryId) => ({ user_id: data.user.id, country_id: countryId })));
-
-  if (countryError) {
-    throw new Error(`Přiřazení zemí selhalo: ${countryError.message}`);
-  }
+  // Typy klienta Supabase jsou příliš zanořené, než aby se daly odvodit;
+  // setUserCountries z nich používá jen malý známý kousek.
+  const countryError = await setUserCountries(
+    adminClient as unknown as UserCountriesClient,
+    data.user.id,
+    countryIds
+  );
+  if (countryError) return { error: countryError };
 
   revalidatePath("/admin");
+  return { ok: `Pozvánka odešla na ${email}.` };
 }
 
-// Uživatel může spravovat víc zemí, proto se přiřazení pokaždé přepíše
+// Uživatel může spravovat víc zemí, proto se přiřazení pokaždé srovná
 // podle zaškrtnutých políček.
-export async function updateUserRoleAndCountries(formData: FormData) {
+export async function updateUserRoleAndCountries(
+  _prev: ActionState,
+  formData: FormData
+): Promise<ActionState> {
   await requireAdmin();
 
-  const userId = formData.get("userId") as string;
+  const userId = String(formData.get("userId") ?? "");
   const countryIds = formData.getAll("countryIds").map(String).filter(Boolean);
   const role = formData.get("role") as UserRole;
-  if (!userId) return;
-
   const locale = String(formData.get("locale") ?? "").trim();
+  if (!userId) return { error: "Chybí uživatel." };
 
   const supabase = await createClient();
   const { error } = await supabase
     .from("users")
     .update({ role, locale: locale || null })
     .eq("id", userId);
-  if (error) throw new Error(`Úprava uživatele selhala: ${error.message}`);
 
-  const { error: deleteError } = await supabase
-    .from("user_countries")
-    .delete()
-    .eq("user_id", userId);
-  if (deleteError) throw new Error(`Úprava zemí selhala: ${deleteError.message}`);
+  if (error) return { error: `Úprava uživatele selhala: ${error.message}` };
 
-  if (countryIds.length > 0) {
-    const { error: insertError } = await supabase
-      .from("user_countries")
-      .insert(countryIds.map((countryId) => ({ user_id: userId, country_id: countryId })));
-    if (insertError) throw new Error(`Úprava zemí selhala: ${insertError.message}`);
-  }
+  const countryError = await setUserCountries(
+    supabase as unknown as UserCountriesClient,
+    userId,
+    countryIds
+  );
+  if (countryError) return { error: countryError };
 
   revalidatePath("/admin");
   revalidatePath("/");
+  return { ok: "Uloženo." };
 }
 
 // Zkušební notifikace na vlastní adresu, stejnou šablonou jako naostro.
@@ -126,18 +138,45 @@ export async function sendTestEmail(): Promise<
 }
 
 // ---------------------------------------------------------------------
+// Náhled jako editor
+// ---------------------------------------------------------------------
+// Admin si prohlédne appku očima editora jedné země. Nic se tím
+// nepovoluje – naopak, v náhledu platí jen práva té jedné země.
+
+export async function startPreview(_prev: ActionState, formData: FormData): Promise<ActionState> {
+  await requireAdmin();
+
+  const countryId = String(formData.get("countryId") ?? "");
+  if (!countryId) return { error: "Vyber prosím zemi." };
+
+  (await cookies()).set(PREVIEW_COOKIE, countryId, { httpOnly: true, sameSite: "lax", path: "/" });
+  revalidatePath("/", "layout");
+  return { ok: "Náhled zapnutý." };
+}
+
+// Ukončení náhledu se musí ptát na skutečného uživatele: v náhledu se
+// admin tváří jako editor, takže requireAdmin by ho nepustil ven.
+export async function stopPreview() {
+  const user = await getRealUser();
+  if (user?.role !== "admin") return;
+
+  (await cookies()).delete(PREVIEW_COOKIE);
+  revalidatePath("/", "layout");
+}
+
+// ---------------------------------------------------------------------
 // Metodiky
 // ---------------------------------------------------------------------
 // Hlavní cesta je import z kurikulum.aidetem.cz (viz catalog-actions.ts).
 // Tohle je ruční záchrana pro případ, kdy web zdrojem být nemůže.
 
-export async function addModule(formData: FormData) {
+export async function addModule(_prev: ActionState, formData: FormData): Promise<ActionState> {
   await requireAdmin();
 
   const name = String(formData.get("name") ?? "").trim();
   const category = String(formData.get("category") ?? "").trim();
   const nameEn = String(formData.get("nameEn") ?? "").trim();
-  if (!name) throw new Error("Vyplň prosím název metodiky.");
+  if (!name) return { error: "Vyplň prosím název metodiky." };
 
   const supabase = await createClient();
   const { error } = await supabase.from("modules").insert({
@@ -145,59 +184,65 @@ export async function addModule(formData: FormData) {
     category: category || null,
     name_en: nameEn || null,
   });
-  if (error) throw new Error(`Přidání metodiky selhalo: ${error.message}`);
+  if (error) return { error: `Přidání metodiky selhalo: ${error.message}` };
 
   revalidatePath("/admin");
   revalidatePath("/");
+  return { ok: "Uloženo." };
 }
 
-export async function updateModule(formData: FormData) {
+export async function updateModule(_prev: ActionState, formData: FormData): Promise<ActionState> {
   await requireAdmin();
 
   const id = String(formData.get("moduleId") ?? "");
   const name = String(formData.get("name") ?? "").trim();
   const category = String(formData.get("category") ?? "").trim();
   const nameEn = String(formData.get("nameEn") ?? "").trim();
-  if (!id || !name) throw new Error("Vyplň prosím název metodiky.");
+  if (!id || !name) return { error: "Vyplň prosím název metodiky." };
 
   const supabase = await createClient();
   const { error } = await supabase
     .from("modules")
     .update({ name, category: category || null, name_en: nameEn || null })
     .eq("id", id);
-  if (error) throw new Error(`Úprava metodiky selhala: ${error.message}`);
+  if (error) return { error: `Úprava metodiky selhala: ${error.message}` };
 
   revalidatePath("/admin");
   revalidatePath("/");
+  return { ok: "Uloženo." };
 }
 
 // Archivovaná metodika se nikde nenabízí, ale nic se jí nestane –
 // verze i vyznačené změny zůstávají.
-export async function setModuleArchived(formData: FormData) {
+export async function setModuleArchived(
+  _prev: ActionState,
+  formData: FormData
+): Promise<ActionState> {
   await requireAdmin();
 
   const id = String(formData.get("moduleId") ?? "");
   const archived = formData.get("archived") === "1";
-  if (!id) return;
+  if (!id) return null;
 
   const supabase = await createClient();
   const { error } = await supabase
     .from("modules")
     .update({ archived_at: archived ? new Date().toISOString() : null })
     .eq("id", id);
-  if (error) throw new Error(`Změna se nepodařila: ${error.message}`);
+  if (error) return { error: `Změna se nepodařila: ${error.message}` };
 
   revalidatePath("/admin");
   revalidatePath("/");
+  return { ok: "Uloženo." };
 }
 
 // Smazat jde jen metodika, ke které ještě není žádná verze. Jinak by se
 // s ní ztratila i historie – od toho je archivace.
-export async function deleteModule(formData: FormData) {
+export async function deleteModule(_prev: ActionState, formData: FormData): Promise<ActionState> {
   await requireAdmin();
 
   const id = String(formData.get("moduleId") ?? "");
-  if (!id) return;
+  if (!id) return null;
 
   const supabase = await createClient();
   const { count } = await supabase
@@ -206,12 +251,13 @@ export async function deleteModule(formData: FormData) {
     .eq("module_id", id);
 
   if ((count ?? 0) > 0) {
-    throw new Error("Metodika má nahrané verze, smazat nejde. Použij archivaci.");
+    return { error: "Metodika má nahrané verze, smazat nejde. Použij archivaci." };
   }
 
   const { error } = await supabase.from("modules").delete().eq("id", id);
-  if (error) throw new Error(`Smazání metodiky selhalo: ${error.message}`);
+  if (error) return { error: `Smazání metodiky selhalo: ${error.message}` };
 
   revalidatePath("/admin");
   revalidatePath("/");
+  return { ok: "Smazáno." };
 }

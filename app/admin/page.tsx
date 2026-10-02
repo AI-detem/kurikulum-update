@@ -10,6 +10,7 @@ import { StatusDot } from "@/components/StatusDot";
 import { CatalogImport } from "@/components/CatalogImport";
 import { TestEmailButton } from "@/components/TestEmailButton";
 import { ConfirmSubmit } from "@/components/ConfirmSubmit";
+import { ActionForm } from "@/components/ActionForm";
 import {
   addCountry,
   addModule,
@@ -18,6 +19,7 @@ import {
   setModuleArchived,
   updateModule,
   updateUserRoleAndCountries,
+  startPreview,
 } from "./actions";
 import type { Country, AppUser, CountryLight, Module } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
@@ -88,7 +90,7 @@ export default async function AdminPage({
         <ModulesTable modules={moduly} pocetVerzi={pocetVerzi} t={t} />
 
         <h3 className="mb-2 mt-6 text-sm font-semibold text-ink/70">{t.addModule}</h3>
-        <form action={addModule} className="flex flex-wrap gap-2">
+        <ActionForm action={addModule} className="flex flex-wrap gap-2">
           <input name="name" placeholder={t.moduleName} required className="input flex-1" />
           <input name="category" placeholder={t.moduleSection} className="input w-56" />
           <input name="nameEn" placeholder={t.moduleNameEn} className="input w-56" />
@@ -98,7 +100,7 @@ export default async function AdminPage({
           >
             {t.addModule}
           </button>
-        </form>
+        </ActionForm>
       </section>
 
       <section>
@@ -110,7 +112,7 @@ export default async function AdminPage({
             </li>
           ))}
         </ul>
-        <form action={addCountry} className="flex gap-2">
+        <ActionForm action={addCountry} className="flex gap-2">
           <input name="name" placeholder={t.countryName} required className="input flex-1" />
           <input name="locale" placeholder={t.languageCode} required className="input w-40" />
           <button
@@ -119,7 +121,7 @@ export default async function AdminPage({
           >
             {t.addCountry}
           </button>
-        </form>
+        </ActionForm>
       </section>
 
       <section>
@@ -132,7 +134,7 @@ export default async function AdminPage({
         />
 
         <h3 className="mb-2 mt-6 text-sm font-semibold text-ink/70">{t.inviteUser}</h3>
-        <form action={inviteUser} className="flex flex-wrap gap-2">
+        <ActionForm action={inviteUser} className="flex flex-wrap gap-2">
           <input
             name="email"
             type="email"
@@ -153,7 +155,25 @@ export default async function AdminPage({
           >
             {t.invite}
           </button>
-        </form>
+        </ActionForm>
+
+        <h3 className="mb-2 mt-6 text-sm font-semibold text-ink/70">{t.previewAsEditor}</h3>
+        <p className="mb-2 text-xs text-ink/50">{t.previewHint}</p>
+        <ActionForm action={startPreview} className="flex flex-wrap gap-2">
+          <select name="countryId" required className="input">
+            {countries?.map((c) => (
+              <option key={c.id} value={c.id}>
+                {c.name}
+              </option>
+            ))}
+          </select>
+          <button
+            type="submit"
+            className="rounded-xl border border-haze px-4 py-2.5 text-sm text-ink hover:border-coral"
+          >
+            {t.previewAsEditor}
+          </button>
+        </ActionForm>
 
         <h3 className="mb-2 mt-6 text-sm font-semibold text-ink/70">{t.testEmail}</h3>
         <TestEmailButton t={t} />
@@ -187,7 +207,7 @@ function UsersTable({
           <tr key={u.id} className="dashed-divider">
             <td className="py-2">{u.email}</td>
             <td className="py-2">
-              <form action={updateUserRoleAndCountries} className="flex flex-wrap items-center gap-2">
+              <ActionForm action={updateUserRoleAndCountries} className="flex flex-wrap items-center gap-2">
                 <input type="hidden" name="userId" value={u.id} />
                 <CountryChecks countries={countries} selected={countryIds.get(u.id) ?? []} />
                 <select name="locale" defaultValue={u.locale ?? ""} className="input py-1">
@@ -205,7 +225,7 @@ function UsersTable({
                 <button type="submit" className="text-coral hover:underline">
                   {t.save}
                 </button>
-              </form>
+              </ActionForm>
             </td>
           </tr>
         ))}
@@ -297,7 +317,7 @@ function ModulesTable({
               archivovana ? "opacity-50" : ""
             }`}
           >
-            <form action={updateModule} className="flex flex-1 flex-wrap items-center gap-2">
+            <ActionForm action={updateModule} className="flex flex-1 flex-wrap items-center gap-2">
               <input type="hidden" name="moduleId" value={module.id} />
               <input
                 name="name"
@@ -320,11 +340,11 @@ function ModulesTable({
               <button type="submit" className="text-sm text-coral hover:underline">
                 {t.save}
               </button>
-            </form>
+            </ActionForm>
 
             {archivovana && <span className="badge-pill">{t.archivedLabel}</span>}
 
-            <form action={setModuleArchived}>
+            <ActionForm action={setModuleArchived}>
               <input type="hidden" name="moduleId" value={module.id} />
               <input type="hidden" name="archived" value={archivovana ? "0" : "1"} />
               {/* Vracet z archivu je neškodné, potvrzuje se jen archivace. */}
@@ -343,12 +363,12 @@ function ModulesTable({
                   t={t}
                 />
               )}
-            </form>
+            </ActionForm>
 
             {maVerze ? (
               <span className="text-xs text-ink/40">{t.cannotDeleteModule}</span>
             ) : (
-              <form action={deleteModule}>
+              <ActionForm action={deleteModule}>
                 <input type="hidden" name="moduleId" value={module.id} />
                 <ConfirmSubmit
                   label={t.delete}
@@ -358,7 +378,7 @@ function ModulesTable({
                   detail={module.name}
                   t={t}
                 />
-              </form>
+              </ActionForm>
             )}
           </div>
         );

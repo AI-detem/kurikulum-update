@@ -241,6 +241,12 @@ export const cs = {
 
   lightNone: "zatím bez verze",
   legendTitle: "Vysvětlivky",
+
+  previewAsEditor: "Zobrazit jako editor",
+  previewHint:
+    "Prohlédne appku očima editora vybrané země. Žádná práva se tím nerozšiřují – naopak, v náhledu platí jen práva té jedné země.",
+  previewBanner: "Prohlížíte jako editor ({country})",
+  previewEnd: "ukončit náhled",
 };
 
 export type Dictionary = typeof cs;

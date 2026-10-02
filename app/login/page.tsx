@@ -2,11 +2,14 @@
 
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
+import { isRateLimit } from "@/lib/auth-errors";
 import { Logo } from "@/components/Logo";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
-  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error">("idle");
+  const [status, setStatus] = useState<"idle" | "loading" | "sent" | "error" | "rateLimit">(
+    "idle"
+  );
   const supabase = createClient();
 
   async function handleSubmit(e: React.FormEvent) {
@@ -20,7 +23,10 @@ export default function LoginPage() {
       },
     });
 
-    setStatus(error ? "error" : "sent");
+    // Vestavěná pošta Supabase pustí jen pár zpráv za hodinu. Bez téhle
+    // hlášky uživatel zkouší znovu a limit tím jen drží.
+    if (isRateLimit(error)) setStatus("rateLimit");
+    else setStatus(error ? "error" : "sent");
   }
 
   return (
@@ -59,6 +65,12 @@ export default function LoginPage() {
             >
               {status === "loading" ? "Posílám odkaz..." : "Poslat přihlašovací odkaz"}
             </button>
+            {status === "rateLimit" && (
+              <p className="text-sm text-coral">
+                Vyčerpaný hodinový limit odesílání e-mailů. Zkus to prosím za hodinu znovu —
+                jde o dočasné omezení testovací pošty, ne o chybu tvého účtu.
+              </p>
+            )}
             {status === "error" && (
               <p className="text-sm text-coral">Něco se nepovedlo, zkus to prosím znovu.</p>
             )}

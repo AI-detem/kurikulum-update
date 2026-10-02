@@ -1,10 +1,13 @@
 // Pomocná funkce pro server komponenty: vrátí přihlášeného uživatele
 // spolu s jeho rolí a zemí (z tabulky public.users), ne jen auth údaje.
 import { createClient } from "@/lib/supabase/server";
+import { readPreviewCountry } from "@/lib/preview";
 import type { AppUser } from "@/lib/types";
 import { redirect } from "next/navigation";
 
-export async function getCurrentUser(): Promise<AppUser | null> {
+// Uživatel tak, jak je zapsaný v databázi – bez ohledu na náhled.
+// Používej jen tam, kde se o náhledu rozhoduje (pruh nahoře, jeho ukončení).
+export async function getRealUser(): Promise<AppUser | null> {
   const supabase = await createClient();
   const {
     data: { user: authUser },
@@ -30,6 +33,29 @@ export async function getCurrentUser(): Promise<AppUser | null> {
     ...appUser,
     country_ids: (countries ?? []).map((row) => row.country_id),
   } as AppUser;
+}
+
+// Uživatel tak, jak ho má vidět zbytek appky. Když má admin zapnutý
+// náhled, tváří se jako editor jedné země – a protože z téhle funkce
+// vychází všechno ostatní, chová se tak celá appka včetně zápisů.
+export async function getCurrentUser(): Promise<AppUser | null> {
+  const user = await getRealUser();
+  if (!user || user.role !== "admin") return user;
+
+  const previewCountryId = await readPreviewCountry();
+  if (!previewCountryId) return user;
+
+  // Země mohla mezitím zmizet; pak se náhled prostě neuplatní.
+  const supabase = await createClient();
+  const { data: country } = await supabase
+    .from("countries")
+    .select("id")
+    .eq("id", previewCountryId)
+    .maybeSingle();
+
+  if (!country) return user;
+
+  return { ...user, role: "editor", country_ids: [previewCountryId] };
 }
 
 // Použij na stránkách, které vyžadují přihlášení. Pokud uživatel není

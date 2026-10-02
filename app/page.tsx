@@ -53,11 +53,15 @@ export default async function DashboardPage({
 
   return (
     <div>
-      <AdminNotices
-        missing={user.role === "admin" ? await missingMigrations() : []}
-        mailConfigured={mailConfigured()}
-        t={t}
-      />
+      {/* Provozní hlášky patří jen adminovi – a v náhledu jako editor
+          se schovají spolu se vším ostatním. */}
+      {user.role === "admin" && (
+        <AdminNotices
+          missing={await missingMigrations()}
+          mailConfigured={mailConfigured()}
+          t={t}
+        />
+      )}
 
       <div className="mb-6 flex items-center justify-between gap-4">
         <h1 className="font-heading text-3xl font-bold text-ink">{t.methodologies}</h1>

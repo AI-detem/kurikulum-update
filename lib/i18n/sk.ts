@@ -225,4 +225,10 @@ export const sk: Dictionary = {
 
   lightNone: "zatiaľ bez verzie",
   legendTitle: "Vysvetlivky",
+
+  previewAsEditor: "Zobraziť ako editor",
+  previewHint:
+    "Prezrie aplikáciu očami editora vybranej krajiny. Žiadne práva sa tým nerozširujú – naopak, v náhľade platia len práva tej jednej krajiny.",
+  previewBanner: "Prezeráte ako editor ({country})",
+  previewEnd: "ukončiť náhľad",
 };

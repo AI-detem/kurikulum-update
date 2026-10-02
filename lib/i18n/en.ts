@@ -225,4 +225,10 @@ export const en: Dictionary = {
 
   lightNone: "no version yet",
   legendTitle: "Legend",
+
+  previewAsEditor: "View as an editor",
+  previewHint:
+    "Shows the app through the eyes of an editor of the chosen country. It grants nothing extra — on the contrary, only that one country's rights apply.",
+  previewBanner: "Viewing as an editor ({country})",
+  previewEnd: "end the preview",
 };

@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { getCurrentUser } from "@/lib/current-user";
+import { readPreviewCountry } from "@/lib/preview";
+import { createClient } from "@/lib/supabase/server";
+import { PreviewBanner } from "@/components/PreviewBanner";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { getNotificationsForCurrentUser } from "@/lib/notifications-data";
 import { Sidebar } from "@/components/Sidebar";
@@ -53,9 +56,24 @@ export default async function RootLayout({
   const { t } = await resolveActiveCountry(user);
   const notifications = await getNotificationsForCurrentUser(user.id);
 
+  // Pruh o náhledu. getCurrentUser v náhledu vrací editora, takže se
+  // pozná podle cookie, ne podle role.
+  const previewCountryId = await readPreviewCountry();
+  let previewCountryName: string | null = null;
+  if (previewCountryId) {
+    const supabase = await createClient();
+    const { data } = await supabase
+      .from("countries")
+      .select("name")
+      .eq("id", previewCountryId)
+      .maybeSingle();
+    previewCountryName = data?.name ?? null;
+  }
+
   return (
     <html lang="cs">
       <body className="font-sans antialiased">
+        {previewCountryName && <PreviewBanner countryName={previewCountryName} t={t} />}
         <div className="flex">
           <Sidebar user={user} t={t} />
           <div className="flex-1">

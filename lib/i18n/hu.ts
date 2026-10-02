@@ -227,4 +227,10 @@ export const hu: Dictionary = {
 
   lightNone: "még nincs verzió",
   legendTitle: "Jelmagyarázat",
+
+  previewAsEditor: "Megtekintés szerkesztőként",
+  previewHint:
+    "Az alkalmazást a kiválasztott ország szerkesztőjének szemével mutatja. Semmilyen jogot nem bővít — ellenkezőleg, csak az adott ország jogai érvényesek.",
+  previewBanner: "Szerkesztőként nézed ({country})",
+  previewEnd: "előnézet befejezése",
 };
