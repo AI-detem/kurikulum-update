@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { applyCatalogImport, previewCatalogImport } from "@/app/admin/catalog-actions";
-import type { ImportPlan } from "@/lib/catalog-plan";
+import { planIsEmpty, type ImportPlan } from "@/lib/catalog-plan";
 import { fill } from "@/lib/format";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -48,12 +48,7 @@ export function CatalogImport({ t }: { t: Dictionary }) {
     router.refresh();
   }
 
-  const nenicoMenit =
-    plan !== null &&
-    plan.toAdd.length === 0 &&
-    plan.toRename.length === 0 &&
-    plan.toLink.length === 0 &&
-    plan.toArchive.length === 0;
+  const nenicoMenit = plan !== null && planIsEmpty(plan);
 
   return (
     <div className="flex flex-col gap-3">
@@ -93,17 +88,65 @@ export function CatalogImport({ t }: { t: Dictionary }) {
                 titulek={fill(t.catalogWillAdd, { count: plan.toAdd.length })}
                 polozky={plan.toAdd.map((m) => `${m.name}${m.section ? ` — ${m.section}` : ""}`)}
               />
+              {/* Přejmenování včetně těch, kde se liší jen pomlčka nebo
+                  uvozovka – takový rozdíl jinak vypadá jako překlep. */}
               <Skupina
                 titulek={fill(t.catalogWillRename, { count: plan.toRename.length })}
-                polozky={plan.toRename.map((m) => `${m.from} → ${m.to}`)}
+                polozky={plan.toRename.map(
+                  (m) =>
+                    `${m.from} → ${m.to}${m.punctuationOnly ? ` (${t.catalogPunctuationOnly})` : ""}`
+                )}
               />
               <Skupina
                 titulek={fill(t.catalogWillLink, { count: plan.toLink.length })}
-                polozky={plan.toLink.map((m) => m.name)}
+                polozky={plan.toLink.map((m) =>
+                  m.from === m.to
+                    ? m.to
+                    : `${m.from} → ${m.to}${m.punctuationOnly ? ` (${t.catalogPunctuationOnly})` : ""}`
+                )}
+              />
+              <Skupina
+                titulek={fill(t.catalogWillRecategorize, {
+                  count: plan.toRecategorize.length,
+                })}
+                polozky={plan.toRecategorize.map(
+                  (m) => `${m.name}: ${m.from ?? t.ungrouped} → ${m.to ?? t.ungrouped}`
+                )}
+              />
+              <Skupina
+                titulek={fill(t.catalogWillSetEnglish, { count: plan.toSetEnglish.length })}
+                polozky={plan.toSetEnglish.map((m) => `${m.name} → ${m.to}`)}
               />
               <Skupina
                 titulek={fill(t.catalogWillArchive, { count: plan.toArchive.length })}
                 polozky={plan.toArchive.map((m) => m.name)}
+              />
+              <Skupina
+                titulek={fill(t.catalogWillUnarchive, { count: plan.toUnarchive.length })}
+                polozky={plan.toUnarchive.map((m) => m.name)}
+              />
+            </div>
+          )}
+
+          {plan.notInCatalog.length > 0 && (
+            <div className="mt-4 rounded-xl bg-haze/40 p-3">
+              <Skupina
+                titulek={fill(t.catalogNotInCatalog, { count: plan.notInCatalog.length })}
+                polozky={plan.notInCatalog.map(
+                  (m) => `${m.name}${m.category ? ` — ${m.category}` : ""}`
+                )}
+              />
+              <p className="mt-1 text-xs text-ink/50">{t.catalogNotInCatalogHint}</p>
+            </div>
+          )}
+
+          {plan.unmatchedEnglish.length > 0 && (
+            <div className="mt-3">
+              <Skupina
+                titulek={fill(t.catalogUnmatchedEnglish, {
+                  count: plan.unmatchedEnglish.length,
+                })}
+                polozky={plan.unmatchedEnglish}
               />
             </div>
           )}

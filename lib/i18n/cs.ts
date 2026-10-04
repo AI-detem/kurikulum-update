@@ -5,6 +5,8 @@
 // se nikdy nepřekládá ani neupravuje.
 export const cs = {
   // formát data podle zvyklostí jazyka
+  // kód jazyka – podle něj se vybírá anglický název metodiky
+  locale: "cs" as "cs" | "sk" | "en" | "hu",
   dateLocale: "cs-CZ",
 
   // navigace
@@ -100,6 +102,8 @@ export const cs = {
   driveLinkNotRecognized:
     "Nepodařilo se rozpoznat odkaz na Google Drive, zkontroluj prosím formát.",
   uploadMissingFields: "Vyplň prosím modul, zemi, odkaz na PDF i poznámku ke změně.",
+  uploadForeignCountry: "Nahrávat jde jen za vlastní zemi.",
+  uploadingFor: "Nahráváte za zemi {country}",
   uploadNotAllowed: "Nemáš oprávnění přidávat nové verze.",
   saveFailed: "Uložení se nepodařilo.",
   saving: "Ukládám...",
@@ -174,11 +178,21 @@ export const cs = {
   catalogWillRename: "Přejmenuje se ({count})",
   catalogWillLink: "Spáruje se s webem ({count})",
   catalogWillArchive: "Archivuje se ({count})",
+  catalogWillUnarchive: "Vrátí se z archivu ({count})",
+  catalogWillRecategorize: "Přesune se do jiné sekce ({count})",
+  catalogWillSetEnglish: "Doplní se anglický název ({count})",
+  catalogPunctuationOnly: "liší se jen interpunkcí",
+  catalogNotInCatalog: "Není v katalogu webu ({count})",
+  catalogNotInCatalogHint:
+    "Ručně založené metodiky. Import se jich nedotkne — smazat nebo archivovat je musíš sama.",
+  catalogUnmatchedEnglish: "Anglické názvy bez páru ({count})",
+  manualModule: "ručně přidaná",
   catalogUnchanged: "Beze změny: {count} z {total}",
   catalogConfirm: "Provést import",
   catalogCancel: "Zrušit",
   catalogNothingToDo: "Katalog je aktuální, není co měnit.",
-  catalogDone: "Hotovo — přibylo {added}, přejmenováno {renamed}, spárováno {linked}, archivováno {archived}.",
+  catalogDone:
+    "Hotovo — přibylo {added}, přejmenováno {renamed}, spárováno {linked}, přesunuto {recategorized}, anglických názvů {english}, archivováno {archived}.",
   addModule: "Přidat metodiku",
   moduleName: "Název metodiky",
   moduleSection: "Sekce",

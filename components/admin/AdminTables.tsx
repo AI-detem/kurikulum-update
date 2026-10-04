@@ -188,6 +188,11 @@ export function ModulesTable({
             </ActionForm>
 
             <div className="flex flex-wrap items-center gap-3">
+            {/* Bez slugu = metodika není z katalogu webu. Import se jí
+                nedotkne, takže je potřeba, aby to bylo vidět. */}
+            {!module.slug && (
+              <span className="badge-pill bg-mist/40 text-ink/70">{t.manualModule}</span>
+            )}
             {archivovana && <span className="badge-pill">{t.archivedLabel}</span>}
 
             <ActionForm action={setModuleArchived}>

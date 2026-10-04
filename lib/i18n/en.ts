@@ -1,6 +1,8 @@
 import type { Dictionary } from "./cs";
 
 export const en: Dictionary = {
+  // kód jazyka – podle něj se vybírá anglický název metodiky
+  locale: "en",
   dateLocale: "en-GB",
 
   overview: "Changes",
@@ -89,6 +91,8 @@ export const en: Dictionary = {
   driveLinkNotRecognized:
     "The Google Drive link could not be recognised, please check the format.",
   uploadMissingFields: "Please fill in the module, country, PDF link and the change note.",
+  uploadForeignCountry: "You can only upload for your own country.",
+  uploadingFor: "Uploading for {country}",
   uploadNotAllowed: "You don't have permission to add new versions.",
   saveFailed: "Saving failed.",
   saving: "Saving...",
@@ -159,11 +163,21 @@ export const en: Dictionary = {
   catalogWillRename: "Will be renamed ({count})",
   catalogWillLink: "Will be linked to the website ({count})",
   catalogWillArchive: "Will be archived ({count})",
+  catalogWillUnarchive: "Will return from the archive ({count})",
+  catalogWillRecategorize: "Will move to another section ({count})",
+  catalogWillSetEnglish: "English name will be filled in ({count})",
+  catalogPunctuationOnly: "differs only in punctuation",
+  catalogNotInCatalog: "Not in the website catalogue ({count})",
+  catalogNotInCatalogHint:
+    "Manually created methodologies. The import leaves them alone — delete or archive them yourself.",
+  catalogUnmatchedEnglish: "English names without a match ({count})",
+  manualModule: "added manually",
   catalogUnchanged: "Unchanged: {count} of {total}",
   catalogConfirm: "Run the import",
   catalogCancel: "Cancel",
   catalogNothingToDo: "The catalogue is up to date, nothing to change.",
-  catalogDone: "Done — {added} added, {renamed} renamed, {linked} linked, {archived} archived.",
+  catalogDone:
+    "Done — {added} added, {renamed} renamed, {linked} linked, {recategorized} moved, {english} English names, {archived} archived.",
   addModule: "Add methodology",
   moduleName: "Methodology name",
   moduleSection: "Section",

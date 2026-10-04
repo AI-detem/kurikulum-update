@@ -107,8 +107,7 @@ export async function updateUserRoleAndCountries(
   );
   if (countryError) return { error: countryError };
 
-  revalidatePath("/admin");
-  revalidatePath("/");
+  obnovSeznamy();
   return { ok: "Uloženo." };
 }
 
@@ -186,8 +185,7 @@ export async function addModule(_prev: ActionState, formData: FormData): Promise
   });
   if (error) return { error: `Přidání metodiky selhalo: ${error.message}` };
 
-  revalidatePath("/admin");
-  revalidatePath("/");
+  obnovSeznamy();
   return { ok: "Uloženo." };
 }
 
@@ -207,8 +205,7 @@ export async function updateModule(_prev: ActionState, formData: FormData): Prom
     .eq("id", id);
   if (error) return { error: `Úprava metodiky selhala: ${error.message}` };
 
-  revalidatePath("/admin");
-  revalidatePath("/");
+  obnovSeznamy();
   return { ok: "Uloženo." };
 }
 
@@ -231,8 +228,7 @@ export async function setModuleArchived(
     .eq("id", id);
   if (error) return { error: `Změna se nepodařila: ${error.message}` };
 
-  revalidatePath("/admin");
-  revalidatePath("/");
+  obnovSeznamy();
   return { ok: "Uloženo." };
 }
 
@@ -254,10 +250,27 @@ export async function deleteModule(_prev: ActionState, formData: FormData): Prom
     return { error: "Metodika má nahrané verze, smazat nejde. Použij archivaci." };
   }
 
-  const { error } = await supabase.from("modules").delete().eq("id", id);
+  // .select() je tu schválně: bez něj by se o smazání nula řádků (třeba
+  // kvůli pravidlům v databázi) uživatel nedozvěděl a hláška by lhala.
+  const { data: smazane, error } = await supabase
+    .from("modules")
+    .delete()
+    .eq("id", id)
+    .select("id");
   if (error) return { error: `Smazání metodiky selhalo: ${error.message}` };
+  if (!smazane || smazane.length === 0) {
+    return { error: "Metodika se nesmazala — nemáš k ní oprávnění, nebo už je pryč." };
+  }
 
+  obnovSeznamy();
+  return { ok: "Smazáno." };
+}
+
+// Metodiky se nabízejí na čtyřech místech. Když se některá změní nebo
+// zmizí, musí se obnovit všechna, ať nikde nezůstane viset.
+function obnovSeznamy() {
   revalidatePath("/admin");
   revalidatePath("/");
-  return { ok: "Smazáno." };
+  revalidatePath("/modules");
+  revalidatePath("/admin/upload");
 }

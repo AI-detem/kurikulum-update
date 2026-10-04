@@ -58,6 +58,45 @@ export function normalize(value: string): string {
     .trim();
 }
 
+// Tvary pomlček, uvozovek a mezer, které se v názvech běžně střídají.
+// Pro člověka je to tentýž název, pro porovnání řetězců ne – a právě na
+// tom se dřív zakládaly duplikáty.
+const SJEDNOCENI: [RegExp, string][] = [
+  // spojovník, non-breaking hyphen, figure dash, en/em dash, minus, horizontal bar
+  [/[\u2010\u2011\u2012\u2013\u2014\u2015\u2212]/g, "-"],
+  // jednoduché uvozovky a apostrofy
+  [/[\u2018\u2019\u201A\u201B\u2032\u00B4`]/g, "'"],
+  // dvojité uvozovky včetně českých „ "
+  [/[\u201C\u201D\u201E\u201F\u2033\u00AB\u00BB]/g, '"'],
+  // tři tečky zapsané jedním znakem
+  [/\u2026/g, "..."],
+  // nezlomitelná a úzká mezera
+  [/[\u00A0\u202F\u2007\u2009]/g, " "],
+];
+
+// Klíč pro párování metodiky s webem podle názvu. Oproti normalize()
+// navíc srovná interpunkci a mezery kolem pomlček, takže „a já – projektový"
+// a „a já - projektový" jsou pro párování totéž.
+//
+// Používá se VÝHRADNĚ na porovnání. Zobrazuje a ukládá se vždy přesný
+// název z webu, nikdy tenhle zploštělý tvar.
+export function pairKey(value: string): string {
+  let text = value;
+  for (const [vzor, nahrada] of SJEDNOCENI) text = text.replace(vzor, nahrada);
+
+  return normalize(text)
+    // mezery kolem pomlčky nejsou rozlišující znak
+    .replace(/\s*-\s*/g, "-")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+// Liší se dva názvy jen interpunkcí nebo mezerami? Takový rozdíl je v
+// seznamu změn potřeba zvlášť vypíchnout – jinak vypadá jako překlep.
+export function onlyPunctuationDiffers(a: string, b: string): boolean {
+  return a !== b && pairKey(a) === pairKey(b);
+}
+
 const SECTION_LOOKUP = new Map(SECTIONS.map((name) => [normalize(name), name]));
 
 export async function fetchCatalog(url: string = CATALOG_URL): Promise<CatalogFetch> {

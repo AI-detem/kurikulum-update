@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import { matchKey, type MatchResult } from "@/lib/match-module";
 import { fill } from "@/lib/format";
+import { moduleName } from "@/lib/module-name";
 import type { Module } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 
@@ -118,7 +119,7 @@ export function ModulePicker({
           <optgroup key={sekce} label={sekce}>
             {seznam.map((module) => (
               <option key={module.id} value={module.id}>
-                {module.name}
+                {moduleName(module, t)}
               </option>
             ))}
           </optgroup>

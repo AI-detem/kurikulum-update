@@ -1,6 +1,8 @@
 import type { Dictionary } from "./cs";
 
 export const sk: Dictionary = {
+  // kód jazyka – podle něj se vybírá anglický název metodiky
+  locale: "sk",
   dateLocale: "sk-SK",
 
   overview: "Zmeny",
@@ -89,6 +91,8 @@ export const sk: Dictionary = {
   driveLinkNotRecognized:
     "Nepodarilo sa rozpoznať odkaz na Google Drive, skontroluj prosím formát.",
   uploadMissingFields: "Vyplň prosím modul, krajinu, odkaz na PDF aj poznámku k zmene.",
+  uploadForeignCountry: "Nahrávať sa dá len za vlastnú krajinu.",
+  uploadingFor: "Nahrávate za krajinu {country}",
   uploadNotAllowed: "Nemáš oprávnenie pridávať nové verzie.",
   saveFailed: "Uloženie sa nepodarilo.",
   saving: "Ukladám...",
@@ -159,11 +163,21 @@ export const sk: Dictionary = {
   catalogWillRename: "Premenuje sa ({count})",
   catalogWillLink: "Spáruje sa s webom ({count})",
   catalogWillArchive: "Archivuje sa ({count})",
+  catalogWillUnarchive: "Vráti sa z archívu ({count})",
+  catalogWillRecategorize: "Presunie sa do inej sekcie ({count})",
+  catalogWillSetEnglish: "Doplní sa anglický názov ({count})",
+  catalogPunctuationOnly: "líši sa len interpunkciou",
+  catalogNotInCatalog: "Nie je v katalógu webu ({count})",
+  catalogNotInCatalogHint:
+    "Ručne založené metodiky. Import sa ich nedotkne — zmazať alebo archivovať ich musíš sama.",
+  catalogUnmatchedEnglish: "Anglické názvy bez páru ({count})",
+  manualModule: "ručne pridaná",
   catalogUnchanged: "Bez zmeny: {count} z {total}",
   catalogConfirm: "Vykonať import",
   catalogCancel: "Zrušiť",
   catalogNothingToDo: "Katalóg je aktuálny, nie je čo meniť.",
-  catalogDone: "Hotovo — pribudlo {added}, premenovaných {renamed}, spárovaných {linked}, archivovaných {archived}.",
+  catalogDone:
+    "Hotovo — pribudlo {added}, premenovaných {renamed}, spárovaných {linked}, presunutých {recategorized}, anglických názvov {english}, archivovaných {archived}.",
   addModule: "Pridať metodiku",
   moduleName: "Názov metodiky",
   moduleSection: "Sekcia",

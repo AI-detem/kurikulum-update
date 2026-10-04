@@ -4,6 +4,7 @@ import { resolveActiveCountry } from "@/lib/active-country";
 import { getModuleDetail } from "@/lib/modules-data";
 import { VersionBrowser } from "@/components/VersionBrowser";
 import { CountrySwitcher } from "@/components/CountrySwitcher";
+import { moduleName } from "@/lib/module-name";
 
 export default async function ModuleDetailPage({
   params,
@@ -42,7 +43,9 @@ export default async function ModuleDetailPage({
       )}
 
       <p className="badge-pill mb-3">{module.category ?? t.noCategory}</p>
-      <h1 className="mb-6 font-heading text-3xl font-bold text-ink">{module.name}</h1>
+      <h1 className="mb-6 font-heading text-3xl font-bold text-ink">
+        {moduleName(module, t)}
+      </h1>
 
       <VersionBrowser
         canEdit={user.role === "admin"} versions={versions} marksByVersion={marksByVersion} t={t} />

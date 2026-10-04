@@ -4,6 +4,7 @@ import type { CountryLight, ModuleWithLatestVersion } from "@/lib/types";
 import type { Dictionary } from "@/lib/i18n";
 import { LocalDateTime } from "@/components/LocalDateTime";
 import { ModuleLightDot } from "@/components/ModuleLightDot";
+import { moduleName } from "@/lib/module-name";
 
 export function ModuleCard({
   module,
@@ -23,7 +24,9 @@ export function ModuleCard({
 
   const telo = (
     <>
-      <h3 className="break-words font-heading text-lg font-bold text-ink">{module.name}</h3>
+      <h3 className="break-words font-heading text-lg font-bold text-ink">
+        {moduleName(module, t)}
+      </h3>
 
       {latest ? (
         <div className="mt-auto text-sm text-ink/60">

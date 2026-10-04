@@ -77,3 +77,20 @@ export async function requireAdmin(): Promise<AppUser> {
 export function canUpload(user: AppUser): boolean {
   return user.role === "admin" || user.role === "editor";
 }
+
+// Smí uživatel zapisovat za tuhle zemi?
+//
+// Nahrává se vždycky jen za vlastní zemi – a admin není výjimka. Hlídají
+// to i pravidla v databázi (migrace 0005, 0006, 0008), ale appka se na ně
+// nespoléhá: formulář cizí zemi nenabídne a server ji odmítne.
+export function canWriteForCountry(user: AppUser, countryId: string): boolean {
+  return canUpload(user) && user.country_ids.includes(countryId);
+}
+
+// Země, za které smí uživatel nahrávat.
+export function writableCountries<T extends { id: string }>(
+  user: AppUser,
+  countries: T[]
+): T[] {
+  return countries.filter((country) => user.country_ids.includes(country.id));
+}

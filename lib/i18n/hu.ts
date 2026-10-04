@@ -1,6 +1,8 @@
 import type { Dictionary } from "./cs";
 
 export const hu: Dictionary = {
+  // kód jazyka – podle něj se vybírá anglický název metodiky
+  locale: "hu",
   dateLocale: "hu-HU",
 
   overview: "Változások",
@@ -90,6 +92,8 @@ export const hu: Dictionary = {
     "A Google Drive-link nem ismerhető fel, ellenőrizd a formátumot.",
   uploadMissingFields:
     "Töltsd ki a modult, az országot, a PDF-linket és a változás leírását.",
+  uploadForeignCountry: "Csak a saját országod nevében tölthetsz fel.",
+  uploadingFor: "Feltöltés – {country}",
   uploadNotAllowed: "Nincs jogosultságod új verziót hozzáadni.",
   saveFailed: "A mentés nem sikerült.",
   saving: "Mentés folyamatban...",
@@ -161,11 +165,21 @@ export const hu: Dictionary = {
   catalogWillRename: "Átnevezésre kerül ({count})",
   catalogWillLink: "Összekapcsolódik a webhellyel ({count})",
   catalogWillArchive: "Archiválásra kerül ({count})",
+  catalogWillUnarchive: "Visszakerül az archívumból ({count})",
+  catalogWillRecategorize: "Másik szekcióba kerül ({count})",
+  catalogWillSetEnglish: "Angol név kitöltése ({count})",
+  catalogPunctuationOnly: "csak központozásban tér el",
+  catalogNotInCatalog: "Nincs a webhely katalógusában ({count})",
+  catalogNotInCatalogHint:
+    "Kézzel létrehozott módszertanok. Az import nem nyúl hozzájuk — törölni vagy archiválni neked kell.",
+  catalogUnmatchedEnglish: "Párosítatlan angol nevek ({count})",
+  manualModule: "kézzel hozzáadva",
   catalogUnchanged: "Változatlan: {count} / {total}",
   catalogConfirm: "Import futtatása",
   catalogCancel: "Mégse",
   catalogNothingToDo: "A katalógus naprakész, nincs mit módosítani.",
-  catalogDone: "Kész — {added} új, {renamed} átnevezve, {linked} összekapcsolva, {archived} archiválva.",
+  catalogDone:
+    "Kész — {added} új, {renamed} átnevezve, {linked} összekapcsolva, {recategorized} áthelyezve, {english} angol név, {archived} archiválva.",
   addModule: "Módszertan hozzáadása",
   moduleName: "Módszertan neve",
   moduleSection: "Szekció",

@@ -4,11 +4,20 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { requireAdmin } from "@/lib/current-user";
 import { CATALOG_URL, fetchCatalog, type CatalogItem } from "@/lib/catalog";
+import { fetchEnglishNames } from "@/lib/catalog-en";
 import { buildPlan, type ImportPlan, type ModuleRow } from "@/lib/catalog-plan";
 
 export type PlanResult = { plan: ImportPlan } | { error: string };
 export type ApplyResult =
-  | { added: number; renamed: number; linked: number; archived: number }
+  | {
+      added: number;
+      renamed: number;
+      linked: number;
+      recategorized: number;
+      unarchived: number;
+      english: number;
+      archived: number;
+    }
   | { error: string };
 
 // Co import udělá, ještě než něco zapíše.
@@ -16,8 +25,19 @@ export async function previewCatalogImport(): Promise<PlanResult> {
   await requireAdmin();
 
   try {
-    const [katalog, modules] = await Promise.all([fetchCatalog(), loadModules()]);
-    return { plan: buildPlan(katalog.items, modules, katalog.warnings) };
+    const [katalog, modules, anglicke] = await Promise.all([
+      fetchCatalog(),
+      loadModules(),
+      fetchEnglishNames(),
+    ]);
+    return {
+      plan: buildPlan(
+        katalog.items,
+        modules,
+        [...katalog.warnings, ...anglicke.warnings],
+        anglicke.names
+      ),
+    };
   } catch (chyba) {
     return { error: popisChyby(chyba) };
   }
@@ -30,10 +50,21 @@ export async function applyCatalogImport(): Promise<ApplyResult> {
 
   let items: CatalogItem[];
   let plan: ImportPlan;
+  let anglickeNazvy: Map<string, string>;
   try {
-    const [katalog, modules] = await Promise.all([fetchCatalog(), loadModules()]);
+    const [katalog, modules, anglicke] = await Promise.all([
+      fetchCatalog(),
+      loadModules(),
+      fetchEnglishNames(),
+    ]);
     items = katalog.items;
-    plan = buildPlan(items, modules, katalog.warnings);
+    anglickeNazvy = anglicke.names;
+    plan = buildPlan(
+      items,
+      modules,
+      [...katalog.warnings, ...anglicke.warnings],
+      anglicke.names
+    );
   } catch (chyba) {
     return { error: popisChyby(chyba) };
   }
@@ -51,19 +82,30 @@ export async function applyCatalogImport(): Promise<ApplyResult> {
     if (error) return { error: error.message };
   }
 
-  // Přejmenování a spárování. Při té příležitosti se u nich srovná i sekce,
-  // odkaz a pořadí podle webu.
+  // Všechno, co se s webem spárovalo, se podle něj srovná naráz: název,
+  // sekce, odkaz, pořadí i anglický název. Dřív se sáhlo jen na metodiky
+  // s jiným názvem, takže přesunutá sekce v databázi zůstala stará.
   const kUprave = new Map<string, string>();
   for (const r of plan.toRename) kUprave.set(r.slug, r.id);
   for (const l of plan.toLink) kUprave.set(l.slug, l.id);
+  for (const r of plan.toRecategorize) kUprave.set(r.slug, r.id);
+  for (const e of plan.toSetEnglish) kUprave.set(e.slug, e.id);
+  for (const u of plan.toUnarchive) kUprave.set(u.slug, u.id);
 
   for (const [slug, id] of kUprave) {
     const item = podleSlugu.get(slug);
     if (!item) continue;
 
+    const anglicky = anglickeNazvy.get(item.slug);
     const { error } = await supabase
       .from("modules")
-      .update({ ...radekZPolozky(item), archived_at: null })
+      .update({
+        ...radekZPolozky(item),
+        // Anglický název se přepisuje jen tehdy, když ho web má. Když ne,
+        // zůstane, co je uložené – nikdy se nemaže ani nepřekládá.
+        ...(anglicky ? { name_en: anglicky } : {}),
+        archived_at: null,
+      })
       .eq("id", id);
     if (error) return { error: error.message };
   }
@@ -81,12 +123,16 @@ export async function applyCatalogImport(): Promise<ApplyResult> {
 
   revalidatePath("/admin");
   revalidatePath("/");
+  revalidatePath("/modules");
   revalidatePath("/admin/upload");
 
   return {
     added: plan.toAdd.length,
     renamed: plan.toRename.length,
     linked: plan.toLink.length,
+    recategorized: plan.toRecategorize.length,
+    unarchived: plan.toUnarchive.length,
+    english: plan.toSetEnglish.length,
     archived: plan.toArchive.length,
   };
 }
@@ -105,7 +151,7 @@ async function loadModules(): Promise<ModuleRow[]> {
   const supabase = await createClient();
   const { data, error } = await supabase
     .from("modules")
-    .select("id, name, slug, category, archived_at");
+    .select("id, name, name_en, slug, category, archived_at");
 
   if (error) throw new Error(error.message);
   return (data ?? []) as ModuleRow[];

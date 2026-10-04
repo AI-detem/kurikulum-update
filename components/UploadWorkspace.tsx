@@ -270,30 +270,40 @@ export function UploadWorkspace({
               />
             </Field>
 
-            <Field label={t.country}>
-              {canChooseCountry ? (
-                <select
-                  name="countryId"
-                  required
-                  value={countryId}
-                  onChange={(event) => setCountryId(event.target.value)}
-                  className="input"
-                >
+            {/* Nabízejí se jen vlastní země. S jedinou zemí není co vybírat,
+                takže místo pole stojí jen věta, za koho se nahrává. */}
+            <input type="hidden" name="countryId" value={countryId} />
+            {canChooseCountry ? (
+              // Schválně ne <Field>: ten vykresluje <label>, a popisek
+              // obalující skupinu tlačítek se plete do jejich názvu
+              // pro odečítače obrazovky („Země Velká Británie").
+              <div className="flex flex-col gap-1.5">
+                <span className="text-sm font-medium text-ink">{t.country}</span>
+                <div role="group" aria-label={t.country} className="flex flex-wrap gap-2">
                   {countries.map((country) => (
-                    <option key={country.id} value={country.id}>
+                    <button
+                      key={country.id}
+                      type="button"
+                      onClick={() => setCountryId(country.id)}
+                      aria-pressed={country.id === countryId}
+                      className={`badge-pill ${
+                        country.id === countryId
+                          ? "bg-coral text-white"
+                          : "hover:bg-mist/50"
+                      }`}
+                    >
                       {country.name}
-                    </option>
+                    </button>
                   ))}
-                </select>
-              ) : (
-                <>
-                  <input type="hidden" name="countryId" value={countryId} />
-                  <p className="input bg-haze/40 text-ink/60">
-                    {countryName || t.noCountryForUpload}
-                  </p>
-                </>
-              )}
-            </Field>
+                </div>
+              </div>
+            ) : (
+              <p className="text-sm font-medium text-ink">
+                {countryName
+                  ? fill(t.uploadingFor, { country: countryName })
+                  : t.noCountryForUpload}
+              </p>
+            )}
 
             <p className="rounded-xl bg-haze/40 p-3 text-xs text-ink/70">
               {latest

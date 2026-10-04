@@ -1,5 +1,5 @@
 import { redirect } from "next/navigation";
-import { requireUser, canUpload } from "@/lib/current-user";
+import { requireUser, canUpload, writableCountries } from "@/lib/current-user";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { createClient } from "@/lib/supabase/server";
 import {
@@ -58,6 +58,21 @@ export default async function UploadPage({
     });
   }
 
+  // Za kterou zemi nahrával naposledy – ta se předvybere. Když takovou
+  // zemi mezitím ztratil, spadne se na první z jeho zemí.
+  const { data: posledni } = await supabase
+    .from("document_versions")
+    .select("country_id")
+    .eq("uploaded_by", user.id)
+    .order("uploaded_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
+  const posledniVlastni = countries.some((c) => c.id === posledni?.country_id)
+    ? posledni!.country_id
+    : null;
+  const defaultCountryId = posledniVlastni ?? countries[0]?.id ?? null;
+
   // Rozdělaná práce z minulé návštěvy.
   const { data: draft } = await supabase
     .from("document_versions")
@@ -101,7 +116,7 @@ export default async function UploadPage({
       <UploadWorkspace
         modules={modules ?? []}
         countries={countries}
-        defaultCountryId={user.role === "admin" ? activeCountryId : user.country_id}
+        defaultCountryId={defaultCountryId}
         canChooseCountry={countries.length > 1}
         latestVersions={latestVersions}
         existingDraft={existingDraft}

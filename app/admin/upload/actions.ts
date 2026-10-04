@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { createClient } from "@/lib/supabase/server";
-import { requireUser, canUpload } from "@/lib/current-user";
+import { requireUser, canUpload, canWriteForCountry } from "@/lib/current-user";
 import { resolveActiveCountry } from "@/lib/active-country";
 import { extractDriveFileId, drivePreviewUrl } from "@/lib/drive";
 import { sortMarks } from "@/lib/annotations";
@@ -31,6 +31,11 @@ export async function ensureDraftVersion(
   const { t } = await resolveActiveCountry(user, countryId);
 
   if (!canUpload(user)) return { error: t.uploadNotAllowed };
+  // Formulář cizí zemi nenabízí, ale na tom se to stát nesmí – někdo může
+  // poslat požadavek i mimo něj.
+  if (countryId && !canWriteForCountry(user, countryId)) {
+    return { error: t.uploadForeignCountry };
+  }
 
   const fileId = extractDriveFileId(driveLink);
   if (!fileId) return { error: t.driveLinkNotRecognized };
@@ -185,6 +190,9 @@ export async function publishVersion(
 
   if (!canUpload(user)) return { error: t.uploadNotAllowed };
   if (!draft) return { error: t.uploadMissingFields };
+  if (!canWriteForCountry(user, draft.country_id)) {
+    return { error: t.uploadForeignCountry };
+  }
 
   const { module_id: moduleId, country_id: countryId } = draft;
 
